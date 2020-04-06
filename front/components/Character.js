@@ -1,6 +1,9 @@
 const Character = () => {
     return(
-        <div>캐릭터의 모습</div>
+        <>
+            <div>머리</div>
+            <div>캐릭터의 모습</div>
+        </>
     )
 }
 

@@ -4,7 +4,7 @@ import Link from 'next/link';
 // import AppLaout from '../components/AppLayout';
 import Character from '../components/Character';
 import History from '../components/History';
-import CheckList from '../components/CheckList';
+import TodoList from '../components/TodoList';
 import Shop from '../components/Shop';
 
 const login = true;
@@ -40,7 +40,7 @@ const Index = () => {
                     }
                     {page===2&&
                         <div>
-                            <CheckList></CheckList>
+                            <TodoList></TodoList>
                         </div>
                     }
                     {page===3&&
