@@ -1,10 +1,22 @@
-import React, {useState, useRef, useCallback} from 'react';
+import React, {useState, useRef, useCallback, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {addDummyAction} from '../reducers/todo';
 
 const CheckList = () => {
-    const [todo, setTodo] = useState([{todo: '밥먹기', checked: false}]);
+    const dispatch = useDispatch();
+    const {todos} = useSelector(state=>state.todo);
+    console.log(todos);
+    useEffect(()=>{
+        dispatch(addDummyAction);
+    }, []);
+
+    const [todo, setTodo] = useState([{todoId: 1, content: '밥먹기', checked: false}]);
     const [started, setStarted] = useState(false);
     const [adding, setAdding] = useState(false);
     const addTodoInput = useRef();
+
+    
+
 
     const onStartTodo = () => {
         setStarted(true);
@@ -17,11 +29,11 @@ const CheckList = () => {
         setAdding(false);
         alert('취소!');
     }
-    const checkTodo = todoId => () => {
-        console.log(todoId);
-        console.log(todo[todoId]);
+    const checkTodo = todoIndex => () => {
+        console.log(todoIndex);
+        console.log(todo[todoIndex]);
         const todoArray = [...todo];
-        const todoTarget = todoArray[todoId];
+        const todoTarget = todoArray[todoIndex];
         todoTarget.checked = true;
         setTodo(todoArray);
     }
@@ -34,7 +46,7 @@ const CheckList = () => {
                 {todo.map((c, i)=>{
                     return (
                         <li>
-                            <span>{c.todo}</span>
+                            <span>{c.content}</span>
                             {c.checked?<button>체크취소</button>:<button onClick={checkTodo(i)}>체크</button>}
                         </li>
                     )
