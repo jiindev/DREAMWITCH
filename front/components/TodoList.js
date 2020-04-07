@@ -1,6 +1,6 @@
 import React, {useState, useRef, useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {addDummyAction, loadDummyAction} from '../reducers/todo';
+import {addDummyAction, loadDummyAction, CHECK_TODO, checkTodoAction} from '../reducers/todo';
 
 const CheckList = () => {
     const dispatch = useDispatch();
@@ -30,10 +30,7 @@ const CheckList = () => {
     const checkTodo = todoIndex => () => {
         // console.log(todoIndex);
         // console.log(todo[todoIndex]);
-        // const todoArray = [...todo];
-        // const todoTarget = todoArray[todoIndex];
-        // todoTarget.checked = true;
-        // setTodo(todoArray);
+        dispatch(checkTodoAction);
     }
 
     return(
@@ -48,14 +45,17 @@ const CheckList = () => {
                 {todos.map((c, i)=>{
                     return (
                         <li>
-                            <span>{c.content}</span>
-                            {c.checked?<button>체크취소</button>:<button onClick={checkTodo(i)}>체크</button>}
+                            <button onClick={checkTodo(i)}>{c.checked? '체크취소' : '체크'}</button>
+                            <span style={c.checked? {textDecorationLine:'line-through'}: {textDecorationLine:'none'}}>{c.content}</span>
                         </li>
                     )
                 })}
                 <input type="text" ref={addTodoInput} onBlur={AddTodoOff}/>
                 </ul>
                 <button onClick = {AddTodoOn}>+</button>
+                <div>
+                    <button>완료</button>
+                </div>
             </div>
             :
                 <div>
