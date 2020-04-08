@@ -1,22 +1,29 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { checkTodoAction, editTodoAction } from "../reducers/todo";
 
 const TodoItem = ({ item, index }) => {
   const dispatch = useDispatch();
-  const [editedTodo, setEditedTodo] = useState("");
+  const [editedTodo, setEditedTodo] = useState(item.content);
   const [editingMode, setEditingMode] = useState(false);
   const todoInput = useRef();
+
+  const [inputRef, setInputRef] = useState(null);
+  const liRef = useRef();
+
+  useEffect(() => {
+    if (editingMode) {
+      liRef.current.childNodes[1].focus();
+    }
+  }, [editingMode]);
 
   const checkTodo = useCallback(() => {
     dispatch(checkTodoAction);
   }, []);
 
   const editModeStart = useCallback(() => {
-    console.log(todoInput);
     setEditingMode(true);
-    todoInput.current.focus();
-  }, [todoInput.current]);
+  }, []);
 
   const editTodo = useCallback((e) => {
     setEditedTodo(e.target.value);
@@ -29,7 +36,7 @@ const TodoItem = ({ item, index }) => {
 
   return (
     <>
-      <li>
+      <li ref={liRef}>
         <button onClick={checkTodo}>
           {item.checked ? "체크취소" : "체크"}
         </button>
@@ -43,7 +50,6 @@ const TodoItem = ({ item, index }) => {
               }
               type="text"
               value={editedTodo || (item && item.content)}
-              ref={todoInput}
               onChange={editTodo}
               onBlur={editModeEnd}
             />
