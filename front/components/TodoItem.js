@@ -1,14 +1,15 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { checkTodoAction, editTodoAction } from "../reducers/todo";
+import {
+  checkTodoAction,
+  editTodoAction,
+  removeTodoAction,
+} from "../reducers/todo";
 
 const TodoItem = ({ item, index }) => {
   const dispatch = useDispatch();
-  const [editedTodo, setEditedTodo] = useState(item.content);
+  const [todoContent, setTodoContent] = useState(item.content);
   const [editingMode, setEditingMode] = useState(false);
-  const todoInput = useRef();
-
-  const [inputRef, setInputRef] = useState(null);
   const liRef = useRef();
 
   useEffect(() => {
@@ -18,21 +19,41 @@ const TodoItem = ({ item, index }) => {
   }, [editingMode]);
 
   const checkTodo = useCallback(() => {
-    dispatch(checkTodoAction);
-  }, []);
+    console.log("todoItem:", index);
+    dispatch(checkTodoAction({ index }));
+  }, [index]);
 
   const editModeStart = useCallback(() => {
+    setTodoContent(item.content);
     setEditingMode(true);
-  }, []);
+  }, [item]);
 
-  const editTodo = useCallback((e) => {
-    setEditedTodo(e.target.value);
-  }, []);
+  const onChangeContent = useCallback(
+    (e) => {
+      setTodoContent(e.target.value);
+      console.log(todoContent);
+    },
+    [todoContent]
+  );
 
   const editModeEnd = useCallback(() => {
     setEditingMode(false);
-    dispatch(editTodoAction);
-  }, []);
+    console.log(todoContent);
+    dispatch(
+      editTodoAction({
+        index,
+        content: todoContent,
+      })
+    );
+  }, [index, todoContent]);
+
+  const onRemoveTodo = useCallback(() => {
+    dispatch(
+      removeTodoAction({
+        index,
+      })
+    );
+  }, [index]);
 
   return (
     <>
@@ -49,23 +70,25 @@ const TodoItem = ({ item, index }) => {
                   : { textDecorationLine: "none" }
               }
               type="text"
-              value={editedTodo || (item && item.content)}
-              onChange={editTodo}
+              value={todoContent}
+              onChange={onChangeContent}
               onBlur={editModeEnd}
             />
-            <button>삭제</button>
           </>
         ) : (
-          <span
-            style={
-              item.checked
-                ? { textDecorationLine: "line-through" }
-                : { textDecorationLine: "none" }
-            }
-            onClick={editModeStart}
-          >
-            {item.content}
-          </span>
+          <>
+            <span
+              style={
+                item.checked
+                  ? { textDecorationLine: "line-through" }
+                  : { textDecorationLine: "none" }
+              }
+              onClick={editModeStart}
+            >
+              {item.content}
+            </span>
+            <button onClick={onRemoveTodo}>삭제</button>
+          </>
         )}
       </li>
     </>

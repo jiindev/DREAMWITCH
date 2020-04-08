@@ -11,20 +11,17 @@ export const LOAD_TODOS = "LOAD_TODOS";
 export const ADD_DUMMY = "ADD_DUMMY";
 
 export const EDIT_TODO = "EDIT_TODO";
+export const REMOVE_TODO = "REMOVE_TODO";
 
-export const editTodoAction = {
-  type: EDIT_TODO,
-  data: {
-    todoId: 1,
-    content: "수정된 투두",
-  },
+export const editTodoAction = (data) => {
+  return {
+    type: EDIT_TODO,
+    data: data,
+  };
 };
 
-export const checkTodoAction = {
-  type: CHECK_TODO,
-  data: {
-    todoId: 3,
-  },
+export const checkTodoAction = (data) => {
+  return { type: CHECK_TODO, data: data };
 };
 
 export const addTodoAction = {
@@ -38,11 +35,18 @@ export const loadTodosAction = {
     date: "2020-04-06",
     isCleared: false,
     todos: [
-      { todoId: 0, content: "밥먹기", checked: false, User: { userId: 1 } },
-      { todoId: 1, content: "숙제하기", checked: true, User: { userId: 1 } },
-      { todoId: 3, content: "숙면", checked: false, User: { userId: 1 } },
+      { todoId: 555, content: "밥먹기", checked: false, User: { userId: 1 } },
+      { todoId: 2, content: "숙제하기", checked: true, User: { userId: 1 } },
+      { todoId: 43, content: "숙면", checked: false, User: { userId: 1 } },
     ],
   },
+};
+
+export const removeTodoAction = (data) => {
+  return {
+    type: REMOVE_TODO,
+    data: data,
+  };
 };
 
 const reducer = (state = initialState, action) => {
@@ -54,8 +58,17 @@ const reducer = (state = initialState, action) => {
       };
     }
     case CHECK_TODO: {
+      console.log("action.data.index:", action.data.index);
       const todoIndex = state.todos.findIndex(
-        (v) => v.todoId === action.data.todoId
+        (v) => v.todoId === state.todos[action.data.index].todoId
+      );
+      console.log(
+        "state.todos: ",
+        state.todos,
+        ", action.data.todoId:",
+        action.data.todoId,
+        ", todoIndex:",
+        todoIndex
       );
       const todos = [...state.todos];
       todos[todoIndex].checked = !todos[todoIndex].checked;
@@ -80,10 +93,21 @@ const reducer = (state = initialState, action) => {
     }
     case EDIT_TODO: {
       const todoIndex = state.todos.findIndex(
-        (v) => v.todoId === action.data.todoId
+        (v) => v.todoId === state.todos[action.data.index].todoId
       );
       const todos = [...state.todos];
       todos[todoIndex].content = action.data.content;
+      return {
+        ...state,
+        todos,
+      };
+    }
+    case REMOVE_TODO: {
+      const todoIndex = state.todos.findIndex(
+        (v) => v.todoId === state.todos[action.data.index].todoId
+      );
+      const todos = [...state.todos];
+      todos.splice(todoIndex, 1);
       return {
         ...state,
         todos,
