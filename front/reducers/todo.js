@@ -7,13 +7,20 @@ export const initialState={
 export const ADD_TODO = 'ADD_TODO';
 export const CHECK_TODO = 'CHECK_TODO';
 
-export const LOAD_DUMMY = 'LOAD_DUMMY';
+export const LOAD_TODOS = 'LOAD_TODOS';
 export const ADD_DUMMY = 'ADD_DUMMY';
 
-export const addTodoAction = {
-    type: ADD_TODO,
-    
-};
+export const EDIT_TODO = 'EDIT_TODO';
+
+export const editTodoAction = {
+    type: EDIT_TODO,
+    data: {
+        todoId: 1,
+        content: '수정된 투두'
+    }
+}
+
+
 export const checkTodoAction = {
     type: CHECK_TODO,
     data: {
@@ -21,13 +28,13 @@ export const checkTodoAction = {
     }
 }
 
-export const addDummyAction = {
+export const addTodoAction = {
     type: ADD_DUMMY,
     data: {todoId: 1, content: '밥먹기', checked: false, User: {userId:1}}
 }
 
-export const loadDummyAction = {
-    type: LOAD_DUMMY,
+export const loadTodosAction = {
+    type: LOAD_TODOS,
     data: {
         date: '2020-04-06',
         isCleared: false,
@@ -56,7 +63,7 @@ const reducer = (state = initialState, action) => {
                 todos,
             }
         }
-        case LOAD_DUMMY: {
+        case LOAD_TODOS: {
             return {
                 ...state,
                 date: action.data.date,
@@ -68,6 +75,15 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 todos: [...state.todos, action.data]
+            }
+        }
+        case EDIT_TODO: {
+            const todoIndex = state.todos.findIndex(v=>v.todoId===action.data.todoId);
+            const todos = [...state.todos];
+            todos[todoIndex].content = action.data.content;
+            return {
+                ...state,
+                todos,
             }
         }
         default: {
