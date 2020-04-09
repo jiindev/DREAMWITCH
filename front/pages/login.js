@@ -1,9 +1,21 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { LOG_IN_REQUEST } from "../reducers/user";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-  const onSubmit = () => {};
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch({
+      type: LOG_IN_REQUEST,
+      data: {
+        userId: id,
+        password,
+      },
+    });
+  };
   const onChangeId = (e) => {
     setId(e.target.value);
   };
@@ -28,6 +40,11 @@ const Login = () => {
             value={password}
             onChange={onChangePassword}
           />
+        </div>
+        <div>
+          <button htmlFor="submit" onClick={onSubmit}>
+            로그인
+          </button>
         </div>
       </form>
     </>

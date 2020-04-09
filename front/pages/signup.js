@@ -1,9 +1,21 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { SIGN_UP_REQUEST } from "../reducers/user";
 
 const Signup = () => {
+  const dispatch = useDispatch();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-  const onSubmit = () => {};
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch({
+      type: SIGN_UP_REQUEST,
+      data: {
+        userId: id,
+        password,
+      },
+    });
+  };
   const onChangeId = (e) => {
     setId(e.target.value);
   };
@@ -28,6 +40,11 @@ const Signup = () => {
             value={password}
             onChange={onChangePassword}
           />
+        </div>
+        <div>
+          <button htmlFor="submit" onClick={onSubmit}>
+            가입하기
+          </button>
         </div>
       </form>
     </>
