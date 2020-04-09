@@ -13,7 +13,12 @@ const CheckList = () => {
   const { todos, date } = useSelector((state) => state.todo);
   console.log(todos);
   useEffect(async () => {
-    await dispatch(loadTodosAction);
+    dispatch({
+      type: "LOAD_TODOS_REQUEST",
+      data: {
+        userId: 3,
+      },
+    });
     const completedTodos = todos.filter((v) => v.checked === true);
     console.log("c:", completedTodos, "t:", todos);
   }, []);

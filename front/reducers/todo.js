@@ -1,3 +1,13 @@
+const dummyData = {
+  date: "2020-04-06",
+  isCleared: false,
+  todos: [
+    { todoId: 555, content: "밥먹기", checked: false, User: { userId: 1 } },
+    { todoId: 2, content: "숙제하기", checked: true, User: { userId: 1 } },
+    { todoId: 43, content: "숙면", checked: false, User: { userId: 1 } },
+  ],
+};
+
 export const initialState = {
   date: false,
   isCleared: false,
@@ -7,7 +17,10 @@ export const initialState = {
 export const ADD_TODO = "ADD_TODO";
 export const CHECK_TODO = "CHECK_TODO";
 
-export const LOAD_TODOS = "LOAD_TODOS";
+export const LOAD_TODOS_REQUEST = "LOAD_TODOS_REQUEST";
+export const LOAD_TODOS_SUCCESS = "LOAD_TODOS_SUCCESS";
+export const LOAD_TODOS_FAILURE = "LOAD_TODOS_FAILURE";
+
 export const ADD_DUMMY = "ADD_DUMMY";
 
 export const EDIT_TODO = "EDIT_TODO";
@@ -27,19 +40,6 @@ export const checkTodoAction = (data) => {
 export const addTodoAction = {
   type: ADD_DUMMY,
   data: { todoId: 1, content: "밥먹기", checked: false, User: { userId: 1 } },
-};
-
-export const loadTodosAction = {
-  type: LOAD_TODOS,
-  data: {
-    date: "2020-04-06",
-    isCleared: false,
-    todos: [
-      { todoId: 555, content: "밥먹기", checked: false, User: { userId: 1 } },
-      { todoId: 2, content: "숙제하기", checked: true, User: { userId: 1 } },
-      { todoId: 43, content: "숙면", checked: false, User: { userId: 1 } },
-    ],
-  },
 };
 
 export const removeTodoAction = (data) => {
@@ -77,12 +77,23 @@ const reducer = (state = initialState, action) => {
         todos,
       };
     }
-    case LOAD_TODOS: {
+    case LOAD_TODOS_REQUEST: {
       return {
         ...state,
-        date: action.data.date,
-        isCleared: action.data.isCleared,
-        todos: action.data.todos,
+      };
+    }
+    case LOAD_TODOS_SUCCESS: {
+      console.log(action.data);
+      return {
+        ...state,
+        date: dummyData.date,
+        isCleared: dummyData.isCleared,
+        todos: dummyData.todos,
+      };
+    }
+    case LOAD_TODOS_FAILURE: {
+      return {
+        ...state,
       };
     }
     case ADD_DUMMY: {
