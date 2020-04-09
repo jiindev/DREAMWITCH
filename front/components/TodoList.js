@@ -5,6 +5,7 @@ import {
   loadTodosAction,
   CHECK_TODO,
   checkTodoAction,
+  LOAD_TODOS_REQUEST,
 } from "../reducers/todo";
 import TodoItem from "./TodoItem";
 
@@ -14,7 +15,7 @@ const CheckList = () => {
   console.log(todos);
   useEffect(async () => {
     dispatch({
-      type: "LOAD_TODOS_REQUEST",
+      type: LOAD_TODOS_REQUEST,
       data: {
         userId: 3,
       },

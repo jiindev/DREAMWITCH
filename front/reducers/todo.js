@@ -14,67 +14,63 @@ export const initialState = {
   todos: [],
 };
 
-export const ADD_TODO = "ADD_TODO";
-export const CHECK_TODO = "CHECK_TODO";
+export const ADD_TODO_REQUEST = "ADD_TODO_REQUEST";
+export const ADD_TODO_SUCCESS = "ADD_TODO_SUCCESS";
+export const ADD_TODO_FAILURE = "ADD_TODO_FAILURE";
+
+export const CHECK_TODO_REQUEST = "CHECK_TODO_REQUEST";
+export const CHECK_TODO_SUCCESS = "CHECK_TODO_SUCCESS";
+export const CHECK_TODO_FAILURE = "CHECK_TODO_FAILURE";
 
 export const LOAD_TODOS_REQUEST = "LOAD_TODOS_REQUEST";
 export const LOAD_TODOS_SUCCESS = "LOAD_TODOS_SUCCESS";
 export const LOAD_TODOS_FAILURE = "LOAD_TODOS_FAILURE";
 
-export const ADD_DUMMY = "ADD_DUMMY";
+export const EDIT_TODO_REQUEST = "EDIT_TODO_REQUEST";
+export const EDIT_TODO_SUCCESS = "EDIT_TODO_SUCCESS";
+export const EDIT_TODO_FAILURE = "EDIT_TODO_FAILURE";
 
-export const EDIT_TODO = "EDIT_TODO";
-export const REMOVE_TODO = "REMOVE_TODO";
-
-export const editTodoAction = (data) => {
-  return {
-    type: EDIT_TODO,
-    data: data,
-  };
-};
-
-export const checkTodoAction = (data) => {
-  return { type: CHECK_TODO, data: data };
-};
-
-export const addTodoAction = {
-  type: ADD_DUMMY,
-  data: { todoId: 1, content: "밥먹기", checked: false, User: { userId: 1 } },
-};
-
-export const removeTodoAction = (data) => {
-  return {
-    type: REMOVE_TODO,
-    data: data,
-  };
-};
+export const REMOVE_TODO_REQUEST = "REMOVE_TODO_REQUEST";
+export const REMOVE_TODO_SUCCESS = "REMOVE_TODO_SUCCESS";
+export const REMOVE_TODO_FAILURE = "REMOVE_TODO_FAILURE";
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_TODO: {
+    case ADD_TODO_REQUEST: {
+      return {
+        ...state,
+      };
+    }
+    case ADD_TODO_SUCCESS: {
       return {
         ...state,
         todos: [...state.todos, action.data],
       };
     }
-    case CHECK_TODO: {
-      console.log("action.data.index:", action.data.index);
+    case ADD_TODO_FAILURE: {
+      return {
+        ...state,
+      };
+    }
+    case CHECK_TODO_REQUEST: {
+      return {
+        ...state,
+      };
+    }
+    case CHECK_TODO_SUCCESS: {
       const todoIndex = state.todos.findIndex(
-        (v) => v.todoId === state.todos[action.data.index].todoId
-      );
-      console.log(
-        "state.todos: ",
-        state.todos,
-        ", action.data.todoId:",
-        action.data.todoId,
-        ", todoIndex:",
-        todoIndex
+        (v) => v.todoId === state.todos[action.data].todoId
       );
       const todos = [...state.todos];
       todos[todoIndex].checked = !todos[todoIndex].checked;
       return {
         ...state,
         todos,
+      };
+    }
+    case CHECK_TODO_FAILURE: {
+      return {
+        ...state,
       };
     }
     case LOAD_TODOS_REQUEST: {
@@ -96,13 +92,12 @@ const reducer = (state = initialState, action) => {
         ...state,
       };
     }
-    case ADD_DUMMY: {
+    case EDIT_TODO_REQUEST: {
       return {
         ...state,
-        todos: [...state.todos, action.data],
       };
     }
-    case EDIT_TODO: {
+    case EDIT_TODO_SUCCESS: {
       const todoIndex = state.todos.findIndex(
         (v) => v.todoId === state.todos[action.data.index].todoId
       );
@@ -113,15 +108,30 @@ const reducer = (state = initialState, action) => {
         todos,
       };
     }
-    case REMOVE_TODO: {
+    case EDIT_TODO_FAILURE: {
+      return {
+        ...state,
+      };
+    }
+    case REMOVE_TODO_REQUEST: {
+      return {
+        ...state,
+      };
+    }
+    case REMOVE_TODO_SUCCESS: {
       const todoIndex = state.todos.findIndex(
-        (v) => v.todoId === state.todos[action.data.index].todoId
+        (v) => v.todoId === state.todos[action.data].todoId
       );
       const todos = [...state.todos];
       todos.splice(todoIndex, 1);
       return {
         ...state,
         todos,
+      };
+    }
+    case REMOVE_TODO_FAILURE: {
+      return {
+        ...state,
       };
     }
     default: {

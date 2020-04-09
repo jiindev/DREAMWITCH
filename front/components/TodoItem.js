@@ -7,9 +7,9 @@ import React, {
 } from "react";
 import { useDispatch } from "react-redux";
 import {
-  checkTodoAction,
-  editTodoAction,
-  removeTodoAction,
+  CHECK_TODO_REQUEST,
+  EDIT_TODO_REQUEST,
+  REMOVE_TODO_REQUEST,
 } from "../reducers/todo";
 
 const TodoItem = ({ item, index }) => {
@@ -25,7 +25,10 @@ const TodoItem = ({ item, index }) => {
 
   const checkTodo = useCallback(() => {
     console.log("todoItem:", index);
-    dispatch(checkTodoAction({ index }));
+    dispatch({
+      type: CHECK_TODO_REQUEST,
+      data: index,
+    });
   }, [index]);
 
   const editModeStart = useCallback(() => {
@@ -44,20 +47,20 @@ const TodoItem = ({ item, index }) => {
   const editModeEnd = useCallback(() => {
     setEditingMode(false);
     console.log(todoContent);
-    dispatch(
-      editTodoAction({
+    dispatch({
+      type: EDIT_TODO_REQUEST,
+      data: {
         index,
         content: todoContent,
-      })
-    );
+      },
+    });
   }, [index, todoContent]);
 
   const onRemoveTodo = useCallback(() => {
-    dispatch(
-      removeTodoAction({
-        index,
-      })
-    );
+    dispatch({
+      type: REMOVE_TODO_REQUEST,
+      data: index,
+    });
   }, [index]);
 
   return (
