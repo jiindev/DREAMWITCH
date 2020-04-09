@@ -1,4 +1,10 @@
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, {
+  useState,
+  useCallback,
+  useRef,
+  useEffect,
+  createRef,
+} from "react";
 import { useDispatch } from "react-redux";
 import {
   checkTodoAction,
@@ -10,11 +16,10 @@ const TodoItem = ({ item, index }) => {
   const dispatch = useDispatch();
   const [todoContent, setTodoContent] = useState(item.content);
   const [editingMode, setEditingMode] = useState(false);
-  const liRef = useRef();
-
+  const todoInput = createRef();
   useEffect(() => {
     if (editingMode) {
-      liRef.current.childNodes[1].focus();
+      todoInput.current.focus();
     }
   }, [editingMode]);
 
@@ -57,7 +62,7 @@ const TodoItem = ({ item, index }) => {
 
   return (
     <>
-      <li ref={liRef}>
+      <li>
         <button onClick={checkTodo}>
           {item.checked ? "체크취소" : "체크"}
         </button>
@@ -73,6 +78,7 @@ const TodoItem = ({ item, index }) => {
               value={todoContent}
               onChange={onChangeContent}
               onBlur={editModeEnd}
+              ref={todoInput}
             />
           </>
         ) : (
