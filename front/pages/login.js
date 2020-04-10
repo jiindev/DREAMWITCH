@@ -1,11 +1,20 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { LOG_IN_REQUEST } from "../reducers/user";
+import Router from "next/router";
 
 const Login = () => {
   const dispatch = useDispatch();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  const { isLoggingIn, me } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (me) {
+      Router.push("/");
+    }
+  }, [me && me.id]);
+
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch({

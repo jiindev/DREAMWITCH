@@ -1,11 +1,21 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { SIGN_UP_REQUEST } from "../reducers/user";
+import Router from "next/router";
 
 const Signup = () => {
   const dispatch = useDispatch();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  const { me, isSignedUp } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (isSignedUp) {
+      alert("가입이 완료되었습니다.");
+      Router.push("/login");
+    }
+  }, [isSignedUp]);
+
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch({

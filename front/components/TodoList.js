@@ -20,8 +20,7 @@ const CheckList = () => {
         userId: 3,
       },
     });
-    const completedTodos = todos.filter((v) => v.checked === true);
-    console.log("c:", completedTodos, "t:", todos);
+    // const completedTodos = todos.filter((v) => v.checked === true);
   }, []);
 
   const [started, setStarted] = useState(false);
