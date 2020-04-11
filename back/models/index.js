@@ -13,7 +13,7 @@ const sequelize = new Sequelize(
 db.User = require("./user")(sequelize, Sequelize);
 db.Todo = require("./todo")(sequelize, Sequelize);
 db.History = require("./history")(sequelize, Sequelize);
-db.Equipment = require("./equipment")(sequelize, Sequelize);
+db.Item = require("./item")(sequelize, Sequelize);
 
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
