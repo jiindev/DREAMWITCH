@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LOG_IN_REQUEST } from "../reducers/user";
 import Router from "next/router";
+import Link from "next/link";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -54,6 +55,13 @@ const Login = () => {
           <button htmlFor="submit" onClick={onSubmit}>
             로그인
           </button>
+        </div>
+        <div>
+          <Link href="/signup">
+            <a>
+              <button>회원가입</button>
+            </a>
+          </Link>
         </div>
       </form>
     </>
