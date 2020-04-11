@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, useStore } from "react-redux";
 import { SIGN_UP_REQUEST } from "../reducers/user";
 import Router from "next/router";
 
@@ -7,6 +7,7 @@ const Signup = () => {
   const dispatch = useDispatch();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  const [nickname, setNickname] = useState("");
   const { me, isSignedUp } = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -22,12 +23,16 @@ const Signup = () => {
       type: SIGN_UP_REQUEST,
       data: {
         userId: id,
+        nickname,
         password,
       },
     });
   };
   const onChangeId = (e) => {
     setId(e.target.value);
+  };
+  const onChangeNickname = (e) => {
+    setNickname(e.target.value);
   };
   const onChangePassword = (e) => {
     setPassword(e.target.value);
@@ -40,6 +45,16 @@ const Signup = () => {
           <label htmlFor="userId">아이디</label>
           <br />
           <input type="text" name="userId" value={id} onChange={onChangeId} />
+        </div>
+        <div>
+          <label htmlFor="nickname">닉네임</label>
+          <br />
+          <input
+            type="text"
+            name="nickname"
+            value={nickname}
+            onChange={onChangeNickname}
+          />
         </div>
         <div>
           <label htmlFor="userPassword">비밀번호</label>

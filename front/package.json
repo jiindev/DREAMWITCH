@@ -11,6 +11,7 @@
   "author": "jiindev",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.19.2",
     "next": "^9.3.2",
     "next-redux-wrapper": "^5.0.0",
     "prop-types": "^15.7.2",

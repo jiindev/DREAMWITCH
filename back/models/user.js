@@ -18,12 +18,12 @@ module.exports = (sequelize, DataTypes) => {
       level: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: 0,
+        defaultValue: 1,
       },
       exp: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: 1,
+        defaultValue: 0,
       },
     },
     {
