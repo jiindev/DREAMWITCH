@@ -6,23 +6,27 @@ import Character from "../components/Character";
 import History from "../components/History";
 import TodoList from "../components/TodoList";
 import Shop from "../components/Shop";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Router from "next/router";
+import { LOAD_USER_REQUEST } from "../reducers/user";
 
 const Index = () => {
+  const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
   const [page, setPage] = useState(2);
 
   useEffect(() => {
-    if (!me) {
-      Router.push("/login");
+    if(!me){
+      dispatch({
+        type: LOAD_USER_REQUEST
+      })
     }
-  }, [me && me.id]);
+  }, []);
 
   return (
     <>
       <>
-        <div>500별 (화폐)</div>
+       <div><span>{me && me.star}별</span><span>{me && me.level}레벨</span></div>
         <div>
           <Character></Character>
         </div>

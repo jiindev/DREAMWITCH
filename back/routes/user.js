@@ -6,6 +6,12 @@ const db = require("../models");
 
 router.get("/", (req, res) => {
   // 유저 정보 프론트로 전달
+  if(!req.user){
+    return res.status(401).send('로그인이 필요합니다.');
+  }
+  const user = Object.assign({}, req.user.toJSON());
+  delete user.password;
+  return res.json(user);
 });
 router.post("/", async (req, res, next) => {
   // 회원가입
@@ -59,7 +65,7 @@ router.post("/login", async (req, res, next) => {
             as: 'Items',
             attributes: ['id'],
           }],
-          attributes: ['id', 'nickname', 'userId', 'level', 'exp'],
+          attributes: ['id', 'nickname', 'userId', 'level', 'exp', 'star'],
         });
         console.log(fullUser);
         return res.json(fullUser);
