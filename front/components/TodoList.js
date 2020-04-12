@@ -13,7 +13,7 @@ const CheckList = () => {
   const dispatch = useDispatch();
   const { todos, date } = useSelector((state) => state.todo);
   console.log(todos);
-  useEffect(async () => {
+  useEffect(() => {
     dispatch({
       type: LOAD_TODOS_REQUEST,
       data: {

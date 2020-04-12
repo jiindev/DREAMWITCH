@@ -21,35 +21,29 @@ const Index = () => {
 
   return (
     <>
-      {me ? (
-        <>
-          <div>500별 (화폐)</div>
-          <div>
-            <Character></Character>
-          </div>
-          <div>
-            {page === 1 && (
-              <div>
-                <History></History>
-              </div>
-            )}
-            {page === 2 && (
-              <div>
-                <TodoList></TodoList>
-              </div>
-            )}
-            {page === 3 && (
-              <div>
-                <Shop></Shop>
-              </div>
-            )}
-          </div>
-        </>
-      ) : (
-        <>
-          <div>로그인하셈</div>
-        </>
-      )}
+      <>
+        <div>500별 (화폐)</div>
+        <div>
+          <Character></Character>
+        </div>
+        <div>
+          {page === 1 && (
+            <div>
+              <History></History>
+            </div>
+          )}
+          {page === 2 && (
+            <div>
+              <TodoList></TodoList>
+            </div>
+          )}
+          {page === 3 && (
+            <div>
+              <Shop></Shop>
+            </div>
+          )}
+        </div>
+      </>
     </>
   );
 };
