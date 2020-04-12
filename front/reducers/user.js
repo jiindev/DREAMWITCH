@@ -6,8 +6,6 @@ export const initialState = {
   isSigningUp: false, // 회원가입 시도중
   signUpErrorReason: "", // 회원가입 실패 사유
   me: null, // 내 정보
-  itemList: [], //아이템 리스트
-  equipList: [], //착용 아이템
 };
 
 export const LOG_IN_REQUEST = "LOG_IN_REQUEST";

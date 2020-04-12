@@ -10,12 +10,12 @@ const Signup = () => {
   const [nickname, setNickname] = useState("");
   const { me, isSignedUp } = useSelector((state) => state.user);
 
-  useEffect(() => {
-    if (isSignedUp) {
-      alert("가입이 완료되었습니다.");
-      Router.push("/login");
-    }
-  }, [isSignedUp]);
+  // useEffect(() => {
+  //   if (isSignedUp) {
+  //     alert("가입이 완료되었습니다.");
+  //     Router.push("/login");
+  //   }
+  // }, [isSignedUp]);
 
   const onSubmit = (e) => {
     e.preventDefault();

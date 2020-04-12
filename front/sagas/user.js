@@ -10,7 +10,9 @@ import {
 } from "../reducers/user";
 
 function logInAPI(loginData) {
-  return axios.post("/user/login", loginData);
+  return axios.post("/user/login", loginData, {
+    withCredentials: true
+  });
 }
 
 function* logIn(action) {
