@@ -21,7 +21,6 @@ function loadTodosAPI() {}
 function* loadTodos(action) {
   try {
     const result = yield call(loadTodosAPI, action.data);
-    yield delay(2000);
     yield put({
       type: LOAD_TODOS_SUCCESS,
       //   data: result.data,
@@ -109,6 +108,7 @@ function removeTodoAPI() {}
 function* removeTodo(action) {
   try {
     const result = yield call(removeTodoAPI, action.data);
+    alert(action.data);
     yield put({
       type: REMOVE_TODO_SUCCESS,
       // data: result.data,

@@ -12,9 +12,9 @@ import {
   REMOVE_TODO_REQUEST,
 } from "../reducers/todo";
 
-const TodoItem = ({ item, index }) => {
+const TodoItem = ({ todo }) => {
   const dispatch = useDispatch();
-  const [todoContent, setTodoContent] = useState(item.content);
+  const [todoContent, setTodoContent] = useState(todo.content);
   const [editingMode, setEditingMode] = useState(false);
   const todoInput = createRef();
   useEffect(() => {
@@ -24,17 +24,17 @@ const TodoItem = ({ item, index }) => {
   }, [editingMode]);
 
   const checkTodo = useCallback(() => {
-    console.log("todoItem:", index);
+    console.log("todoItem:", todo.id);
     dispatch({
       type: CHECK_TODO_REQUEST,
-      data: index,
+      data: todo.id,
     });
-  }, [index]);
+  }, []);
 
   const editModeStart = useCallback(() => {
-    setTodoContent(item.content);
+    setTodoContent(todo.content);
     setEditingMode(true);
-  }, [item]);
+  }, [todo]);
 
   const onChangeContent = useCallback(
     (e) => {
@@ -50,30 +50,30 @@ const TodoItem = ({ item, index }) => {
     dispatch({
       type: EDIT_TODO_REQUEST,
       data: {
-        index,
+        id : todo.id,
         content: todoContent,
       },
     });
-  }, [index, todoContent]);
+  }, [todoContent]);
 
   const onRemoveTodo = useCallback(() => {
     dispatch({
       type: REMOVE_TODO_REQUEST,
-      data: index,
+      data: todo.id,
     });
-  }, [index]);
+  }, []);
 
   return (
     <>
       <li>
         <button onClick={checkTodo}>
-          {item.checked ? "체크취소" : "체크"}
+          {todo.checked ? "체크취소" : "체크"}
         </button>
         {editingMode ? (
           <>
             <input
               style={
-                item.checked
+                todo.checked
                   ? { textDecorationLine: "line-through" }
                   : { textDecorationLine: "none" }
               }
@@ -88,13 +88,13 @@ const TodoItem = ({ item, index }) => {
           <>
             <span
               style={
-                item.checked
+                todo.checked
                   ? { textDecorationLine: "line-through" }
                   : { textDecorationLine: "none" }
               }
               onClick={editModeStart}
             >
-              {item.content}
+              {todo.content}
             </span>
             <button onClick={onRemoveTodo}>삭제</button>
           </>

@@ -2,9 +2,9 @@ const dummyData = {
   date: "2020-04-06",
   isCleared: false,
   todos: [
-    { todoId: 555, content: "밥먹기", checked: false, User: { userId: 1 } },
-    { todoId: 2, content: "숙제하기", checked: true, User: { userId: 1 } },
-    { todoId: 43, content: "숙면", checked: false, User: { userId: 1 } },
+    { id: 555, content: "밥먹기", checked: false, User: { userId: 1 } },
+    { id: 2, content: "숙제하기", checked: true, User: { userId: 1 } },
+    { id: 43, content: "숙면", checked: false, User: { userId: 1 } },
   ],
 };
 
@@ -59,10 +59,12 @@ const reducer = (state = initialState, action) => {
     }
     case CHECK_TODO_SUCCESS: {
       const todoIndex = state.todos.findIndex(
-        (v) => v.todoId === state.todos[action.data].todoId
+        (v) => v.id === action.data
       );
+      const todo = state.todos[todoIndex];
       const todos = [...state.todos];
-      todos[todoIndex].checked = !todos[todoIndex].checked;
+      const checked = !todo.checked;
+      todos[todoIndex] = {...todo, checked};
       return {
         ...state,
         todos,
@@ -99,7 +101,7 @@ const reducer = (state = initialState, action) => {
     }
     case EDIT_TODO_SUCCESS: {
       const todoIndex = state.todos.findIndex(
-        (v) => v.todoId === state.todos[action.data.index].todoId
+        (v) => v.id === action.data.id
       );
       const todos = [...state.todos];
       todos[todoIndex].content = action.data.content;
@@ -119,14 +121,9 @@ const reducer = (state = initialState, action) => {
       };
     }
     case REMOVE_TODO_SUCCESS: {
-      const todoIndex = state.todos.findIndex(
-        (v) => v.todoId === state.todos[action.data].todoId
-      );
-      const todos = [...state.todos];
-      todos.splice(todoIndex, 1);
       return {
         ...state,
-        todos,
+        todos: state.todos.filter(v=>v.id!==action.data),
       };
     }
     case REMOVE_TODO_FAILURE: {

@@ -21,7 +21,7 @@ const CheckList = () => {
       },
     });
     // const completedTodos = todos.filter((v) => v.checked === true);
-  }, []);
+  }, [todos.length]);
 
   const [started, setStarted] = useState(false);
   const [adding, setAdding] = useState(false);
@@ -55,7 +55,7 @@ const CheckList = () => {
         <div>
           <ul>
             {todos.map((c, i) => {
-              return <TodoItem item={c} index={i} />;
+              return <TodoItem todo={c} />;
             })}
             <input type="text" ref={addTodoInput} onBlur={AddTodoOff} />
           </ul>
