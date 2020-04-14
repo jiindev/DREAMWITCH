@@ -6,13 +6,15 @@ import {
   CHECK_TODO,
   checkTodoAction,
   LOAD_TODOS_REQUEST,
+  ADD_TODO_REQUEST,
 } from "../reducers/todo";
 import TodoItem from "./TodoItem";
 
 const CheckList = () => {
   const dispatch = useDispatch();
   const { todos, date } = useSelector((state) => state.todo);
-  console.log(todos);
+  
+
   useEffect(() => {
     dispatch({
       type: LOAD_TODOS_REQUEST,
@@ -21,10 +23,11 @@ const CheckList = () => {
       },
     });
     // const completedTodos = todos.filter((v) => v.checked === true);
-  }, [todos.length]);
+  }, []);
 
   const [started, setStarted] = useState(false);
   const [adding, setAdding] = useState(false);
+  const [content, setContent] = useState('');
   const addTodoInput = useRef();
 
   const onStartTodo = () => {
@@ -34,9 +37,27 @@ const CheckList = () => {
     setAdding(true);
     addTodoInput.current.focus();
   }, [addTodoInput.current]);
-  const AddTodoOff = () => {
+
+  const AddTodoOff = useCallback(() => {
     setAdding(false);
-  };
+    if(!content || !content.trim()){
+      return setContent('');;
+    }
+    dispatch({
+      type: ADD_TODO_REQUEST,
+      data: {
+        content
+      }
+    })
+    setContent('');
+  }, [content]);
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      AddTodoOff();
+    }
+  }
+
   const onCompleteTodos = () => {
     const completedTodos = todos.filter((v) => v.checked === true);
     console.log("c:", completedTodos, "t:", todos);
@@ -45,19 +66,23 @@ const CheckList = () => {
     }
   };
 
+  const onChangeContent = (e) => {
+    setContent(e.target.value);
+  }
+
   return (
     <div>
       <div>
         <h2>할 일 목록</h2>
         <span>{date}</span>
       </div>
-      {todos[0] || started ? (
+      {todos && todos[0] || started ? (
         <div>
           <ul>
             {todos.map((c, i) => {
               return <TodoItem todo={c} />;
             })}
-            <input type="text" ref={addTodoInput} onBlur={AddTodoOff} />
+            <input type="text" ref={addTodoInput} onBlur={AddTodoOff} value={content} onChange={onChangeContent} onKeyPress={handleKeyPress}/>
           </ul>
           <button onClick={AddTodoOn}>+</button>
           <div>

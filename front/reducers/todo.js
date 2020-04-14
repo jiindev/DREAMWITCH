@@ -1,15 +1,7 @@
-const dummyData = {
-  date: "2020-04-06",
-  isCleared: false,
-  todos: [
-    { id: 555, content: "밥먹기", checked: false, User: { userId: 1 } },
-    { id: 2, content: "숙제하기", checked: true, User: { userId: 1 } },
-    { id: 43, content: "숙면", checked: false, User: { userId: 1 } },
-  ],
-};
+
 
 export const initialState = {
-  date: false,
+  date: '',
   isCleared: false,
   todos: [],
 };
@@ -58,12 +50,15 @@ const reducer = (state = initialState, action) => {
       };
     }
     case CHECK_TODO_SUCCESS: {
+      console.log('check:', action.data);
+      console.log(state.todos);
       const todoIndex = state.todos.findIndex(
-        (v) => v.id === action.data
+        (v) => v.id === action.data.id
       );
+      console.log('check index:',todoIndex);
       const todo = state.todos[todoIndex];
       const todos = [...state.todos];
-      const checked = !todo.checked;
+      const checked = action.data.checked;
       todos[todoIndex] = {...todo, checked};
       return {
         ...state,
@@ -81,12 +76,12 @@ const reducer = (state = initialState, action) => {
       };
     }
     case LOAD_TODOS_SUCCESS: {
-      console.log(action.data);
+      console.log('action.data:', action.data);
       return {
         ...state,
-        date: dummyData.date,
-        isCleared: dummyData.isCleared,
-        todos: dummyData.todos,
+        date: action.data.date,
+        isCleared: action.data.isCleared,
+        todos: action.data.todos,
       };
     }
     case LOAD_TODOS_FAILURE: {
@@ -100,9 +95,11 @@ const reducer = (state = initialState, action) => {
       };
     }
     case EDIT_TODO_SUCCESS: {
+      console.log('edit todo:', action.data.id);
       const todoIndex = state.todos.findIndex(
         (v) => v.id === action.data.id
       );
+      console.log('todoindex:', todoIndex);
       const todos = [...state.todos];
       todos[todoIndex].content = action.data.content;
       return {

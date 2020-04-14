@@ -27,9 +27,12 @@ const TodoItem = ({ todo }) => {
     console.log("todoItem:", todo.id);
     dispatch({
       type: CHECK_TODO_REQUEST,
-      data: todo.id,
+      data: {
+        id: todo.id,
+        checked: todo.checked
+      }
     });
-  }, []);
+  }, [todo.checked, todo.id]);
 
   const editModeStart = useCallback(() => {
     setTodoContent(todo.content);
@@ -54,14 +57,20 @@ const TodoItem = ({ todo }) => {
         content: todoContent,
       },
     });
-  }, [todoContent]);
+  }, [todoContent, todo.id]);
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      editModeEnd();
+    }
+  }
 
   const onRemoveTodo = useCallback(() => {
     dispatch({
       type: REMOVE_TODO_REQUEST,
       data: todo.id,
     });
-  }, []);
+  }, [todo.id]);
 
   return (
     <>
@@ -81,6 +90,7 @@ const TodoItem = ({ todo }) => {
               value={todoContent}
               onChange={onChangeContent}
               onBlur={editModeEnd}
+              onKeyPress={handleKeyPress}
               ref={todoInput}
             />
           </>

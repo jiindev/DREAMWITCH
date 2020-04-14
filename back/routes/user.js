@@ -4,7 +4,7 @@ const passport = require("passport");
 const router = express.Router();
 const db = require("../models");
 
-router.get("/", (req, res) => {
+router.get("/", async(req, res, next) => {
   // 유저 정보 프론트로 전달
   if(!req.user){
     return res.status(401).send('로그인이 필요합니다.');

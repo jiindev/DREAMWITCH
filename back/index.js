@@ -38,6 +38,7 @@ app.use(
       httpOnly: true,
       secure: false,
     },
+    name: 'znzldlfmaqusrud'
   })
 );
 

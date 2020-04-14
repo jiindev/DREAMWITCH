@@ -16,14 +16,24 @@ import {
   REMOVE_TODO_FAILURE,
   REMOVE_TODO_REQUEST,
 } from "../reducers/todo";
+import axios from 'axios';
 
-function loadTodosAPI() {}
+function loadTodosAPI() {
+  return axios.get("/todos", {
+    withCredentials: true
+  });
+}
 function* loadTodos(action) {
   try {
     const result = yield call(loadTodosAPI, action.data);
+    let today = new Date();
     yield put({
       type: LOAD_TODOS_SUCCESS,
-      //   data: result.data,
+      data: {
+        todos: result.data,
+        date:today.toLocaleDateString(),
+        cleared: false
+      }
     });
   } catch (e) {
     console.error(e);
@@ -37,14 +47,17 @@ function* watchLoadTodos() {
   yield takeLatest(LOAD_TODOS_REQUEST, loadTodos);
 }
 
-function checkTodoAPI() {}
+function checkTodoAPI(todoData) {
+  return axios.patch(`/todo/${todoData.id}/check`, {checked: todoData.checked}, {
+    withCredentials: true
+  });
+}
 function* checkTodo(action) {
   try {
     const result = yield call(checkTodoAPI, action.data);
     yield put({
       type: CHECK_TODO_SUCCESS,
-      // data: result.data,
-      data: action.data,
+      data: result.data,
     });
   } catch (e) {
     console.error(e);
@@ -57,19 +70,17 @@ function* checkTodo(action) {
 function* watchCheckTodo() {
   yield takeLatest(CHECK_TODO_REQUEST, checkTodo);
 }
-function addTodoAPI() {}
+function addTodoAPI(todoData) {
+  return axios.post("/todo", todoData, {
+    withCredentials: true
+  });
+}
 function* addTodo(action) {
   try {
     const result = yield call(addTodoAPI, action.data);
     yield put({
       type: ADD_TODO_SUCCESS,
-      // data: result.data,
-      data: {
-        todoId: 1,
-        content: "밥먹기",
-        checked: false,
-        User: { userId: 1 },
-      },
+      data: result.data,
     });
   } catch (e) {
     console.error(e);
@@ -83,14 +94,17 @@ function* watchAddTodo() {
   yield takeLatest(ADD_TODO_REQUEST, addTodo);
 }
 
-function editTodoAPI() {}
+function editTodoAPI(todoData) {
+  return axios.patch(`/todo/${todoData.id}`, {content: todoData.content}, {
+    withCredentials: true
+  });
+}
 function* editTodo(action) {
   try {
     const result = yield call(editTodoAPI, action.data);
     yield put({
       type: EDIT_TODO_SUCCESS,
-      // data: result.data,
-      data: action.data,
+      data: result.data,
     });
   } catch (e) {
     console.error(e);
@@ -104,15 +118,17 @@ function* watchEditTodo() {
   yield takeLatest(EDIT_TODO_REQUEST, editTodo);
 }
 
-function removeTodoAPI() {}
+function removeTodoAPI(todoId) {
+  return axios.delete(`todo/${todoId}`, {
+    withCredentials: true,
+  })
+}
 function* removeTodo(action) {
   try {
     const result = yield call(removeTodoAPI, action.data);
-    alert(action.data);
     yield put({
       type: REMOVE_TODO_SUCCESS,
-      // data: result.data,
-      data: action.data,
+      data: result.data,
     });
   } catch (e) {
     console.error(e);
