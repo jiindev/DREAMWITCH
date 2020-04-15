@@ -5,11 +5,12 @@ const router = express.Router();
 const db = require("../models");
 
 router.post("/", async(req, res, next) => {
-  console.log('here it is: ', req.user);
   try{
+    let today = new Date().toLocaleDateString();
     const newTodo = await db.Todo.create({
       content: req.body.content,
       UserId: req.user.id,
+      date: today,
     });
     const fullTodo = await db.Todo.findOne({
       where: {id:newTodo.id},

@@ -18,20 +18,19 @@ import {
 } from "../reducers/todo";
 import axios from 'axios';
 
-function loadTodosAPI() {
+function loadTodosAPI(date) {
   return axios.get("/todos", {
     withCredentials: true
   });
 }
-function* loadTodos(action) {
+function* loadTodos() {
   try {
-    const result = yield call(loadTodosAPI, action.data);
-    let today = new Date();
+    const result = yield call(loadTodosAPI);
     yield put({
       type: LOAD_TODOS_SUCCESS,
       data: {
-        todos: result.data,
-        date:today.toLocaleDateString(),
+        todos: result.data.todos,
+        date: result.data.today,
         cleared: false
       }
     });

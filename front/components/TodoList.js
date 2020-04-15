@@ -16,11 +16,9 @@ const CheckList = () => {
   
 
   useEffect(() => {
+    let today = new Date();
     dispatch({
       type: LOAD_TODOS_REQUEST,
-      data: {
-        userId: 3,
-      },
     });
     // const completedTodos = todos.filter((v) => v.checked === true);
   }, []);
@@ -46,7 +44,8 @@ const CheckList = () => {
     dispatch({
       type: ADD_TODO_REQUEST,
       data: {
-        content
+        content,
+        date
       }
     })
     setContent('');

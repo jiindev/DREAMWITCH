@@ -76,11 +76,10 @@ const reducer = (state = initialState, action) => {
       };
     }
     case LOAD_TODOS_SUCCESS: {
-      console.log('action.data:', action.data);
       return {
         ...state,
         date: action.data.date,
-        isCleared: action.data.isCleared,
+        isCleared: state.isCleared,
         todos: action.data.todos,
       };
     }
