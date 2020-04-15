@@ -9,14 +9,14 @@ import {
   ADD_TODO_REQUEST,
 } from "../reducers/todo";
 import TodoItem from "./TodoItem";
+import { ADD_HISTORIES_REQUEST } from "../reducers/history";
 
 const CheckList = () => {
   const dispatch = useDispatch();
-  const { todos, date } = useSelector((state) => state.todo);
+  const { todos, date, isCleared } = useSelector((state) => state.todo);
   
 
   useEffect(() => {
-    let today = new Date();
     dispatch({
       type: LOAD_TODOS_REQUEST,
     });
@@ -26,7 +26,9 @@ const CheckList = () => {
   const [started, setStarted] = useState(false);
   const [adding, setAdding] = useState(false);
   const [content, setContent] = useState('');
+  const [historyContent, setHistoryContent] = useState('');
   const addTodoInput = useRef();
+  const historyContentInput = useRef();
 
   const onStartTodo = () => {
     setStarted(true);
@@ -69,11 +71,26 @@ const CheckList = () => {
     setContent(e.target.value);
   }
 
+  const onChangeHistoryContent = (e) => {
+    setHistoryContent(e.target.value);
+  }
+
+  const clear = useCallback(() => {
+    dispatch({
+      type: ADD_HISTORIES_REQUEST,
+      data: {
+        date,
+        content: historyContent
+      }
+    })
+  }, [date, historyContent]);
+
   return (
     <div>
       <div>
         <h2>할 일 목록</h2>
         <span>{date}</span>
+        {isCleared && <span>클리어!!!</span>}
       </div>
       {todos && todos[0] || started ? (
         <div>
@@ -86,6 +103,10 @@ const CheckList = () => {
           <button onClick={AddTodoOn}>+</button>
           <div>
             <button>완료</button>
+          </div>
+          <div>
+            <input type="text" ref={historyContentInput} value={historyContent} onChange={onChangeHistoryContent}/>
+            <button onClick={clear}>완료</button>
           </div>
         </div>
       ) : (

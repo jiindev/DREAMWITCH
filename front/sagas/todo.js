@@ -31,7 +31,6 @@ function* loadTodos() {
       data: {
         todos: result.data.todos,
         date: result.data.today,
-        cleared: false
       }
     });
   } catch (e) {

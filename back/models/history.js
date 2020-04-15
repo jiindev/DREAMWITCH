@@ -3,8 +3,8 @@ module.exports = (sequelize, DataTypes) => {
     "History",
     {
       date: {
-        type: DataTypes.DATE,
-        allowNull: false,
+        type: DataTypes.STRING(20),
+        allowNull: false
       },
       content: {
         type: DataTypes.STRING(50),
@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   );
   History.associate = (db) => {
     db.History.belongsTo(db.User);
+    db.History.hasMany(db.Todo);
   };
 
   return History;

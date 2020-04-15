@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
   );
   Todo.associate = (db) => {
     db.Todo.belongsTo(db.User);
+    db.Todo.belongsTo(db.History);
   };
 
   return Todo;

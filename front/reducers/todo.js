@@ -26,6 +26,8 @@ export const REMOVE_TODO_REQUEST = "REMOVE_TODO_REQUEST";
 export const REMOVE_TODO_SUCCESS = "REMOVE_TODO_SUCCESS";
 export const REMOVE_TODO_FAILURE = "REMOVE_TODO_FAILURE";
 
+export const TODOS_CLEAR = 'TODOS_CLEAR';
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TODO_REQUEST: {
@@ -76,10 +78,12 @@ const reducer = (state = initialState, action) => {
       };
     }
     case LOAD_TODOS_SUCCESS: {
+      console.log(action.data.todos);
+      let cleared = action.data.todos[0] ? action.data.todos[0].HistoryId ? true : false : false;
       return {
         ...state,
         date: action.data.date,
-        isCleared: state.isCleared,
+        isCleared: cleared,
         todos: action.data.todos,
       };
     }
@@ -126,6 +130,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
       };
+    }
+    case TODOS_CLEAR: {
+      return {
+        ...state,
+        isCleared: true
+      }
     }
     default: {
       return {
