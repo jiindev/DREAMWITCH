@@ -1,3 +1,5 @@
+import produce from 'immer';
+
 export const initialState = {
     histories: [],
   };
@@ -12,44 +14,35 @@ export const initialState = {
   
   
   const reducer = (state = initialState, action) => {
-    switch (action.type) {
-      case LOAD_HISTORIES_REQUEST: {
-        return {
-          ...state,
-        };
+    return produce(state, (draft)=>{
+      switch (action.type) {
+        case LOAD_HISTORIES_REQUEST: {
+          break;
+        }
+        case LOAD_HISTORIES_SUCCESS: {
+          draft.histories = action.data;
+          break;
+        }
+        case LOAD_HISTORIES_FAILURE: {
+          break;
+        }
+        case ADD_HISTORIES_REQUEST: {
+          break;
+        }
+        case ADD_HISTORIES_SUCCESS: {
+          action.data.forEach((d)=>{
+            draft.histories.push(d);
+          })
+          break;
+        }
+        case ADD_HISTORIES_FAILURE: {
+          break;
+        }
+        default: {
+          break;
+        }
       }
-      case LOAD_HISTORIES_SUCCESS: {
-        return {
-          ...state,
-        };
-      }
-      case LOAD_HISTORIES_FAILURE: {
-        return {
-          ...state,
-        };
-      }
-      case ADD_HISTORIES_REQUEST: {
-        return {
-          ...state,
-        };
-      }
-      case ADD_HISTORIES_SUCCESS: {
-        return {
-          ...state,
-          histories: state.histories.concat(action.data)
-        };
-      }
-      case ADD_HISTORIES_FAILURE: {
-        return {
-          ...state,
-        };
-      }
-      default: {
-        return {
-          ...state,
-        };
-      }
-    }
+    })
   };
   
   export default reducer;
