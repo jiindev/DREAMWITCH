@@ -16,7 +16,7 @@ router.post("/", async(req, res, next) => {
     const clearedTodos = await db.Todo.update({
       HistoryId: newHistory.id
     }, {
-      where: {date: req.body.date}
+      where: {date: req.body.date, UserId: req.user.id}
     });
 
     const fullHistory = await db.History.findOne({

@@ -54,6 +54,7 @@ function* logOut() {
     yield put({
       type: LOG_OUT_SUCCESS,
     });
+    Router.push('/login');
   } catch (e) {
     console.error(e);
     yield put({

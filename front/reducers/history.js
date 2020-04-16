@@ -30,9 +30,7 @@ export const initialState = {
           break;
         }
         case ADD_HISTORIES_SUCCESS: {
-          action.data.forEach((d)=>{
-            draft.histories.push(d);
-          })
+          draft.histories.push(action.data);
           break;
         }
         case ADD_HISTORIES_FAILURE: {

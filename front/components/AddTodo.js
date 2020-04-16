@@ -1,6 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect, createRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LOAD_HISTORIES_REQUEST } from "../reducers/history";
 import { ADD_TODO_REQUEST } from "../reducers/todo";
 
 const AddTodo = () => {

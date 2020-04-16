@@ -24,7 +24,6 @@ const TodoItem = ({ todo }) => {
   }, [editingMode]);
 
   const checkTodo = useCallback(() => {
-    console.log("todoItem:", todo.id);
     dispatch({
       type: CHECK_TODO_REQUEST,
       data: {

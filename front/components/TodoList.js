@@ -16,18 +16,17 @@ import { ADD_HISTORIES_REQUEST } from "../reducers/history";
 const CheckList = () => {
   const dispatch = useDispatch();
   const { todos, date, isCleared } = useSelector((state) => state.todo);
+  const [started, setStarted] = useState(false);
   
   useEffect(() => {
     dispatch({
       type: LOAD_TODOS_REQUEST,
     });
   }, []);
-
-  const [started, setStarted] = useState(false);
   
-  const onStartTodo = () => {
+  const onStartTodo = useCallback(() => {
     setStarted(true);
-  };
+  }, []);
 
 
   return (
