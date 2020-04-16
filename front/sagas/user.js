@@ -77,6 +77,8 @@ function* signUp(action) {
     yield put({
       type: SIGN_UP_SUCCESS,
     });
+    alert('가입이 완료되었습니다.');
+    Router.push('/login');
   } catch (e) {
     console.error(e);
     yield put({

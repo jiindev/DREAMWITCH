@@ -73,7 +73,7 @@ const reducer = (state = initialState, action) => {
       }
       case EDIT_TODO_SUCCESS: {
         const todoIndex = draft.todos.findIndex((v)=>v.id===action.data.id);
-        draft[todoIndex].content = action.data.content;
+        draft.todos[todoIndex].content = action.data.content;
         break;
       }
       case EDIT_TODO_FAILURE: {

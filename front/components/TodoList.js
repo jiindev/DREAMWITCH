@@ -9,11 +9,13 @@ import {
   ADD_TODO_REQUEST,
 } from "../reducers/todo";
 import TodoItem from "./TodoItem";
+import AddTodo from './AddTodo';
+import TodoStatue from './TodoStatue';
 import { ADD_HISTORIES_REQUEST } from "../reducers/history";
 
 const CheckList = () => {
   const dispatch = useDispatch();
-  const { todos, date, isCleared, clearPercentage } = useSelector((state) => state.todo);
+  const { todos, date, isCleared } = useSelector((state) => state.todo);
   
   useEffect(() => {
     dispatch({
@@ -22,67 +24,14 @@ const CheckList = () => {
   }, []);
 
   const [started, setStarted] = useState(false);
-  const [adding, setAdding] = useState(false);
-  const [content, setContent] = useState('');
-  const [historyContent, setHistoryContent] = useState('');
-  const addTodoInput = createRef();
-  const historyContentInput = useRef();
-
-  useEffect(()=>{
-    if(adding){
-      addTodoInput.current.focus();
-    }
-  }, [adding]);
-
+  
   const onStartTodo = () => {
     setStarted(true);
   };
-  const AddTodoOn = useCallback(() => {
-    setAdding(true);
-  }, []);
-
-  const AddTodoOff = useCallback(() => {
-    setAdding(false);
-    if(!content || !content.trim()){
-      return setContent('');;
-    }
-    dispatch({
-      type: ADD_TODO_REQUEST,
-      data: {
-        content,
-        date
-      }
-    })
-    setContent('');
-  }, [content]);
-
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      AddTodoOff();
-    }
-  }
-
-  const onChangeContent = (e) => {
-    setContent(e.target.value);
-  }
-
-  const onChangeHistoryContent = (e) => {
-    setHistoryContent(e.target.value);
-  }
-
-  const clear = useCallback(() => {
-    dispatch({
-      type: ADD_HISTORIES_REQUEST,
-      data: {
-        date,
-        content: historyContent
-      }
-    })
-  }, [date, historyContent]);
 
 
   return (
-    <div>
+    <>
       <div>
         <h2>할 일 목록</h2>
         <span>{date}</span>
@@ -94,18 +43,9 @@ const CheckList = () => {
             {todos.map((c, i) => {
               return <TodoItem todo={c}/>;
             })}
-            {adding && <input type="text" ref={addTodoInput} onBlur={AddTodoOff} value={content} onChange={onChangeContent} onKeyPress={handleKeyPress}/>}
           </ul>
-          {!adding && <button onClick={AddTodoOn}>+</button>}
-          <div>
-            <div>{clearPercentage}</div>
-            {clearPercentage === 100 && 
-              <>
-                <input type="text" ref={historyContentInput} value={historyContent} onChange={onChangeHistoryContent}/>
-                <button onClick={clear}>완료</button>
-              </>
-            }
-          </div>
+          <AddTodo/>
+          <TodoStatue/>
         </div>
       ) : (
         <div>
@@ -116,7 +56,7 @@ const CheckList = () => {
           <button onClick={onStartTodo}>시작하기</button>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
