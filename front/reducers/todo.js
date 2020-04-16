@@ -4,6 +4,7 @@ export const initialState = {
   date: '',
   isCleared: false,
   todos: [],
+  clearPercentage: 0,
 };
 
 export const ADD_TODO_REQUEST = "ADD_TODO_REQUEST";
@@ -39,6 +40,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         todos: [...state.todos, action.data],
+        clearPercentage: Math.floor([...state.todos, action.data].filter(v=>v.checked===true).length/[...state.todos, action.data].length * 100)
       };
     }
     case ADD_TODO_FAILURE: {
@@ -65,6 +67,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         todos,
+        clearPercentage: Math.floor(todos.filter(v=>v.checked===true).length/todos.length * 100)
       };
     }
     case CHECK_TODO_FAILURE: {
@@ -80,11 +83,13 @@ const reducer = (state = initialState, action) => {
     case LOAD_TODOS_SUCCESS: {
       console.log(action.data.todos);
       let cleared = action.data.todos[0] ? action.data.todos[0].HistoryId ? true : false : false;
+      let clearPercentage = Math.floor(action.data.todos.filter(v=>v.checked===true).length/action.data.todos.length * 100);
       return {
         ...state,
         date: action.data.date,
         isCleared: cleared,
         todos: action.data.todos,
+        clearPercentage
       };
     }
     case LOAD_TODOS_FAILURE: {

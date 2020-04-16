@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useRef, createRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addTodoAction,
@@ -13,30 +13,33 @@ import { ADD_HISTORIES_REQUEST } from "../reducers/history";
 
 const CheckList = () => {
   const dispatch = useDispatch();
-  const { todos, date, isCleared } = useSelector((state) => state.todo);
+  const { todos, date, isCleared, clearPercentage } = useSelector((state) => state.todo);
   
-
   useEffect(() => {
     dispatch({
       type: LOAD_TODOS_REQUEST,
     });
-    // const completedTodos = todos.filter((v) => v.checked === true);
   }, []);
 
   const [started, setStarted] = useState(false);
   const [adding, setAdding] = useState(false);
   const [content, setContent] = useState('');
   const [historyContent, setHistoryContent] = useState('');
-  const addTodoInput = useRef();
+  const addTodoInput = createRef();
   const historyContentInput = useRef();
+
+  useEffect(()=>{
+    if(adding){
+      addTodoInput.current.focus();
+    }
+  }, [adding]);
 
   const onStartTodo = () => {
     setStarted(true);
   };
   const AddTodoOn = useCallback(() => {
     setAdding(true);
-    addTodoInput.current.focus();
-  }, [addTodoInput.current]);
+  }, []);
 
   const AddTodoOff = useCallback(() => {
     setAdding(false);
@@ -59,14 +62,6 @@ const CheckList = () => {
     }
   }
 
-  const onCompleteTodos = () => {
-    const completedTodos = todos.filter((v) => v.checked === true);
-    console.log("c:", completedTodos, "t:", todos);
-    if (todos.length === completedTodos.length) {
-      alert("완료");
-    }
-  };
-
   const onChangeContent = (e) => {
     setContent(e.target.value);
   }
@@ -85,6 +80,7 @@ const CheckList = () => {
     })
   }, [date, historyContent]);
 
+
   return (
     <div>
       <div>
@@ -96,17 +92,19 @@ const CheckList = () => {
         <div>
           <ul>
             {todos.map((c, i) => {
-              return <TodoItem todo={c} />;
+              return <TodoItem todo={c}/>;
             })}
-            <input type="text" ref={addTodoInput} onBlur={AddTodoOff} value={content} onChange={onChangeContent} onKeyPress={handleKeyPress}/>
+            {adding && <input type="text" ref={addTodoInput} onBlur={AddTodoOff} value={content} onChange={onChangeContent} onKeyPress={handleKeyPress}/>}
           </ul>
-          <button onClick={AddTodoOn}>+</button>
+          {!adding && <button onClick={AddTodoOn}>+</button>}
           <div>
-            <button>완료</button>
-          </div>
-          <div>
-            <input type="text" ref={historyContentInput} value={historyContent} onChange={onChangeHistoryContent}/>
-            <button onClick={clear}>완료</button>
+            <div>{clearPercentage}</div>
+            {clearPercentage === 100 && 
+              <>
+                <input type="text" ref={historyContentInput} value={historyContent} onChange={onChangeHistoryContent}/>
+                <button onClick={clear}>완료</button>
+              </>
+            }
           </div>
         </div>
       ) : (
