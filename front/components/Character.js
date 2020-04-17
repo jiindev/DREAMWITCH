@@ -8,14 +8,18 @@ import { SAY_RESET } from '../reducers/character';
 const Character = () => {
   const { talking } = useSelector(state=>state.character);
   const dispatch = useDispatch();
+  const timeoutRef = useRef();
 
   useEffect(()=>{
     if(talking){
-      const sayReset = setTimeout(()=>{
+      timeoutRef.current = setTimeout(()=>{
         dispatch({
           type: SAY_RESET
         })
       }, 1000);
+    }
+    return () => {
+      clearTimeout(timeoutRef.current);
     }
   }, [talking]);
 
