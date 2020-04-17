@@ -15,6 +15,7 @@ import {
   LOAD_USER_REQUEST,
 } from "../reducers/user";
 import Router from 'next/router';
+import { SAY_HELLO } from "../reducers/character";
 
 function logInAPI(loginData) {
   return axios.post("/user/login", loginData, {
@@ -29,6 +30,10 @@ function* logIn(action) {
       type: LOG_IN_SUCCESS,
       data: result.data,
     });
+    yield put({
+      type: SAY_HELLO,
+      data: result.data.nickname
+    })
   } catch (e) {
     console.error(e);
     yield put({

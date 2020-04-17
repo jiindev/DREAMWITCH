@@ -17,6 +17,7 @@ import {
   REMOVE_TODO_REQUEST,
 } from "../reducers/todo";
 import axios from 'axios';
+import { SAY_ADD_TODO, SAY_CHECK_TODO, SAY_EDIT_TODO, SAY_DELETE_TODO, SAY_LOAD_TODOS, SAY_HELLO} from "../reducers/character";
 
 function loadTodosAPI(date) {
   return axios.get("/todos", {
@@ -33,6 +34,10 @@ function* loadTodos() {
         date: result.data.today,
       }
     });
+      yield put({
+        type: SAY_LOAD_TODOS,
+        data : result.data.length
+      });
   } catch (e) {
     console.error(e);
     yield put({
@@ -57,6 +62,11 @@ function* checkTodo(action) {
       type: CHECK_TODO_SUCCESS,
       data: result.data,
     });
+    if(result.data.checked===true){
+      yield put({
+        type: SAY_CHECK_TODO
+      });
+    }
   } catch (e) {
     console.error(e);
     yield put({
@@ -79,6 +89,9 @@ function* addTodo(action) {
     yield put({
       type: ADD_TODO_SUCCESS,
       data: result.data,
+    });
+    yield put({
+      type: SAY_ADD_TODO
     });
   } catch (e) {
     console.error(e);
@@ -104,6 +117,9 @@ function* editTodo(action) {
       type: EDIT_TODO_SUCCESS,
       data: result.data,
     });
+    yield put({
+      type: SAY_EDIT_TODO
+    });
   } catch (e) {
     console.error(e);
     yield put({
@@ -128,6 +144,9 @@ function* removeTodo(action) {
       type: REMOVE_TODO_SUCCESS,
       data: result.data,
     });
+    yield put({
+      type: SAY_DELETE_TODO,
+    })
   } catch (e) {
     console.error(e);
     yield put({

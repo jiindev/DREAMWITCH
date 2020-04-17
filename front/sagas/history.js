@@ -2,6 +2,7 @@ import { all, fork, takeLatest, call, put, delay } from "redux-saga/effects";
 import { TODOS_CLEAR } from "../reducers/todo";
 import axios from 'axios';
 import { LOAD_HISTORIES_REQUEST, LOAD_HISTORIES_SUCCESS, LOAD_HISTORIES_FAILURE, ADD_HISTORIES_SUCCESS, ADD_HISTORIES_FAILURE, ADD_HISTORIES_REQUEST } from "../reducers/history";
+import { SAY_LOAD_HISTORIES } from "../reducers/character";
 
 function loadHistoriesAPI() {
   return axios.get("/histories", {
@@ -15,6 +16,10 @@ function* loadHistories() {
       type: LOAD_HISTORIES_SUCCESS,
       data: result.data
     });
+    yield put({
+      type: SAY_LOAD_HISTORIES,
+      data: result.data.length
+    })
   } catch (e) {
     console.error(e);
     yield put({
