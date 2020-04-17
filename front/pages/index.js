@@ -9,6 +9,7 @@ import Shop from "../components/Shop";
 import { useSelector, useDispatch } from "react-redux";
 import Router from "next/router";
 import { LOAD_USER_REQUEST, LOG_OUT_REQUEST } from "../reducers/user";
+import styled from 'styled-components';
 
 const Index = () => {
   const dispatch = useDispatch();
@@ -24,8 +25,10 @@ const Index = () => {
   }, []);
 
   const onChangePage = useCallback(pageNum => () => {
-    setPage(pageNum);
-  }, []);
+    if(page!==pageNum){
+      setPage(pageNum);
+    }
+  }, [page]);
 
   const onLogout = () => {
     dispatch({
@@ -36,38 +39,63 @@ const Index = () => {
   return (
     <>
       <>
-       <div><span>{me && me.star}별</span><span>{me && me.level}레벨</span></div>
-       <button onClick={onLogout}>로그아웃</button>
-        <div>
+       <TopContent>
+         <UserStatue>
+            <span>{me && me.star}별</span><span>{me && me.level}레벨</span>
+            <button onClick={onLogout}>로그아웃</button>
+         </UserStatue>
           <Character></Character>
-        </div>
-        <nav>
+        <Tab>
           <ul>
-            <li onClick={onChangePage(1)}>투두 리스트</li>
-            <li onClick={onChangePage(2)}>히스토리</li>
-            <li onClick={onChangePage(3)}>스토어</li>
+            <TabItem onClick={onChangePage(1)} active={page===1}>투두 리스트</TabItem>
+            <TabItem onClick={onChangePage(2)} active={page===2}>히스토리</TabItem>
+            <TabItem onClick={onChangePage(3)} active={page===3}>스토어</TabItem>
           </ul>
-        </nav>
-        <div>
-          {page === 1 && (
-            <div>
-              <TodoList></TodoList>
-            </div>
-          )}
-          {page === 2 && (
-            <div>
-              <History></History>
-            </div>
-          )}
-          {page === 3 && (
-            <div>
-              <Shop></Shop>
-            </div>
-          )}
-        </div>
+        </Tab>
+        </TopContent>
+        <Page>
+          {page === 1 && <TodoList/>}
+          {page === 2 && <History/>}
+          {page === 3 && <Shop/>}
+        </Page>
       </>
     </>
   );
+  
 };
+
+
+const Page = styled.div`
+  background-color: ${props => props.theme.yellowBright};
+`;
+
+const Tab = styled.nav`
+  & ul {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+  }
+`;
+
+const TabItem = styled.li`
+    background-color: ${props => (props.active ? props.theme.yellowBright : props.theme.purpleBright)};
+    color: ${props => props.theme.purpleDark};
+    padding: 20px 0;
+    flex: 0.33333;
+    border-radius: 20px 20px 0 0;
+    text-align: center;
+`;
+
+const TopContent = styled.div`
+  position: relative;
+`;
+
+const UserStatue = styled.div`
+  position: absolute;
+  top: 0;
+  z-index: 99;
+`;
+
 
 export default Index;

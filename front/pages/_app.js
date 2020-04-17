@@ -8,6 +8,9 @@ import reducer from "../reducers";
 import createSagaMiddleware from "redux-saga";
 import rootsaga from "../sagas";
 // import { initialState } from "../reducers/todo";
+import {ThemeProvider} from 'styled-components';
+import themes from '../components/styledComponents/theme';
+import GlobalStyle from '../components/styledComponents/GlobalStyle';
 
 const DreamWitch = ({ Component, store }) => {
   return (
@@ -15,8 +18,13 @@ const DreamWitch = ({ Component, store }) => {
       <Provider store={store}>
         <Head>
           <title>DreamWitch</title>
+          <meta name="viewport" content="width=device-width, user-scalable=no"/>
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>
         </Head>
-        <Component />
+        <ThemeProvider theme={themes}>
+          <GlobalStyle></GlobalStyle>
+            <Component />
+          </ThemeProvider>
       </Provider>
     </>
   );
