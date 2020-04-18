@@ -1,7 +1,7 @@
 import { all, fork, takeLatest, call, put, delay } from "redux-saga/effects";
 import { TODOS_CLEAR } from "../reducers/todo";
 import axios from 'axios';
-import { LOAD_HISTORIES_REQUEST, LOAD_HISTORIES_SUCCESS, LOAD_HISTORIES_FAILURE, ADD_HISTORIES_SUCCESS, ADD_HISTORIES_FAILURE, ADD_HISTORIES_REQUEST } from "../reducers/history";
+import { LOAD_HISTORIES_REQUEST, LOAD_HISTORIES_SUCCESS, LOAD_HISTORIES_FAILURE, ADD_HISTORIES_SUCCESS, ADD_HISTORIES_FAILURE, ADD_HISTORIES_REQUEST, LOAD_HISTORY_FAILURE, LOAD_HISTORY_REQUEST, LOAD_HISTORY_SUCCESS } from "../reducers/history";
 import { SAY_LOAD_HISTORIES } from "../reducers/character";
 
 function loadHistoriesAPI() {
@@ -30,6 +30,32 @@ function* loadHistories() {
 }
 function* watchLoadHistories() {
   yield takeLatest(LOAD_HISTORIES_REQUEST, loadHistories);
+}
+function loadHistoryAPI(historyId) {
+  return axios.get(`/history/${historyId}`, {
+    withCredentials: true
+  });
+}
+function* loadHistory(action) {
+  try {
+    const result = yield call(loadHistoryAPI, action.data);
+    yield put({
+      type: LOAD_HISTORY_SUCCESS,
+      data: {
+        todos : result.data,
+        historyId : action.data
+      }
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: LOAD_HISTORY_FAILURE,
+      error: e,
+    });
+  }
+}
+function* watchLoadHistory() {
+  yield takeLatest(LOAD_HISTORY_REQUEST, loadHistory);
 }
 
 function addHistoryAPI(historyData) {
@@ -64,5 +90,6 @@ export default function* historySaga() {
   yield all([
     fork(watchLoadHistories),
     fork(watchAddHistory),
+    fork(watchLoadHistory),
   ]);
 }

@@ -44,7 +44,7 @@ export const initialState = {
           break;
         }
         case SAY_COMPLETE_TODOS: {
-            draft.talking = `완료를 눌러서 오늘 하루를 기록하자!`;
+            draft.talking = `전부 완료! 구슬을 눌러봐!`;
           break;
         }
         case SAY_LOAD_HISTORIES: {
@@ -59,7 +59,9 @@ export const initialState = {
           break;
         }
         case SAY_LOAD_TODOS: {
-            draft.talking = `나와라, 오늘의 할 일!`;
+            if(draft.talking!==`전부 완료! 구슬을 눌러봐!`){
+              draft.talking = `나와라, 오늘의 할 일!`;
+            }
           break;
         }
         case SAY_RESET: {

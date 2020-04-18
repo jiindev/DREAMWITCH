@@ -7,10 +7,11 @@ const TodoStatue = () => {
   const dispatch = useDispatch();
   const [historyContent, setHistoryContent] = useState('');
   const historyContentInput = useRef();
-  const { date, clearPercentage } = useSelector((state) => state.todo);
+  const { date, clearPercentage, isCleared } = useSelector((state) => state.todo);
+  const [writingHistory, setWritingHistory] = useState(false);
 
   useEffect(()=>{
-    if(clearPercentage === 100){
+    if(clearPercentage === 100 && isCleared === false){
       dispatch({
         type: SAY_COMPLETE_TODOS
       })
@@ -28,25 +29,35 @@ const TodoStatue = () => {
         date,
         content: historyContent
       }
-    })
+    });
+    setWritingHistory(false);
   }, [date, historyContent]);
+
+  const onClickWriteHistory = () => {
+    setWritingHistory(true);
+  }
   
   return (
     <>
       <div>
         <div>{clearPercentage}</div>
-        {clearPercentage === 100 && (
+        {(clearPercentage === 100 && !isCleared ) && 
           <>
-            <input
+            <button onClick={onClickWriteHistory}>구슬버튼</button>
+          </>
+        }
+      </div>
+      {writingHistory && 
+        <>
+          <input
               type="text"
               ref={historyContentInput}
               value={historyContent}
               onChange={onChangeHistoryContent}
             />
             <button onClick={clear}>완료</button>
-          </>
-        )}
-      </div>
+        </>
+      }
     </>
   );
 };

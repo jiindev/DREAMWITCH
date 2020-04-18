@@ -1,6 +1,7 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LOAD_HISTORIES_REQUEST } from "../reducers/history";
+import HistoryItem from './HistoryItem';
 
 const History = () => {
   const dispatch = useDispatch();
@@ -18,17 +19,7 @@ return (
       {histories ? 
         <div>
           {histories.map((c, i)=>{
-            return (
-            <>
-              <div><b>{c.content}</b></div>
-              <div>
-                {c.Todos.map((todo, i)=>{
-                  return <div>{todo.content}</div>
-                })}
-              </div>
-              <span>{c.date}</span>
-              <br/><br/>
-            </>)
+            return (<HistoryItem history={c}/>)
           })}
           </div>
       :

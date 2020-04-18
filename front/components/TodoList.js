@@ -41,11 +41,19 @@ const CheckList = () => {
       {todos && todos[0] || started ? (
         <div>
           <ul>
-            {todos.map((c, i) => {
-              return <TodoItem todo={c}/>;
-            })}
+            {isCleared ? 
+              todos.map((c, i)=> {
+                return <li>{c.content}</li>
+              })
+            :
+            <>
+              {todos.map((c, i) => {
+                return <TodoItem todo={c}/>;
+              })}
+              <AddTodo/>
+            </>
+            }
           </ul>
-          <AddTodo/>
           <TodoStatue/>
         </div>
       ) : (

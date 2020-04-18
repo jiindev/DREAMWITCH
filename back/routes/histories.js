@@ -9,10 +9,6 @@ router.get("/", async(req, res, next) => {
       where: {
         userId: req.user.id
       },
-      include: [{
-        model: db.Todo,
-        attributes: ['id', 'content'],
-      }],
       order: [['createdAt', 'DESC']]
     });
     return res.json(histories);

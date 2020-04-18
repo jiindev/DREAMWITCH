@@ -32,9 +32,23 @@ router.post("/", async(req, res, next) => {
     next(e);
   }
 });
-router.get("/:id/todos", (req, res) => {
-  // 그 날짜에 해당하는 투두 목록 불러오기
+router.get("/:id", async(req, res, next) => {
+  // 특정 히스토리 정보 더 가져오기
+  try{
+    const todos = await db.Todo.findAll({
+      where: {
+        HistoryId: req.params.id
+      },
+      order: [['createdAt', 'ASC']],
+      attributes: ['content'],
+    });
+    return res.json(todos);
+  }catch(e){
+    console.error(e);
+    return next(e);
+  }
 });
+
 router.patch("/:id/content", (req, res) => {
   // 특정 히스토리 텍스트 변경
 });
