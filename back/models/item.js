@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       equipped: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
+        defaultValue: false,
       },
     },
     {

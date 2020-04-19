@@ -7,6 +7,7 @@ import { SAY_RESET } from '../reducers/character';
 
 const Character = () => {
   const { talking } = useSelector(state=>state.character);
+  const { head } = useSelector(state=>state.item);
   const dispatch = useDispatch();
   const timeoutRef = useRef();
 
@@ -26,7 +27,9 @@ const Character = () => {
   return (
     <>
       <Witch>
-        <div>머리</div>
+        <br/>
+        <br/>
+        {head && <div>{head.itemId}번째 아이템 장착중!</div>}
         <div>캐릭터의 모습</div>
         {talking && <Talking><p>{talking}</p></Talking>}
       </Witch>

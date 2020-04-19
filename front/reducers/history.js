@@ -45,7 +45,7 @@ export const initialState = {
           break;
         }
         case ADD_HISTORIES_SUCCESS: {
-          draft.histories.push(action.data);
+          draft.histories.unshift(action.data);
           break;
         }
         case ADD_HISTORIES_FAILURE: {
