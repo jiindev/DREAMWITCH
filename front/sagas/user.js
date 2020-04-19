@@ -116,9 +116,6 @@ function* loadUser() {
       type: LOAD_USER_FAILURE,
       error: e,
     });
-    if(e.response.data==='로그인이 필요합니다.'){
-      Router.push('/login');
-    }
   }
 }
 

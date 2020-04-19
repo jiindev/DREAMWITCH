@@ -18,13 +18,6 @@ const CheckList = () => {
   const { todos, date, isCleared } = useSelector((state) => state.todo);
   const [started, setStarted] = useState(false);
   
-  useEffect(() => {
-    dispatch({
-      type: LOAD_TODOS_REQUEST,
-    });
-  }, []);
-
-  
   
   const onStartTodo = useCallback(() => {
     setStarted(true);
@@ -43,7 +36,7 @@ const CheckList = () => {
           <ul>
             {isCleared ? 
               todos.map((c, i)=> {
-                return <li>{c.content}</li>
+                return <li key={i}>{c.content}</li>
               })
             :
             <>
@@ -68,5 +61,6 @@ const CheckList = () => {
     </>
   );
 };
+
 
 export default CheckList;

@@ -10,19 +10,19 @@ import { useSelector, useDispatch } from "react-redux";
 import Router from "next/router";
 import { LOAD_USER_REQUEST, LOG_OUT_REQUEST } from "../reducers/user";
 import styled from 'styled-components';
+import { LOAD_HISTORIES_REQUEST } from "../reducers/history";
+import { LOAD_TODOS_REQUEST } from "../reducers/todo";
 
-const Index = () => {
+const Index = ({pageProps}) => {
   const dispatch = useDispatch();
-  const { me } = useSelector((state) => state.user);
+  const { me, logInErrorReason } = useSelector((state) => state.user);
   const [page, setPage] = useState(1);
 
-  useEffect(() => {
+  useEffect(()=>{
     if(!me){
-      dispatch({
-        type: LOAD_USER_REQUEST
-      })
+      Router.push('/login');
     }
-  }, []);
+  }, [me]);
 
   const onChangePage = useCallback(pageNum => () => {
     if(page!==pageNum){
@@ -54,7 +54,7 @@ const Index = () => {
         </Tab>
         </TopContent>
         <Page>
-          {page === 1 && <TodoList/>}
+          {page === 1 && <TodoList {...pageProps}/>}
           {page === 2 && <History/>}
           {page === 3 && <Shop/>}
         </Page>
@@ -96,6 +96,18 @@ const UserStatue = styled.div`
   top: 0;
   z-index: 99;
 `;
+
+Index.getInitialProps = async (context) => {
+  context.store.dispatch({
+    type: LOAD_USER_REQUEST
+  })
+  context.store.dispatch({
+    type: LOAD_HISTORIES_REQUEST
+  })
+  context.store.dispatch({
+    type: LOAD_TODOS_REQUEST
+  })
+}
 
 
 export default Index;

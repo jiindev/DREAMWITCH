@@ -6,12 +6,6 @@ import HistoryItem from './HistoryItem';
 const History = () => {
   const dispatch = useDispatch();
   const { histories } = useSelector(state=>state.history);
-
-  useEffect(() => {
-    dispatch({
-      type: LOAD_HISTORIES_REQUEST
-    })
-  }, []);
   
 return (
   <>
