@@ -47,7 +47,7 @@ const TodoStatue = () => {
         </Percentage>
         {(clearPercentage === 100 && !isCleared ) ? 
             <StarButtonActive onClick={onClickWriteHistory}>완료버튼</StarButtonActive> :
-            <StarButton/>
+            <><StarBase><StarPercentage opacity={clearPercentage+'%'}/></StarBase></>
         }
       </TodoStatueBar>
       {writingHistory && 
@@ -92,22 +92,27 @@ const Percentage = styled.div`
   }
 `;
 
-const StarButton = styled.button`
+const StarBase = styled.button`
   width: 70px;
   height: 70px;
   margin: 15px;
   background: url('/static/icons/stat_basic_no_move.svg');
   outline: none;
   border: 0;
+  position: relative;
 `;
 
-const StarButtonActive = styled(StarButton)`
-  width: 70px;
-  height: 70px;
-  margin: 15px;
+const StarPercentage = styled(StarBase)`
+  background: url('/static/icons/stat_star.svg');
+  position: absolute;
+  margin: 0;
+  top: 0;
+  left: 0;
+  opacity: ${props => props.opacity};
+`;
+
+const StarButtonActive = styled(StarBase)`
   background: url('/static/icons/stat_click_to_finish.svg');
-  outline: none;
-  border: 0;
   text-indent: -9999px;
   cursor: pointer;
 `;

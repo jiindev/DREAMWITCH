@@ -35,7 +35,7 @@ const CheckList = () => {
             <H2>할 일 목록 <Date>{date}</Date></H2>
             
           </div>
-          <ul>
+          <TodoUl>
             {isCleared ? 
               todos.map((c, i)=> {
                 return <li key={i}>{c.content}</li>
@@ -48,7 +48,7 @@ const CheckList = () => {
               <AddTodo/>
             </>
             }
-          </ul>
+          </TodoUl>
           <TodoStatue/>
         </TodoPage>
       ) : (
@@ -66,6 +66,10 @@ const CheckList = () => {
 
 const TodoPage = styled.div`
   width: 100%;
+`;
+
+const TodoUl = styled.ul`
+  padding-bottom: 100px;
 `;
 
 const StartIllust = styled.span`
