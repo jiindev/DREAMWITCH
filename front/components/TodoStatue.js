@@ -96,7 +96,7 @@ const StarButton = styled.button`
   width: 70px;
   height: 70px;
   margin: 15px;
-  background: url('/static/icons/statbasicnomove.svg');
+  background: url('/static/icons/stat_basic_no_move.svg');
   outline: none;
   border: 0;
 `;
@@ -105,7 +105,7 @@ const StarButtonActive = styled(StarButton)`
   width: 70px;
   height: 70px;
   margin: 15px;
-  background: url('/static/icons/statclicktofinish.svg');
+  background: url('/static/icons/stat_click_to_finish.svg');
   outline: none;
   border: 0;
   text-indent: -9999px;

@@ -106,7 +106,7 @@ const TabItem = styled.li`
 const TabIcon = styled.i`
   width: 16px;
   height: 16px;
-  background: ${props => `url('/static/icons/3button${props.iconName}.svg')`};
+  background: ${props => `url('/static/icons/tabbutton_${props.iconName}.svg')`};
   display: inline-block;
 `;
 

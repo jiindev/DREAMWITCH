@@ -40,7 +40,7 @@ return (
 const Star = styled.span`
     width: 20px;
     height: 20px;
-    background: ${props => props.open ? "url('/static/icons/listlinestarmore.svg')" : "url('/static/icons/listlinestarbasic.svg')"};
+    background: ${props => props.open ? "url('/static/icons/listline_star_more.svg')" : "url('/static/icons/listline_star_basic.svg')"};
 `;
 const History = styled.div`
     display: flex;
@@ -78,7 +78,7 @@ const Todos = styled.div`
         width: 16px;
         height: 16px;
         display: inline-block;
-        background: url('/static/icons/listhistorystar.svg');
+        background: url('/static/icons/list_history_star.svg');
         background-size: contain;
         margin: -3px 10px;
     }

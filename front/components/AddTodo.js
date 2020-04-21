@@ -60,7 +60,7 @@ const AddButton = styled(Button)`
     width: 16px;
     height: 16px;
     display: inline-block;
-    background: url('/static/icons/checkadd.svg');
+    background: url('/static/icons/check_add.svg');
   }
 `;
 

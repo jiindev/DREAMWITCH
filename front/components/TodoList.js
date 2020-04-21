@@ -19,7 +19,7 @@ const CheckList = () => {
   const dispatch = useDispatch();
   const { todos, date, isCleared } = useSelector((state) => state.todo);
   const [started, setStarted] = useState(false);
-  
+
   
   const onStartTodo = useCallback(() => {
     setStarted(true);
