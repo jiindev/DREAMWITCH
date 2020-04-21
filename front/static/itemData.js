@@ -1,27 +1,27 @@
 export const HeadItems = [
     {
         id: 1,
-        name: '기본 모자',
+        image: 'https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg',
         price: 100
     },
     {
         id: 2,
-        name: '멋진 모자',
+        image: 'https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg',
         price: 200
     },
     {
         id: 3,
-        name: '중절모',
+        image: 'https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg',
         price: 300
     },
     {
         id: 4,
-        name: '화관',
+        image: 'https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg',
         price: 400
     },
     {
         id: 5,
-        name: '토끼 모자',
+        image: 'https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg',
         price: 500
     },
 ]

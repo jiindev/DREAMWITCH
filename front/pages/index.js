@@ -17,7 +17,7 @@ import { LOAD_ITEMS_REQUEST } from "../reducers/item";
 const Index = ({pageProps}) => {
   const dispatch = useDispatch();
   const { me, logInErrorReason } = useSelector((state) => state.user);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(3);
 
   useEffect(()=>{
     if(!me){
@@ -39,7 +39,7 @@ const Index = ({pageProps}) => {
 
   return (
     <>
-      <>
+      <Wrap>
        <TopContent>
          <UserStatue>
             <span>{me && me.star}별</span><span>{me && me.level}레벨</span>
@@ -48,26 +48,39 @@ const Index = ({pageProps}) => {
           <Character></Character>
         <Tab>
           <ul>
-            <TabItem onClick={onChangePage(1)} active={page===1}>투두 리스트</TabItem>
-            <TabItem onClick={onChangePage(2)} active={page===2}>히스토리</TabItem>
-            <TabItem onClick={onChangePage(3)} active={page===3}>스토어</TabItem>
+            <TabItem onClick={onChangePage(1)} active={page===1}><TabIcon iconName={'star'}/></TabItem>
+            <TabItem onClick={onChangePage(2)} active={page===2}><TabIcon iconName={'list'}/></TabItem>
+            <TabItem onClick={onChangePage(3)} active={page===3}><TabIcon iconName={'shop'}/></TabItem>
           </ul>
         </Tab>
         </TopContent>
+        
         <Page>
-          {page === 1 && <TodoList {...pageProps}/>}
+          {page === 1 && <TodoList/>}
           {page === 2 && <History/>}
           {page === 3 && <Shop/>}
         </Page>
-      </>
+        </Wrap>
     </>
   );
   
 };
 
+const Wrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+`;
+
 
 const Page = styled.div`
-  background-color: ${props => props.theme.yellowBright};
+  background-color: ${props => props.theme.yellowLight};
+  width: 100%;
+  padding: 38px 15px 0 15px;
+  box-sizing: border-box;
+  flex: 1;
+  overflow: scroll;
+  position: relative;
 `;
 
 const Tab = styled.nav`
@@ -80,16 +93,27 @@ const Tab = styled.nav`
 `;
 
 const TabItem = styled.li`
-    background-color: ${props => (props.active ? props.theme.yellowBright : props.theme.purpleBright)};
+    background-color: ${props => (props.active ? props.theme.yellowLight : props.theme.purpleLight)};
     color: ${props => props.theme.purpleDark};
-    padding: 20px 0;
+    padding: 12px 0;
     flex: 0.33333;
     border-radius: 20px 20px 0 0;
     text-align: center;
+    transition: all .2s ease;
+    cursor: pointer;
+`;
+
+const TabIcon = styled.i`
+  width: 16px;
+  height: 16px;
+  background: ${props => `url('/static/icons/3button${props.iconName}.svg')`};
+  display: inline-block;
 `;
 
 const TopContent = styled.div`
   position: relative;
+  display: flex;
+  flex-direction: column;
 `;
 
 const UserStatue = styled.div`
