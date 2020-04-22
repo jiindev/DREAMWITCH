@@ -4,12 +4,19 @@ import {HeadItems} from '../static/itemData';
 import { LOAD_ITEMS_REQUEST, BUY_ITEM_REQUEST, EQUIP_ITEM_REQUEST, UNEQUIP_ITEM_REQUEST } from "../reducers/item";
 import {H2} from './styledComponents/PageComponent';
 import styled from 'styled-components';
+import { SAY_LOAD_ITEMS } from "../reducers/character";
 
 
 const Shop = () => {
   const dispatch = useDispatch();
   const { items, head } = useSelector(state=>state.item);
   const { me } = useSelector(state=>state.user);
+
+  useEffect(() => {
+    dispatch({
+      type: SAY_LOAD_ITEMS,
+    })
+  }, []);
 
   const onClickItem = useCallback((item, itemType) => () => {
     if(!items.includes(item.id)){ // 현재 아이템 목록에 없음 (구매기능)

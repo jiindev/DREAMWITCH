@@ -17,7 +17,7 @@ const Character = () => {
         dispatch({
           type: SAY_RESET
         })
-      }, 2000);
+      }, 1500);
     }
     return () => {
       clearTimeout(timeoutRef.current);

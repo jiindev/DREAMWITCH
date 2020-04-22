@@ -1,17 +1,9 @@
 import React, { useState, useRef, createRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addTodoAction,
-  loadTodosAction,
-  CHECK_TODO,
-  checkTodoAction,
-  LOAD_TODOS_REQUEST,
-  ADD_TODO_REQUEST,
-} from "../reducers/todo";
 import TodoItem from "./TodoItem";
 import AddTodo from './AddTodo';
 import TodoStatue from './TodoStatue';
-import { ADD_HISTORIES_REQUEST } from "../reducers/history";
+import { SAY_LOAD_TODOS } from '../reducers/character';
 import { H2, Date, Button } from './styledComponents/PageComponent';
 import styled from 'styled-components';
 
@@ -20,7 +12,14 @@ const CheckList = () => {
   const { todos, date, isCleared } = useSelector((state) => state.todo);
   const [started, setStarted] = useState(false);
 
-  
+  useEffect(() => {
+    if(todos.length>0 && !isCleared){
+      dispatch({
+        type: SAY_LOAD_TODOS,
+      })
+    }
+  }, [])
+
   const onStartTodo = useCallback(() => {
     setStarted(true);
   }, []);

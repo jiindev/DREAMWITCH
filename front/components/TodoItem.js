@@ -42,7 +42,6 @@ const TodoItem = ({ todo }) => {
   const onChangeContent = useCallback(
     (e) => {
       setTodoContent(e.target.value);
-      console.log(todoContent);
     },
     [todoContent]
   );

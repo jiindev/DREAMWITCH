@@ -4,11 +4,19 @@ import { LOAD_HISTORIES_REQUEST } from "../reducers/history";
 import HistoryItem from './HistoryItem';
 import { H2 } from './styledComponents/PageComponent';
 import styled from 'styled-components';
+import { SAY_LOAD_HISTORIES } from "../reducers/character";
 
 const History = () => {
   const dispatch = useDispatch();
   const { histories } = useSelector(state=>state.history);
   
+  useEffect(() => {
+    dispatch({
+      type: SAY_LOAD_HISTORIES,
+      data: histories.length
+    })
+  }, [histories.length]);
+
 return (
   <>
     <HistoryPage>

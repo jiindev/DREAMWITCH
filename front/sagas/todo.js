@@ -34,10 +34,6 @@ function* loadTodos() {
         date: result.data.today,
       }
     });
-      yield put({
-        type: SAY_LOAD_TODOS,
-        data : result.data.length
-      });
   } catch (e) {
     console.error(e);
     yield put({
