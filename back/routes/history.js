@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require('../models');
-
+const sequelize = require('sequelize');
 
 
 router.post("/", async(req, res, next) => {
@@ -12,11 +12,15 @@ router.post("/", async(req, res, next) => {
       UserId: req.user.id,
       content: req.body.content,
     });
-
     const clearedTodos = await db.Todo.update({
       HistoryId: newHistory.id
     }, {
       where: {date: req.body.date, UserId: req.user.id}
+    });
+    const getStars = await db.User.update({
+      star: sequelize.literal(`star + 10`)
+    }, {
+      where: {id: req.user.id}
     });
 
     const fullHistory = await db.History.findOne({

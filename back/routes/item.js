@@ -1,10 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const db = require('../models');
+const sequelize = require('sequelize');
 
 router.post("/", async(req, res, next) => {
   //아이템 구매
   try{
+    const useStars = await db.User.update({
+      star: sequelize.literal(`star - ${req.body.price}`)
+    }, {
+      where: {id: req.user.id}
+    });
     const newItem = await db.Item.create({
       itemId: req.body.itemId,
       itemType: req.body.itemType,

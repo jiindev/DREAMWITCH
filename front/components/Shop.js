@@ -9,24 +9,29 @@ import styled from 'styled-components';
 const Shop = () => {
   const dispatch = useDispatch();
   const { items, head } = useSelector(state=>state.item);
+  const { me } = useSelector(state=>state.user);
 
-  const onClickItem = useCallback((itemId, itemType) => () => {
-    if(!items.includes(itemId)){
-      dispatch({
-        type: BUY_ITEM_REQUEST,
-        data: {itemId, itemType}
-      })
+  const onClickItem = useCallback((item, itemType) => () => {
+    if(!items.includes(item.id)){ // 현재 아이템 목록에 없음 (구매기능)
+      if(me.star<item.price){ // 별이 부족할 경우
+        return alert('별이 부족합니다.');
+      }else{
+        dispatch({
+          type: BUY_ITEM_REQUEST,
+          data: {itemId:item.id, price:item.price, itemType}
+        })
+      }
     }else{
       if(itemType==='head'){
-        if(head && head.itemId === itemId){
+        if(head && head.itemId === item.id){
           dispatch({
             type: UNEQUIP_ITEM_REQUEST,
-            data: {itemId, itemType}
+            data: {itemId:item.id, price:item.price, itemType}
           })
         }else{
           dispatch({
             type: EQUIP_ITEM_REQUEST,
-            data: {itemId, itemType}
+            data: {itemId:item.id, price:item.price, itemType}
           })
         }
       }
@@ -43,7 +48,7 @@ const Shop = () => {
       <ItemList>
         {HeadItems.map((v, i)=>{
           return (
-          <Item onClick={onClickItem(v.id, 'head')} equip={head && head.itemId===v.id}>
+          <Item onClick={onClickItem(v, 'head')} equip={head && head.itemId===v.id}>
             <Image backgroundImage={v.image}/>
             {items && !items.includes(v.id) && <div>{v.price}</div>}
             {head && head.itemId === v.id && <EquipLabel>장착해제</EquipLabel>}

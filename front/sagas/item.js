@@ -1,6 +1,7 @@
 import { all, fork, takeLatest, call, put, delay } from "redux-saga/effects";
 import axios from 'axios';
 import { LOAD_ITEMS_SUCCESS, LOAD_ITEMS_FAILURE, LOAD_ITEMS_REQUEST, BUY_ITEM_SUCCESS, BUY_ITEM_FAILURE, BUY_ITEM_REQUEST, EQUIP_ITEM_SUCCESS, EQUIP_ITEM_FAILURE, EQUIP_ITEM_REQUEST, UNEQUIP_ITEM_FAILURE, UNEQUIP_ITEM_SUCCESS, UNEQUIP_ITEM_REQUEST } from "../reducers/item";
+import { USE_STARS } from "../reducers/user";
 
 function loadItemsAPI() {
   return axios.get("/items", {
@@ -38,6 +39,10 @@ function* buyItem(action) {
       type: BUY_ITEM_SUCCESS,
       data: result.data
     });
+    yield put({
+      type: USE_STARS,
+      data: action.data.price
+    })
   } catch (e) {
     console.error(e);
     yield put({

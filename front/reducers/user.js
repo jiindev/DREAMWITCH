@@ -26,6 +26,9 @@ export const LOAD_USER_REQUEST = 'LOAD_USER_REQUEST';
 export const LOAD_USER_SUCCESS = 'LOAD_USER_SUCCESS';
 export const LOAD_USER_FAILURE = 'LOAD_USER_FAILURE';
 
+export const GET_STARS = 'GET_STARS';
+export const USE_STARS = 'USE_STARS';
+
 const reducer = (state = initialState, action) => {
   return produce(state, (draft)=>{
     switch (action.type) {
@@ -83,6 +86,14 @@ const reducer = (state = initialState, action) => {
         break;
       }
       case LOAD_USER_FAILURE: {
+        break;
+      }
+      case GET_STARS: {
+        draft.me.star += action.data;
+        break;
+      }
+      case USE_STARS: {
+        draft.me.star -= action.data;
         break;
       }
       default: {

@@ -3,6 +3,7 @@ import { TODOS_CLEAR } from "../reducers/todo";
 import axios from 'axios';
 import { LOAD_HISTORIES_REQUEST, LOAD_HISTORIES_SUCCESS, LOAD_HISTORIES_FAILURE, ADD_HISTORIES_SUCCESS, ADD_HISTORIES_FAILURE, ADD_HISTORIES_REQUEST, LOAD_HISTORY_FAILURE, LOAD_HISTORY_REQUEST, LOAD_HISTORY_SUCCESS } from "../reducers/history";
 import { SAY_LOAD_HISTORIES } from "../reducers/character";
+import { GET_STARS } from "../reducers/user";
 
 function loadHistoriesAPI() {
   return axios.get("/histories", {
@@ -73,6 +74,10 @@ function addHistoryAPI(historyData) {
       yield put({
         type: TODOS_CLEAR
       });
+      yield put({
+        type: GET_STARS,
+        data: 10
+      })
     } catch (e) {
       console.error(e);
       yield put({
