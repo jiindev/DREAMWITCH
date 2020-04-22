@@ -14,7 +14,7 @@ import { LOAD_HISTORIES_REQUEST } from "../reducers/history";
 import { LOAD_TODOS_REQUEST } from "../reducers/todo";
 import { LOAD_ITEMS_REQUEST } from "../reducers/item";
 
-const Index = () => {
+const User = ({id}) => {
   const dispatch = useDispatch();
   const { me, logInErrorReason } = useSelector((state) => state.user);
   const [page, setPage] = useState(1);
@@ -22,7 +22,8 @@ const Index = () => {
   useEffect(()=>{
     if(!me){
       Router.push('/login');
-    }
+    };
+    alert(id);
   }, [me]);
 
   const onChangePage = useCallback(pageNum => () => {
@@ -50,7 +51,6 @@ const Index = () => {
           <ul>
             <TabItem onClick={onChangePage(1)} active={page===1}><TabIcon iconName={'star'}/></TabItem>
             <TabItem onClick={onChangePage(2)} active={page===2}><TabIcon iconName={'list'}/></TabItem>
-            <TabItem onClick={onChangePage(3)} active={page===3}><TabIcon iconName={'shop'}/></TabItem>
           </ul>
         </Tab>
         </TopContent>
@@ -96,7 +96,7 @@ const TabItem = styled.li`
     background-color: ${props => (props.active ? props.theme.yellowLight : props.theme.purpleLight)};
     color: ${props => props.theme.purpleDark};
     padding: 12px 0;
-    flex: 0.33333;
+    flex: 0.5;
     border-radius: 20px 20px 0 0;
     text-align: center;
     transition: all .2s ease;
@@ -122,17 +122,9 @@ const UserStatue = styled.div`
   z-index: 99;
 `;
 
-Index.getInitialProps = async (context) => {
-  context.store.dispatch({
-    type: LOAD_HISTORIES_REQUEST
-  })
-  context.store.dispatch({
-    type: LOAD_TODOS_REQUEST
-  })
-  context.store.dispatch({
-    type: LOAD_ITEMS_REQUEST
-  })
+User.getInitialProps = async (context) => {
+  return {id:parseInt(context.query.id,10)};
 }
 
 
-export default Index;
+export default User;

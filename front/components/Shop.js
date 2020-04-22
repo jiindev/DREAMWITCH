@@ -43,7 +43,7 @@ const Shop = () => {
       <ItemList>
         {HeadItems.map((v, i)=>{
           return (
-          <Item onClick={onClickItem(v.id, 'head')} equip={head.itemId===v.id}>
+          <Item onClick={onClickItem(v.id, 'head')} equip={head && head.itemId===v.id}>
             <Image backgroundImage={v.image}/>
             {items && !items.includes(v.id) && <div>{v.price}</div>}
             {head && head.itemId === v.id && <EquipLabel>장착해제</EquipLabel>}
