@@ -47,7 +47,7 @@ const Witch = styled.div`
 const Talking = styled.div`
   width: 100%;
   position: absolute;
-  bottom: 65px;
+  bottom: 55px;
   & p {
     color: ${props => props.theme.purpleDark};
     margin: 0 15px;

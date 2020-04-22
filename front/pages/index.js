@@ -42,9 +42,9 @@ const Index = () => {
       <Wrap>
        <TopContent>
          <UserStatue>
-            <span>{me && me.star}별</span><span>{me && me.level}레벨</span>
-            <button onClick={onLogout}>로그아웃</button>
+            <Star>{me && me.star}</Star><Level>{me && me.level}레벨</Level>
          </UserStatue>
+         <LogoutButton onClick={onLogout}><i/></LogoutButton>
           <Character></Character>
         <Tab>
           <ul>
@@ -120,6 +120,52 @@ const UserStatue = styled.div`
   position: absolute;
   top: 0;
   z-index: 99;
+  width: 100%;
+`;
+
+const Level = styled.span`
+  background-color: ${props => props.theme.purpleDark}; 
+  color: ${props => props.theme.purpleLight}; 
+  font-size: 12px;
+  padding: 10px 15px;
+  display: inline-block;
+  border-radius: 0 0 0 20px;
+  float: right;
+`;
+
+const Star = styled(Level)`
+border-radius: 0 0 20px 0;
+float: left;
+  &:before{
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: red;
+    vertical-align: middle;
+    margin-right: 5px;
+    background: url('/static/icons/top_left_star.svg');
+    background-size: contain;
+  }
+`;
+
+const LogoutButton = styled.button`
+  position: absolute;
+  top: 32px;
+  right: 0;
+  z-index: 98;
+  width: 40px;
+  height: 34px;
+  background-color: ${props => props.theme.purpleLight}; 
+  outline: none;
+  border: 0;
+  border-radius: 0 0 0 20px;
+  & i{
+    width: 16px;
+    height: 16px;
+    background-image: url('/static/icons/back_to_home.svg');
+    display: inline-block;
+  }
 `;
 
 Index.getInitialProps = async (context) => {
