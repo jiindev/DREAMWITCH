@@ -71,7 +71,7 @@ export const initialState = {
           break;
         }
         case SAY_LOAD_TODOS: {
-            if(draft.talking!==`전부 완료! 구슬을 눌러봐!`){
+            if(draft.talking!==`전부 완료! 구슬을 눌러봐!`&&draft.talking!==`어서와, ${draft.nickname}!`){
               draft.talking = `나와라, 오늘의 할 일!`;
             }
           break;

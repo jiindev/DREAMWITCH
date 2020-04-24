@@ -15,6 +15,7 @@ export const Date = styled.span`
 `;
 
 export const Button = styled.button`
+    font-family: 'GmarketSansMedium';
     border-radius: 20px;
     background-color: ${props => props.theme.purpleMedium};
     color: white;
@@ -23,5 +24,6 @@ export const Button = styled.button`
     padding: 10px 0;
     margin: 12px 0 20px 0;
     border: 0;
+    outline: none;
     cursor: pointer;
 `;
