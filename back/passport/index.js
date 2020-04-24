@@ -22,7 +22,7 @@ module.exports = () => {
           as: 'Items',
           attributes: ['id'],
         }],
-        attributes: ['id', 'nickname', 'userId', 'level', 'exp', 'star'],
+        attributes: ['id', 'nickname', 'userId', 'level', 'exp', 'star', 'lastStart'],
       });
       return done(null, user);
     } catch (e) {

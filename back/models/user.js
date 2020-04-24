@@ -29,6 +29,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 0,
+      },
+      lastStart : {
+        type: DataTypes.STRING(20),
+        allowNull: false,
+        defaultValue: 0
       }
     },
     {

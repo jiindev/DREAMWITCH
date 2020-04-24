@@ -79,7 +79,7 @@ const Page = styled.div`
   padding: 38px 15px 0 15px;
   box-sizing: border-box;
   flex: 1;
-  overflow: scroll;
+  overflow-y: auto;
   position: relative;
 `;
 

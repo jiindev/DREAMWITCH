@@ -13,6 +13,9 @@ import {
   LOAD_USER_SUCCESS,
   LOAD_USER_FAILURE,
   LOAD_USER_REQUEST,
+  UPDATE_LASTSTART_SUCCESS,
+  UPDATE_LASTSTART_FAILURE,
+  UPDATE_LASTSTART_REQUEST,
 } from "../reducers/user";
 import Router from 'next/router';
 import { SAY_HELLO } from "../reducers/character";
@@ -123,6 +126,32 @@ function* watchLoadUser() {
   yield takeLatest(LOAD_USER_REQUEST, loadUser);
 }
 
+function updateLastStartAPI(date) {
+  return axios.patch(`/user/laststart`, date, {
+    withCredentials: true
+  });
+}
+
+function* updateLastStart() {
+  try {
+    const today = new Date().toLocaleDateString();
+    const result = yield call(updateLastStartAPI, {today});
+    yield put({
+      type: UPDATE_LASTSTART_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    yield put({
+      type: UPDATE_LASTSTART_FAILURE,
+      error: e,
+    });
+  }
+}
+
+function* watchupdateLastStart() {
+  yield takeLatest(UPDATE_LASTSTART_REQUEST, updateLastStart);
+}
+
 
 export default function* userSaga() {
   yield all([
@@ -130,5 +159,6 @@ export default function* userSaga() {
     fork(watchSignUp),
     fork(watchLoadUser),
     fork(watchLogOut),
+    fork(watchupdateLastStart),
   ]);
 }

@@ -5,6 +5,7 @@ export const initialState = {
   isCleared: false,
   todos: [],
   clearPercentage: 0,
+  lastTodos: [],
 };
 
 export const ADD_TODO_REQUEST = "ADD_TODO_REQUEST";
@@ -26,6 +27,15 @@ export const EDIT_TODO_FAILURE = "EDIT_TODO_FAILURE";
 export const REMOVE_TODO_REQUEST = "REMOVE_TODO_REQUEST";
 export const REMOVE_TODO_SUCCESS = "REMOVE_TODO_SUCCESS";
 export const REMOVE_TODO_FAILURE = "REMOVE_TODO_FAILURE";
+
+export const LOAD_LAST_TODOS_REQUEST = "LOAD_LAST_TODOS_REQUEST";
+export const LOAD_LAST_TODOS_SUCCESS = "LOAD_LAST_TODOS_SUCCESS";
+export const LOAD_LAST_TODOS_FAILURE = "LOAD_LAST_TODOS_FAILURE";
+
+export const CLEAN_LAST_TODOS_REQUEST = "CLEAN_LAST_TODOS_REQUEST";
+export const CLEAN_LAST_TODOS_SUCCESS = "CLEAN_LAST_TODOS_SUCCESS";
+export const CLEAN_LAST_TODOS_FAILURE = "CLEAN_LAST_TODOS_FAILURE";
+
 
 export const TODOS_CLEAR = 'TODOS_CLEAR';
 
@@ -88,6 +98,29 @@ const reducer = (state = initialState, action) => {
         break;
       }
       case REMOVE_TODO_FAILURE: {
+        break;
+      }
+
+      case LOAD_LAST_TODOS_REQUEST: {
+        break;
+      }
+      case LOAD_LAST_TODOS_SUCCESS: {
+        draft.lastTodos = action.data;
+        break;
+      }
+      case LOAD_LAST_TODOS_FAILURE: {
+        break;
+      }
+
+      case CLEAN_LAST_TODOS_REQUEST: {
+        break;
+      }
+      case CLEAN_LAST_TODOS_SUCCESS: {
+        draft.lastTodos = [];
+        draft.todos = action.data;
+        break;
+      }
+      case CLEAN_LAST_TODOS_FAILURE: {
         break;
       }
       case TODOS_CLEAR: {

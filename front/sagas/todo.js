@@ -15,11 +15,18 @@ import {
   REMOVE_TODO_SUCCESS,
   REMOVE_TODO_FAILURE,
   REMOVE_TODO_REQUEST,
+  LOAD_LAST_TODOS_SUCCESS,
+  LOAD_LAST_TODOS_FAILURE,
+  LOAD_LAST_TODOS_REQUEST,
+  CLEAN_LAST_TODOS_SUCCESS,
+  CLEAN_LAST_TODOS_FAILURE,
+  CLEAN_LAST_TODOS_REQUEST,
 } from "../reducers/todo";
 import axios from 'axios';
 import { SAY_ADD_TODO, SAY_CHECK_TODO, SAY_EDIT_TODO, SAY_DELETE_TODO, SAY_LOAD_TODOS, SAY_HELLO} from "../reducers/character";
+import { UPDATE_LASTSTART_REQUEST } from "../reducers/user";
 
-function loadTodosAPI(date) {
+function loadTodosAPI() {
   return axios.get("/todos", {
     withCredentials: true
   });
@@ -155,6 +162,67 @@ function* watchRemoveTodo() {
   yield takeLatest(REMOVE_TODO_REQUEST, removeTodo);
 }
 
+function loadLastTodosAPI(lastStart) {
+  return axios.get(`/todos/last/${encodeURIComponent(lastStart)}`, {
+    withCredentials: true
+  });
+}
+function* loadLastTodos(action) {
+  try {
+    const result = yield call(loadLastTodosAPI, action.data);
+    yield put({
+      type: LOAD_LAST_TODOS_SUCCESS,
+      data: result.data
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: LOAD_LAST_TODOS_FAILURE,
+      error: e,
+    });
+  }
+}
+function* watchLoadLastTodos() {
+  yield takeLatest(LOAD_LAST_TODOS_REQUEST, loadLastTodos);
+}
+
+function deleteLastTodosAPI(date) {
+  return axios.delete(`/todos/last/${encodeURIComponent(date)}`, {
+    withCredentials: true
+  });
+}
+function addLastTodosAPI(data) {
+  return axios.post("/todos", data, {
+    withCredentials: true
+  });
+}
+
+function* cleanLastTodos(action) {
+  try {
+    if(!action.data.isCleared){
+      yield call(deleteLastTodosAPI, action.data.date);
+    }
+    const result = yield call(addLastTodosAPI, action.data.todosToCopy);
+    yield put({
+      type: CLEAN_LAST_TODOS_SUCCESS,
+      data: result.data
+    });
+    yield put({
+      type: UPDATE_LASTSTART_REQUEST
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: CLEAN_LAST_TODOS_FAILURE,
+      error: e,
+    });
+  }
+}
+function* watchCleanLastTodos() {
+  yield takeLatest(CLEAN_LAST_TODOS_REQUEST, cleanLastTodos);
+}
+
+
 export default function* todoSaga() {
   yield all([
     fork(watchLoadTodos),
@@ -162,5 +230,7 @@ export default function* todoSaga() {
     fork(watchAddTodo),
     fork(watchEditTodo),
     fork(watchRemoveTodo),
+    fork(watchLoadLastTodos),
+    fork(watchCleanLastTodos),
   ]);
 }

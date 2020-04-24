@@ -65,9 +65,8 @@ router.post("/login", async (req, res, next) => {
             as: 'Items',
             attributes: ['id'],
           }],
-          attributes: ['id', 'nickname', 'userId', 'level', 'exp', 'star'],
+          attributes: ['id', 'nickname', 'userId', 'level', 'exp', 'star','lastStart'],
         });
-        console.log(fullUser);
         return res.json(fullUser);
       }catch(e){
         console.error(e);
@@ -82,6 +81,21 @@ router.post("/logout", (req, res) => {
   req.logout();
   req.session.destroy();
   res.send("logout 성공");
+});
+
+router.patch('/laststart', async (req, res, next) => {
+  //마지막으로 미션을 시작한 시간 기록
+  try{
+    const changeLastStart = await db.User.update({
+      lastStart: req.body.today
+    }, {
+      where: {id: req.user.id}
+    });
+    res.send(req.body.today);
+  }catch(e){
+    console.error(e);
+    next(e);
+  }
 });
 
 module.exports = router;
