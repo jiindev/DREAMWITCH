@@ -7,6 +7,8 @@ import { SAY_LOAD_TODOS } from '../reducers/character';
 import { H2, Date, Button } from './styledComponents/PageComponent';
 import styled from 'styled-components';
 import { LOAD_LAST_TODOS_REQUEST, CLEAN_LAST_TODOS_REQUEST } from "../reducers/todo";
+import TodoCompletePopup from './TodoCompletePopup';
+import { ADD_HISTORIES_REQUEST } from "../reducers/history";
 
 const CheckList = () => {
   const dispatch = useDispatch();
@@ -14,13 +16,17 @@ const CheckList = () => {
   const { me } = useSelector(state=>state.user);
   const [started, setStarted] = useState(false);
   const [todosToCopy, setTodosToCopy] = useState([]);
+  const [writingHistory, setWritingHistory] = useState(false);
 
-  useEffect(() => {
+  useEffect(()=>{
     if(todos.length>0 && !isCleared){
       return dispatch({
         type: SAY_LOAD_TODOS
       })
     }
+  }, []);
+
+  useEffect(() => {
     if(!started && todos.length===0){
       return dispatch({
         type: LOAD_LAST_TODOS_REQUEST,
@@ -56,32 +62,56 @@ const CheckList = () => {
     }
   }, [todosToCopy]);
 
+  const onClickWriteHistory = () => {
+    setWritingHistory(true);
+  }
+
+  const clear = useCallback((historyContent) => () => {
+    dispatch({
+      type: ADD_HISTORIES_REQUEST,
+      data: {
+        date,
+        content: historyContent ? historyContent : '오늘도 힘냈다! 아자아자!'
+      }
+    });
+    setWritingHistory(false);
+  }, [date]);
+
 
   return (
     <>
       
       {todos && todos[0] || started ? (
-        <TodoPage>
-          <div>
-            <H2>할 일 목록 <Date>{date}</Date></H2>
-            
-          </div>
-          <TodoUl>
-            {isCleared ? 
-              todos.map((c, i)=> {
-                return <li key={i}>{c.content}</li>
-              })
-            :
-            <>
-              {todos.map((c, i) => {
-                return <TodoItem todo={c}/>;
-              })}
-              <AddTodo/>
-            </>
-            }
-          </TodoUl>
-          <TodoStatue/>
-        </TodoPage>
+        <>
+        {writingHistory &&
+          <TodoCompletePopup clear={clear}/>
+        }
+          <TodoPage>
+            <div>
+              <H2>할 일 목록 <Date>{date}</Date></H2>
+            </div>
+            <TodoUl>
+              {isCleared ? 
+                <>
+                <FinishedList>
+                  {todos.map((c, i)=> {
+                    return <li key={i}>{c.content}</li>
+                  })}
+                </FinishedList>
+                </>
+              :
+              <>
+                {todos.map((c, i) => {
+                  return <TodoItem todo={c}/>;
+                })}
+                <AddTodo/>
+              </>
+              }
+            </TodoUl>
+            <TodoBottom/>
+            <TodoStatue onClickWriteHistory={onClickWriteHistory}/>
+          </TodoPage>
+        </>
       ) : lastTodos.length>0 ? (
          <LastTodoPage>
            <H2>지난 날의 기록 <Date>{lastTodos[0].date}</Date></H2>
@@ -108,10 +138,34 @@ const CheckList = () => {
 
 const TodoPage = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  height:100%;
+`;
+
+const TodoBottom = styled.div`
+  height: 120px;
 `;
 
 const TodoUl = styled.ul`
-  padding-bottom: 100px;
+  flex:1;
+  overflow: scroll;
+`;
+
+const FinishedList = styled.ul`
+  & li{
+    padding: 8px 15px 8px 0px;
+    color: ${props=>props.theme.purpleMedium};
+    &:before{
+      width: 30px;
+      height: 30px;
+      content: '';
+      background-size: contain;
+      background: url('/static/icons/check_done.svg');
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
 `;
 
 const StartIllust = styled.span`
@@ -139,7 +193,7 @@ const LastTodoPage = styled.div`
   height: 100%;
 `;
 const H3 = styled.div`
-  background-color: ${props=>props.theme.yellowMedium};
+    background-color: ${props=>props.theme.yellowMedium};
     padding: 10px;
     text-align: center;
     border-radius: 20px 20px 0 0;

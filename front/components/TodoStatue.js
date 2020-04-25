@@ -1,15 +1,13 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ADD_HISTORIES_REQUEST } from "../reducers/history";
 import {SAY_COMPLETE_TODOS} from '../reducers/character';
 import styled from 'styled-components';
+import { Button } from './styledComponents/PageComponent';
 
-const TodoStatue = () => {
+const TodoStatue = ({onClickWriteHistory}) => {
   const dispatch = useDispatch();
-  const [historyContent, setHistoryContent] = useState('');
-  const historyContentInput = useRef();
   const { date, clearPercentage, isCleared } = useSelector((state) => state.todo);
-  const [writingHistory, setWritingHistory] = useState(false);
+  
 
   useEffect(()=>{
     if(clearPercentage === 100 && isCleared === false){
@@ -19,25 +17,6 @@ const TodoStatue = () => {
     }
   }, [clearPercentage]);
 
-  const onChangeHistoryContent = (e) => {
-    setHistoryContent(e.target.value);
-  }
-
-  const clear = useCallback(() => {
-    dispatch({
-      type: ADD_HISTORIES_REQUEST,
-      data: {
-        date,
-        content: historyContent
-      }
-    });
-    setWritingHistory(false);
-  }, [date, historyContent]);
-
-  const onClickWriteHistory = () => {
-    setWritingHistory(true);
-  }
-  
   return (
     <>
       <TodoStatueBar complete={clearPercentage === 100}>
@@ -47,22 +26,9 @@ const TodoStatue = () => {
         </Percentage>
         {(clearPercentage === 100 && !isCleared ) ? 
             <StarButtonActive onClick={onClickWriteHistory}>완료버튼</StarButtonActive> :
-            <><StarBase><StarPercentage opacity={clearPercentage+'%'}/></StarBase></>
+            <><StarBase><StarPercentage opacity={clearPercentage+'%'} cleared={isCleared}/></StarBase></>
         }
       </TodoStatueBar>
-      {writingHistory && 
-        <>
-          <CompletePopUp>
-            <input
-                type="text"
-                ref={historyContentInput}
-                value={historyContent}
-                onChange={onChangeHistoryContent}
-              />
-            <button onClick={clear}>완료</button>
-          </CompletePopUp>
-        </>
-      }
     </>
   );
 };
@@ -103,7 +69,7 @@ const StarBase = styled.button`
 `;
 
 const StarPercentage = styled(StarBase)`
-  background: url('/static/icons/stat_star.svg');
+  background: ${props => props.cleared ? "url('/static/icons/stat_finished.svg')": "url('/static/icons/stat_star.svg')"};
   position: absolute;
   margin: 0;
   top: 0;
@@ -115,19 +81,6 @@ const StarButtonActive = styled(StarBase)`
   background: url('/static/icons/stat_click_to_finish.svg');
   text-indent: -9999px;
   cursor: pointer;
-`;
-
-const CompletePopUp = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: ${props => props.theme.yellowLight};
-  opacity: 80%;
-  & input {
-    opacity: 100%;
-  }
 `;
 
 export default TodoStatue;

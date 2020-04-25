@@ -72,7 +72,7 @@ const reducer = (state = initialState, action) => {
         draft.date = action.data.date;
         draft.isCleared = action.data.todos[0] ? action.data.todos[0].HistoryId ? true : false : false;
         draft.todos = action.data.todos;
-        draft.clearPercentage = Math.floor(action.data.todos.filter(v=>v.checked===true).length/action.data.todos.length * 100);
+        draft.clearPercentage = draft.todos[0] ? Math.floor(action.data.todos.filter(v=>v.checked===true).length/action.data.todos.length * 100) : 0;
         break;
       }
       case LOAD_TODOS_FAILURE: {

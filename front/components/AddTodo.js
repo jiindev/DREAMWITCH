@@ -48,7 +48,7 @@ const AddTodo = () => {
 
   return (
   <>
-    {adding && <input type="text" ref={addTodoInput} onBlur={AddTodoOff} value={content} onChange={onChangeContent} onKeyPress={handleKeyPress}/>}
+    {adding && <AddTodoDiv><PlusIcon/><TodoContentInput type="text" ref={addTodoInput} onBlur={AddTodoOff} value={content} onChange={onChangeContent} onKeyPress={handleKeyPress}/></AddTodoDiv>}
     {!adding && <AddButton onClick={AddTodoOn}><i/></AddButton>}
   </>);
 };
@@ -62,6 +62,37 @@ const AddButton = styled(Button)`
     display: inline-block;
     background: url('/static/icons/check_add.svg');
   }
+`;
+
+const AddTodoDiv = styled.div`
+  display:flex;
+  width: 100%;
+`;
+
+const PlusIcon = styled.span`
+  width: 16px;
+  height: 16px;
+  margin: 7px;
+  display: inline-block;
+  border-radius: 20px;
+  border:none;
+  outline: none;
+  background: url('/static/icons/check_add.svg');
+  background-size: contain;
+  vertical-align: middle;
+`;
+
+const TodoContentInput = styled.input`
+  display: inline-block;
+  background-color: white;
+  padding: 3px 0;
+  margin: 0 0 0 10px;
+  font-size: 14px;
+  border: 0;
+  outline: none;
+  color: ${props => props.checked ? props.theme.purpleMedium : props.theme.black};
+  font-family: 'GmarketSansMedium';
+  flex:1;
 `;
 
 
