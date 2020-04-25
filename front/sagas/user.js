@@ -16,10 +16,18 @@ import {
   UPDATE_LASTSTART_SUCCESS,
   UPDATE_LASTSTART_FAILURE,
   UPDATE_LASTSTART_REQUEST,
+  LOAD_FRIENDS_SUCCESS,
+  LOAD_FRIENDS_FAILURE,
+  LOAD_FRIENDS_REQUEST,
+  REMOVE_FRIEND_SUCCESS,
+  REMOVE_FRIEND_FAILURE,
+  REMOVE_FRIEND_REQUEST,
+  ADD_FRIEND_SUCCESS,
+  ADD_FRIEND_FAILURE,
+  ADD_FRIEND_REQUEST,
 } from "../reducers/user";
 import Router from 'next/router';
 import { SAY_HELLO } from "../reducers/character";
-
 function logInAPI(loginData) {
   return axios.post("/user/login", loginData, {
     withCredentials: true
@@ -151,6 +159,77 @@ function* watchupdateLastStart() {
   yield takeLatest(UPDATE_LASTSTART_REQUEST, updateLastStart);
 }
 
+function loadFriendsAPI() {
+  return axios.get("/users", {
+    withCredentials: true
+  });
+}
+
+function* loadFriends() {
+  try {
+    const result = yield call(loadFriendsAPI);
+    yield put({
+      type: LOAD_FRIENDS_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    yield put({
+      type: LOAD_FRIENDS_FAILURE,
+      error: e,
+    });
+  }
+}
+
+function* watchLoadFriends() {
+  yield takeLatest(LOAD_FRIENDS_REQUEST, loadFriends);
+}
+
+function removeFriendAPI(friendId) {
+  return axios.delete(`user/friend/${friendId}`, {
+    withCredentials: true,
+  })
+}
+function* removeFriend(action) {
+  try {
+    const result = yield call(removeFriendAPI, action.data);
+    yield put({
+      type: REMOVE_FRIEND_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: REMOVE_FRIEND_FAILURE,
+      error: e,
+    });
+  }
+}
+function* watchRemoveFriend() {
+  yield takeLatest(REMOVE_FRIEND_REQUEST, removeFriend);
+}
+function addFriendAPI(friendData) {
+  return axios.post(`user/friend`, friendData, {
+    withCredentials: true,
+  })
+}
+function* addFriend(action) {
+  try {
+    const result = yield call(addFriendAPI, action.data);
+    yield put({
+      type: ADD_FRIEND_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: ADD_FRIEND_FAILURE,
+      error: e,
+    });
+  }
+}
+function* watchAddFriend() {
+  yield takeLatest(ADD_FRIEND_REQUEST, addFriend);
+}
 
 export default function* userSaga() {
   yield all([
@@ -159,5 +238,8 @@ export default function* userSaga() {
     fork(watchLoadUser),
     fork(watchLogOut),
     fork(watchupdateLastStart),
+    fork(watchLoadFriends),
+    fork(watchRemoveFriend),
+    fork(watchAddFriend),
   ]);
 }

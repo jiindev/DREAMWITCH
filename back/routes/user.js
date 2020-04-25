@@ -98,4 +98,23 @@ router.patch('/laststart', async (req, res, next) => {
   }
 });
 
+router.delete('/friend/:id', async (req, res, next) => {
+  //친구 삭제
+  try{
+    res.send(req.params.id);
+  }catch(e){
+    console.error(e);
+    next(e);
+  }
+});
+router.post('/friend', async (req, res, next) => {
+  //친구 추가
+  try{
+    res.send({id: 11, userId:'test', nickname:'추가된아이디'});
+  }catch(e){
+    console.error(e);
+    next(e);
+  }
+});
+
 module.exports = router;

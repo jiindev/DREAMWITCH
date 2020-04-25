@@ -15,6 +15,7 @@ const historyAPIRouter = require("./routes/history");
 const historiesAPIRouter = require("./routes/histories");
 const itemAPIRouter = require("./routes/item");
 const itemsAPIRouter = require("./routes/items");
+const usersAPIRouter = require('./routes/users');
 dotenv.config();
 const app = express();
 
@@ -52,6 +53,7 @@ app.use("/api/history", historyAPIRouter);
 app.use("/api/histories", historiesAPIRouter);
 app.use("/api/item", itemAPIRouter);
 app.use("/api/items", itemsAPIRouter);
+app.use("/api/users", usersAPIRouter);
 
 app.listen(3065, () => {
   console.log("server is running on http://localhost:3065");

@@ -8,6 +8,7 @@ export const initialState = {
   isSigningUp: false, // 회원가입 시도중
   signUpErrorReason: "", // 회원가입 실패 사유
   me: null, // 내 정보
+  friends: [],
 };
 
 export const LOG_IN_REQUEST = "LOG_IN_REQUEST";
@@ -25,6 +26,18 @@ export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
 export const LOAD_USER_REQUEST = 'LOAD_USER_REQUEST';
 export const LOAD_USER_SUCCESS = 'LOAD_USER_SUCCESS';
 export const LOAD_USER_FAILURE = 'LOAD_USER_FAILURE';
+
+export const LOAD_FRIENDS_REQUEST = 'LOAD_FRIENDS_REQUEST';
+export const LOAD_FRIENDS_SUCCESS = 'LOAD_FRIENDS_SUCCESS';
+export const LOAD_FRIENDS_FAILURE = 'LOAD_FRIENDS_FAILURE';
+
+export const ADD_FRIEND_REQUEST = 'ADD_FRIEND_REQUEST';
+export const ADD_FRIEND_SUCCESS = 'ADD_FRIEND_SUCCESS';
+export const ADD_FRIEND_FAILURE = 'ADD_FRIEND_FAILURE';
+
+export const REMOVE_FRIEND_REQUEST = 'REMOVE_FRIEND_REQUEST';
+export const REMOVE_FRIEND_SUCCESS = 'REMOVE_FRIEND_SUCCESS';
+export const REMOVE_FRIEND_FAILURE = 'REMOVE_FRIEND_FAILURE';
 
 export const UPDATE_LASTSTART_REQUEST = 'UPDATE_LASTSTART_REQUEST';
 export const UPDATE_LASTSTART_SUCCESS = 'UPDATE_LASTSTART_SUCCESS';
@@ -108,6 +121,37 @@ const reducer = (state = initialState, action) => {
       }
       case USE_STARS: {
         draft.me.star -= action.data;
+        break;
+      }
+      case LOAD_FRIENDS_REQUEST: {
+        break;
+      }
+      case LOAD_FRIENDS_SUCCESS: {
+        draft.friends = action.data;
+        break;
+      }
+      case LOAD_FRIENDS_FAILURE: {
+        break;
+      }
+      case REMOVE_FRIEND_REQUEST: {
+        break;
+      }
+      case REMOVE_FRIEND_SUCCESS: {
+        const friendIndex = draft.friends.findIndex(v=>v.id===action.data);
+        draft.friends.splice(friendIndex, 1);
+        break;
+      }
+      case REMOVE_FRIEND_FAILURE: {
+        break;
+      }
+      case ADD_FRIEND_REQUEST: {
+        break;
+      }
+      case ADD_FRIEND_SUCCESS: {
+        draft.friends.push(action.data);
+        break;
+      }
+      case ADD_FRIEND_FAILURE: {
         break;
       }
       default: {

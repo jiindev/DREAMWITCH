@@ -6,6 +6,7 @@ import Character from "../components/Character";
 import History from "../components/History";
 import TodoList from "../components/TodoList";
 import Shop from "../components/Shop";
+import Visit from '../components/Visit';
 import { useSelector, useDispatch } from "react-redux";
 import Router from "next/router";
 import { LOAD_USER_REQUEST, LOG_OUT_REQUEST } from "../reducers/user";
@@ -17,7 +18,7 @@ import { LOAD_ITEMS_REQUEST } from "../reducers/item";
 const Index = () => {
   const dispatch = useDispatch();
   const { me, logInErrorReason } = useSelector((state) => state.user);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(4);
 
   useEffect(()=>{
     if(!me){
@@ -51,6 +52,7 @@ const Index = () => {
             <TabItem onClick={onChangePage(1)} active={page===1}><TabIcon iconName={'star'}/></TabItem>
             <TabItem onClick={onChangePage(2)} active={page===2}><TabIcon iconName={'list'}/></TabItem>
             <TabItem onClick={onChangePage(3)} active={page===3}><TabIcon iconName={'shop'}/></TabItem>
+            <TabItem onClick={onChangePage(4)} active={page===4}><TabIcon iconName={'friend'}/></TabItem>
           </ul>
         </Tab>
         </TopContent>
@@ -59,6 +61,7 @@ const Index = () => {
           {page === 1 && <TodoList/>}
           {page === 2 && <History/>}
           {page === 3 && <Shop/>}
+          {page === 4 && <Visit/>}
         </Page>
         </Wrap>
     </>
