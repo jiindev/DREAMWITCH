@@ -200,7 +200,7 @@ function addLastTodosAPI(data) {
 function* cleanLastTodos(action) {
   try {
     if(!action.data.isCleared){
-      yield call(deleteLastTodosAPI, action.data.date);
+      yield call(deleteLastTodosAPI, action.data.lastDate);
     }
     const result = yield call(addLastTodosAPI, action.data.todosToCopy);
     yield put({
@@ -208,7 +208,8 @@ function* cleanLastTodos(action) {
       data: result.data
     });
     yield put({
-      type: UPDATE_LASTSTART_REQUEST
+      type: UPDATE_LASTSTART_REQUEST,
+      data: action.data
     });
   } catch (e) {
     console.error(e);

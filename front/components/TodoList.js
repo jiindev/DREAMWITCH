@@ -44,7 +44,8 @@ const CheckList = () => {
       type: CLEAN_LAST_TODOS_REQUEST,
       data: {
         isCleared : lastTodos[0].HistoryId,
-        date : lastTodos[0].date,
+        lastDate : lastTodos[0].date,
+        date,
         todosToCopy,
       }
     });

@@ -126,16 +126,15 @@ function* watchLoadUser() {
   yield takeLatest(LOAD_USER_REQUEST, loadUser);
 }
 
-function updateLastStartAPI(date) {
-  return axios.patch(`/user/laststart`, date, {
+function updateLastStartAPI(data) {
+  return axios.patch(`/user/laststart`, data, {
     withCredentials: true
   });
 }
 
-function* updateLastStart() {
+function* updateLastStart(action) {
   try {
-    const today = new Date().toLocaleDateString();
-    const result = yield call(updateLastStartAPI, {today});
+    const result = yield call(updateLastStartAPI, action.data);
     yield put({
       type: UPDATE_LASTSTART_SUCCESS,
       data: result.data,

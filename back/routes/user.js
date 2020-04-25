@@ -87,7 +87,7 @@ router.patch('/laststart', async (req, res, next) => {
   //마지막으로 미션을 시작한 시간 기록
   try{
     const changeLastStart = await db.User.update({
-      lastStart: req.body.today
+      lastStart: req.body.date
     }, {
       where: {id: req.user.id}
     });
