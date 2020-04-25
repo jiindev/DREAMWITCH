@@ -84,6 +84,8 @@ const Page = styled.div`
 `;
 
 const Tab = styled.nav`
+  position: relative;
+  z-index: 10;
   & ul {
     display: flex;
     position: absolute;

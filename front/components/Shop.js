@@ -18,27 +18,27 @@ const Shop = () => {
     })
   }, []);
 
-  const onClickItem = useCallback((item, itemType) => () => {
+  const onClickItem = useCallback((item) => () => {
     if(!items.includes(item.id)){ // 현재 아이템 목록에 없음 (구매기능)
       if(me.star<item.price){ // 별이 부족할 경우
         return alert('별이 부족합니다.');
       }else{
         dispatch({
           type: BUY_ITEM_REQUEST,
-          data: {itemId:item.id, price:item.price, itemType}
+          data: {itemId:item.id, price:item.price, itemType:item.type}
         })
       }
     }else{
-      if(itemType==='head'){
-        if(head && head.itemId === item.id){
+      if(item.type==='hat'){
+        if(hat && hat.itemId === item.id){
           dispatch({
             type: UNEQUIP_ITEM_REQUEST,
-            data: {itemId:item.id, price:item.price, itemType}
+            data: {itemId:item.id, price:item.price, itemType:item.type}
           })
         }else{
           dispatch({
             type: EQUIP_ITEM_REQUEST,
-            data: {itemId:item.id, price:item.price, itemType}
+            data: {itemId:item.id, price:item.price, itemType:item.type}
           })
         }
       }
@@ -55,8 +55,8 @@ const Shop = () => {
       <ItemList>
         {HeadItems.map((v, i)=>{
           return (
-          <Item onClick={onClickItem(v, 'head')} equip={head && head.itemId===v.id}>
-            <Image backgroundImage={v.image}/>
+          <Item onClick={onClickItem(v)} equip={head && head.itemId===v.id}>
+            <Image thumb={`item_${v.type}_thumb0${v.id}.png`}/>
             {items && !items.includes(v.id) && <div>{v.price}</div>}
             {head && head.itemId === v.id && <EquipLabel>장착해제</EquipLabel>}
           </Item>)
@@ -113,7 +113,7 @@ const Image = styled.span`
   height: 50px;
   margin: 10px 0 0 0;
   display: inline-block;
-  background: ${props => `url('${props.backgroundImage}')`};
+  background: ${props => `url('/static/img/${props.thumb}')`};
   background-size: contain;
 `;
 
