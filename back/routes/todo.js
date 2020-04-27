@@ -6,11 +6,10 @@ const db = require("../models");
 
 router.post("/", async(req, res, next) => {
   try{
-    let today = new Date().toLocaleDateString();
     const newTodo = await db.Todo.create({
       content: req.body.content,
       UserId: req.user.id,
-      date: today,
+      date: req.body.date,
     });
     const fullTodo = await db.Todo.findOne({
       where: {id:newTodo.id},

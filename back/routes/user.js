@@ -82,7 +82,7 @@ router.patch('/laststart', async (req, res, next) => {
     }, {
       where: {id: req.user.id}
     });
-    res.send(req.body.today);
+    res.send(req.body.date);
   }catch(e){
     console.error(e);
     next(e);

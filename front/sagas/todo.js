@@ -37,8 +37,8 @@ function* loadTodos() {
     yield put({
       type: LOAD_TODOS_SUCCESS,
       data: {
-        todos: result.data,
-        date: result.data[0].date,
+        todos: result.data.todos,
+        date: result.data.date,
       }
     });
   } catch (e) {
@@ -202,7 +202,7 @@ function* cleanLastTodos(action) {
     if(!action.data.isCleared){
       yield call(deleteLastTodosAPI, action.data.lastDate);
     }
-    const result = yield call(addLastTodosAPI, action.data.todosToCopy);
+    const result = yield call(addLastTodosAPI, action.data);
     yield put({
       type: CLEAN_LAST_TODOS_SUCCESS,
       data: result.data
