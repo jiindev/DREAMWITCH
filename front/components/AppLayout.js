@@ -11,10 +11,6 @@ import { useSelector, useDispatch } from "react-redux";
 import Router from "next/router";
 import { LOAD_USER_REQUEST, LOG_OUT_REQUEST } from "../reducers/user";
 import styled from 'styled-components';
-import { LOAD_HISTORIES_REQUEST } from "../reducers/history";
-import { LOAD_TODOS_REQUEST } from "../reducers/todo";
-import { LOAD_ITEMS_REQUEST } from "../reducers/item";
-import HistoryList from "./HistoryList";
 
 const AppLayout = ({children}) => {
   const dispatch = useDispatch();

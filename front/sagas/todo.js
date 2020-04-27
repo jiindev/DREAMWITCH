@@ -27,7 +27,7 @@ import { SAY_ADD_TODO, SAY_CHECK_TODO, SAY_EDIT_TODO, SAY_DELETE_TODO, SAY_LOAD_
 import { UPDATE_LASTSTART_REQUEST } from "../reducers/user";
 
 function loadTodosAPI() {
-  return axios.get("/todos", {
+  return axios.get(`/todos`, {
     withCredentials: true
   });
 }
@@ -37,8 +37,8 @@ function* loadTodos() {
     yield put({
       type: LOAD_TODOS_SUCCESS,
       data: {
-        todos: result.data.todos,
-        date: result.data.today,
+        todos: result.data,
+        date: result.data[0].date,
       }
     });
   } catch (e) {

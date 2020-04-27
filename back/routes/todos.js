@@ -6,7 +6,7 @@ const sequelize = require('sequelize');
 router.get("/", async(req, res, next) => {
   // 사용자의 그날의 투두리스트 불러오기
   try {
-    let today = new Date().toLocaleDateString();
+    let today = new Date().toLocaleDateString().split('-').map((v)=>parseInt(v, 10)<10?'0'+v:v).join('-');
     const todos = await db.Todo.findAll({
       where: {
         userId: req.user.id,
@@ -14,7 +14,7 @@ router.get("/", async(req, res, next) => {
       },
       order: [['createdAt', 'ASC']]
     });
-    return res.json({todos, today});
+    return res.json(todos);
   } catch (e) {
     console.error(e);
     return next(e);
@@ -63,15 +63,14 @@ router.delete("/last/:date", async(req, res, next) => {
 router.post("/", async(req, res, next) => {
   //지난 할일 목록에서 투두 복사
   try{
-    let today = new Date().toLocaleDateString();
     let fullTodos = [];
     if(req.body){
       const copiedTodos = req.body.map((v, i)=>{
-        return {content: v, UserId: req.user.id, date: today};
+        return {content: v, UserId: req.user.id, date: req.body.date};
       })
       db.Todo.bulkCreate(copiedTodos);
       fullTodos = await db.Todo.findAll({
-        where: {UserId: req.user.id, date: today}
+        where: {UserId: req.user.id, date: req.body.date}
       })
     }
     res.json(fullTodos);

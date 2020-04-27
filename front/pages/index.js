@@ -18,7 +18,7 @@ import { LOAD_ITEMS_REQUEST } from "../reducers/item";
 const Index = () => {
   const dispatch = useDispatch();
   const { me, logInErrorReason } = useSelector((state) => state.user);
-  const [page, setPage] = useState(4);
+  const [page, setPage] = useState(1);
 
   useEffect(()=>{
     if(!me){
