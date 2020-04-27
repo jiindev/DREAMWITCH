@@ -7,7 +7,7 @@ import { SAY_RESET } from '../reducers/character';
 
 const Character = () => {
   const { talking } = useSelector(state=>state.character);
-  const { head } = useSelector(state=>state.item);
+  const { equipment } = useSelector(state=>state.item);
   const dispatch = useDispatch();
   const timeoutRef = useRef();
 
@@ -26,14 +26,14 @@ const Character = () => {
 
   return (
     <>
-      <CharacterDiv index={'01'}>
+      <CharacterDiv index={equipment ? equipment.bg  : 0}>
         {talking && <Talking><p>{talking}</p></Talking>}
         <Witch>
-          <Cloths index={'02'}/>
-          <FrontHat index={head ? head.itemId : 0}/>
+          <Cloths index={equipment ? equipment.clothes  : 0}/>
+          <FrontHat index={equipment ? equipment.hat : 0}/>
           <Emotion emotion={'mad'}/>
-          <Hair index={'04'}/>
-          <BackHat index={head ? head.itemId : 0}/>
+          <Hair index={equipment ? equipment.hair  : 0}/>
+          <BackHat index={equipment ? equipment.hat  : 0}/>
           <Effect effect={'happy'}/>
         </Witch>
         {/* {head && <div>{head.itemId}번째 아이템 장착중!</div>} */}
@@ -54,7 +54,6 @@ const Witch = styled.div`
   width: 300px;
   height: 200px;
   margin: 0 auto;
-  margin-top: 10px;
   position: relative;
   & div{
     position: absolute;
@@ -64,7 +63,7 @@ const Witch = styled.div`
 `;
 
 const Cloths = styled.div`
-  top: 0;
+  bottom: 0;
   left: 54px;
   width: 200px;
   height:85px;
@@ -77,7 +76,7 @@ const FrontHat = styled.div`
   width: 260px;
   height: 80px;
   z-index: 5;
-  background: ${props=>`url(/static/img/item_hat_front0${props.index}.png)`};
+  background: ${props=>`url(/static/img/item_hat_front${props.index}.png)`};
 `;
 const Emotion = styled.div`
   top: 30px;

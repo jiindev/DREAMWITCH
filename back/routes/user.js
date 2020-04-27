@@ -30,6 +30,9 @@ router.post("/", async (req, res, next) => {
       userId: req.body.userId,
       password: hashedPassword,
     });
+    const newEquipment = await db.Equipment.create({
+      UserId: newUser.id
+    });
     return res.status(200).json(newUser);
   } catch (e) {
     console.error(e);
@@ -53,18 +56,6 @@ router.post("/login", async (req, res, next) => {
         }
         const fullUser = await db.User.findOne({
           where: {id: user.id},
-          include: [{
-            model: db.Todo,
-            as: 'Todos',
-            attributes: ['id'],
-          }, {
-            model: db.History,
-            attributes: ['id'],
-          }, {
-            model: db.Item,
-            as: 'Items',
-            attributes: ['id'],
-          }],
           attributes: ['id', 'nickname', 'userId', 'level', 'exp', 'star','lastStart'],
         });
         return res.json(fullUser);

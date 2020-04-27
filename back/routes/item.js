@@ -29,30 +29,14 @@ router.post("/", async(req, res, next) => {
 router.patch("/equip/:id", async(req, res, next) => {
   //아이템 장착
   try{
-    const unEquippedItems = await db.Item.update({
-      equipped: false
+    const equippedItem = await db.Equipment.update({
+      [req.body.itemType]: req.body.itemId
     }, {
       where: {
         UserId: req.user.id,
-        itemType: req.body.itemType
       }
     });
-    const equippedItem = await db.Item.update({
-      equipped: true
-    }, {
-      where: {
-        itemId: req.params.id,
-        UserId: req.user.id,
-      }
-    });
-    const fullEquippedItem = await db.Item.findOne({
-      where: {
-        itemId: req.params.id,
-        UserId: req.user.id
-      },
-      attributes: ['itemType', 'itemId', 'equipped'],
-    });
-    res.send(fullEquippedItem);
+    res.send({itemType: req.body.itemType, itemId: req.body.itemId});
   }catch(e){
     console.error(e);
     next(e);
@@ -62,14 +46,12 @@ router.patch("/equip/:id", async(req, res, next) => {
 router.patch("/unequip", async(req, res, next) => {
   //아이템 장착해제
   try{
-    const unEquippedItem = await db.Item.update({
-      equipped: false
+    db.Equipment.itemType = req.body.itemType;
+    const equippedItem = await db.Equipment.update({
+      [req.body.itemType]: 0
     }, {
       where: {
-        itemId: req.body.itemId,
         UserId: req.user.id,
-        equipped: true,
-        itemType: req.body.itemType,
       }
     });
     res.send(req.body.itemType);

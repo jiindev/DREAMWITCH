@@ -45,6 +45,7 @@ module.exports = (sequelize, DataTypes) => {
     db.User.hasMany(db.Todo, {as:'Todos'});
     db.User.hasMany(db.History);
     db.User.hasMany(db.Item, {as:'Items'});
+    db.User.hasOne(db.Equipment);
   };
 
   return User;

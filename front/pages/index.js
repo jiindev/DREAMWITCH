@@ -13,7 +13,7 @@ import { LOAD_USER_REQUEST, LOG_OUT_REQUEST } from "../reducers/user";
 import styled from 'styled-components';
 import { LOAD_HISTORIES_REQUEST } from "../reducers/history";
 import { LOAD_TODOS_REQUEST } from "../reducers/todo";
-import { LOAD_ITEMS_REQUEST } from "../reducers/item";
+import { LOAD_ITEMS_REQUEST, LOAD_EQUIPMENT_REQUEST } from "../reducers/item";
 
 const Index = () => {
   const dispatch = useDispatch();
@@ -182,6 +182,9 @@ Index.getInitialProps = async (context) => {
   })
   context.store.dispatch({
     type: LOAD_ITEMS_REQUEST
+  })
+  context.store.dispatch({
+    type: LOAD_EQUIPMENT_REQUEST
   })
 }
 

@@ -14,6 +14,7 @@ db.User = require("./user")(sequelize, Sequelize);
 db.Todo = require("./todo")(sequelize, Sequelize);
 db.History = require("./history")(sequelize, Sequelize);
 db.Item = require("./item")(sequelize, Sequelize);
+db.Equipment = require('./equipment')(sequelize, Sequelize);
 
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {

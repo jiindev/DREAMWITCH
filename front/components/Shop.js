@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {HeadItems} from '../static/itemData';
+import {hatItems, clothesItems, hairItems, bgItems} from '../static/itemData';
 import { LOAD_ITEMS_REQUEST, BUY_ITEM_REQUEST, EQUIP_ITEM_REQUEST, UNEQUIP_ITEM_REQUEST } from "../reducers/item";
 import {H2} from './styledComponents/PageComponent';
 import styled from 'styled-components';
@@ -9,7 +9,7 @@ import { SAY_LOAD_ITEMS } from "../reducers/character";
 
 const Shop = () => {
   const dispatch = useDispatch();
-  const { items, head } = useSelector(state=>state.item);
+  const { items, equipment } = useSelector(state=>state.item);
   const { me } = useSelector(state=>state.user);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const Shop = () => {
   }, []);
 
   const onClickItem = useCallback((item) => () => {
-    if(!items.includes(item.id)){ // 현재 아이템 목록에 없음 (구매기능)
+    if(!items[item.type].includes(item.id)){ // 현재 아이템 목록에 없음 (구매기능)
       if(me.star<item.price){ // 별이 부족할 경우
         return alert('별이 부족합니다.');
       }else{
@@ -29,22 +29,19 @@ const Shop = () => {
         })
       }
     }else{
-      if(item.type==='hat'){
-        if(hat && hat.itemId === item.id){
+      if(equipment[item.type] === item.id){ //장착중일 시 (장착해제)
           dispatch({
             type: UNEQUIP_ITEM_REQUEST,
-            data: {itemId:item.id, price:item.price, itemType:item.type}
+            data: {itemId:item.id, itemType:item.type}
           })
-        }else{
+        }else{ //장착을 하지 않고 있을 시 (장착)
           dispatch({
             type: EQUIP_ITEM_REQUEST,
-            data: {itemId:item.id, price:item.price, itemType:item.type}
+            data: {itemId:item.id, itemType:item.type}
           })
         }
-      }
     }
-
-  }, [items, head]);
+  }, [items, equipment]);
 
   return (
     <>
@@ -53,17 +50,55 @@ const Shop = () => {
     <HAT>
       <H3>HAT</H3>
       <ItemList>
-        {HeadItems.map((v, i)=>{
+        {hatItems.map((v, i)=>{
           return (
-          <Item onClick={onClickItem(v)} equip={head && head.itemId===v.id}>
-            <Image thumb={`item_${v.type}_thumb0${v.id}.png`}/>
-            {items && !items.includes(v.id) && <div>{v.price}</div>}
-            {head && head.itemId === v.id && <EquipLabel>장착해제</EquipLabel>}
+          <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
+            <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
+            {items && !items[v.type].includes(v.id) && <div>{v.price}</div>}
+            {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
           </Item>)
         })}
       </ItemList>
     </HAT>
-    
+    <HAT>
+      <H3>CLOTHES</H3>
+      <ItemList>
+        {clothesItems.map((v, i)=>{
+          return (
+          <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
+            <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
+            {items && !items[v.type].includes(v.id) && <div>{v.price}</div>}
+            {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
+          </Item>)
+        })}
+      </ItemList>
+    </HAT>
+    <HAT>
+      <H3>HAIR</H3>
+      <ItemList>
+        {hairItems.map((v, i)=>{
+          return (
+          <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
+            <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
+            {items && !items[v.type].includes(v.id) && <div>{v.price}</div>}
+            {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
+          </Item>)
+        })}
+      </ItemList>
+    </HAT>
+    <HAT>
+      <H3>BACKGROUND</H3>
+      <ItemList>
+        {bgItems.map((v, i)=>{
+          return (
+          <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
+            <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
+            {items && !items[v.type].includes(v.id) && <div>{v.price}</div>}
+            {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
+          </Item>)
+        })}
+      </ItemList>
+    </HAT>
   </>);
 };
 

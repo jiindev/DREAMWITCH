@@ -9,10 +9,32 @@ router.get("/", async(req, res, next) => {
       where: {
         userId: req.user.id
       },
-      attributes: ['itemType', 'itemId', 'equipped'],
+      attributes: ['itemType', 'itemId'],
       order: [['createdAt', 'ASC']]
     });
+    const equipment = await db.Equipment.findOne({
+      where: {
+        userId: req.user.id
+      },
+      attributes: ['hat', 'hair', 'clothes', 'bg'],
+    })
     return res.json(items);
+  }catch(e){
+    console.error(e);
+    return next(e);
+  }
+});
+
+router.get("/equipment", async(req, res, next) => {
+  // 사용자 장착 아이템 불러오기
+  try{
+    const equipment = await db.Equipment.findOne({
+      where: {
+        userId: req.user.id
+      },
+      attributes: ['hat', 'hair', 'clothes', 'bg'],
+    })
+    return res.json(equipment);
   }catch(e){
     console.error(e);
     return next(e);

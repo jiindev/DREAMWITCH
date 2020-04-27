@@ -1,6 +1,6 @@
 import { all, fork, takeLatest, call, put, delay } from "redux-saga/effects";
 import axios from 'axios';
-import { LOAD_ITEMS_SUCCESS, LOAD_ITEMS_FAILURE, LOAD_ITEMS_REQUEST, BUY_ITEM_SUCCESS, BUY_ITEM_FAILURE, BUY_ITEM_REQUEST, EQUIP_ITEM_SUCCESS, EQUIP_ITEM_FAILURE, EQUIP_ITEM_REQUEST, UNEQUIP_ITEM_FAILURE, UNEQUIP_ITEM_SUCCESS, UNEQUIP_ITEM_REQUEST } from "../reducers/item";
+import { LOAD_ITEMS_SUCCESS, LOAD_ITEMS_FAILURE, LOAD_ITEMS_REQUEST, BUY_ITEM_SUCCESS, BUY_ITEM_FAILURE, BUY_ITEM_REQUEST, EQUIP_ITEM_SUCCESS, EQUIP_ITEM_FAILURE, EQUIP_ITEM_REQUEST, UNEQUIP_ITEM_FAILURE, UNEQUIP_ITEM_SUCCESS, UNEQUIP_ITEM_REQUEST, LOAD_EQUIPMENT_SUCCESS, LOAD_EQUIPMENT_REQUEST, LOAD_EQUIPMENT_FAILURE } from "../reducers/item";
 import { USE_STARS } from "../reducers/user";
 import { SAY_BUY_ITEM, SAY_EQUIP_ITEM, SAY_UNEQUIP_ITEM } from "../reducers/character";
 
@@ -26,6 +26,30 @@ function* loadItems() {
 }
 function* watchLoadItems() {
   yield takeLatest(LOAD_ITEMS_REQUEST, loadItems);
+}
+
+function loadEquipmentAPI() {
+  return axios.get("/items/equipment", {
+    withCredentials: true
+  });
+}
+function* loadEquipment() {
+  try {
+    const result = yield call(loadEquipmentAPI);
+    yield put({
+      type: LOAD_EQUIPMENT_SUCCESS,
+      data: result.data
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: LOAD_EQUIPMENT_FAILURE,
+      error: e,
+    });
+  }
+}
+function* watchLoadEquipment() {
+  yield takeLatest(LOAD_EQUIPMENT_REQUEST, loadEquipment);
 }
 
 function buyItemAPI(itemData) {
@@ -117,6 +141,7 @@ function* watchUnequipItem() {
 export default function* itemSaga() {
   yield all([
     fork(watchLoadItems),
+    fork(watchLoadEquipment),
     fork(watchBuyItem),
     fork(watchEquipItem),
     fork(watchUnequipItem),

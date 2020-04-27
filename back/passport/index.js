@@ -10,18 +10,6 @@ module.exports = () => {
     try {
       const user = await db.User.findOne({
         where: { id },
-        include: [{
-          model: db.Todo,
-          as: 'Todos',
-          attributes: ['id'],
-        }, {
-          model: db.History,
-          attributes: ['id'],
-        }, {
-          model: db.Item,
-          as: 'Items',
-          attributes: ['id'],
-        }],
         attributes: ['id', 'nickname', 'userId', 'level', 'exp', 'star', 'lastStart'],
       });
       return done(null, user);
