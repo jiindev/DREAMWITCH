@@ -17,6 +17,10 @@ const User = ({id}) => {
   const { userInfo } = useSelector((state) => state.user);
   const [page, setPage] = useState(1);
 
+  useEffect(()=>{
+    setPage(1);
+  }, [id]);
+
   const onChangePage = useCallback(pageNum => () => {
     if(page!==pageNum){
       setPage(pageNum);

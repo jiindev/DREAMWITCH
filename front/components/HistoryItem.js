@@ -56,7 +56,7 @@ const HistoryItem = ({history, userHistory}) => {
                         {history.comments && 
                         <div>
                             {history.comments.map((v)=>{
-                                return <div>{me.id ==v.User.id ? <p>{v.User.nickname}</p> : <Link href={{pathname: '/user', query:{id:v.User.id}}} as={`/user/${v.User.id}`}><p>{v.User.nickname}</p></Link>}{v.content}</div>
+                                return <div>{me && me.id ==v.User.id ? <p>{v.User.nickname}</p> : <Link href={{pathname: '/user', query:{id:v.User.id}}} as={`/user/${v.User.id}`}><p>{v.User.nickname}</p></Link>}{v.content}</div>
                             })}
                         </div>
                         }
