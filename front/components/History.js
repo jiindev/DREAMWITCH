@@ -6,10 +6,11 @@ import { H2 } from './styledComponents/PageComponent';
 import styled from 'styled-components';
 import { SAY_LOAD_HISTORIES } from "../reducers/character";
 
-const History = () => {
+const History = ({id}) => {
   const dispatch = useDispatch();
-  const { histories } = useSelector(state=>state.history);
-  
+  const { histories, userHistories } = useSelector(state=>state.history);
+  const {userInfo} = useSelector(state=>state.user);
+
   useEffect(() => {
     dispatch({
       type: SAY_LOAD_HISTORIES,
@@ -20,16 +21,34 @@ const History = () => {
 return (
   <>
     <HistoryPage>
-      <H2>나의 기록</H2>
-      {histories ? 
-        <div>
-          {histories.map((c, i)=>{
-            return (<HistoryItem history={c}/>)
-          })}
-          </div>
+      {id?
+        <>
+        <H2>{userInfo && userInfo.nickname}의 기록</H2>
+        {userHistories ? 
+            <div>
+              {userHistories.map((c, i)=>{
+                return (<HistoryItem history={c} userHistory={true}/>)
+              })}
+              </div>
+          :
+          <div>기록된 별이 없습니다.</div>
+          }
+        </>
       :
-      <div>기록된 별이 없습니다.</div>
+        <>
+          <H2>나의 기록</H2>
+          {histories ? 
+            <div>
+              {histories.map((c, i)=>{
+                return (<HistoryItem history={c}/>)
+              })}
+              </div>
+          :
+          <div>기록된 별이 없습니다.</div>
+          }
+        </>
       }
+      
     </HistoryPage>
   </>
   );

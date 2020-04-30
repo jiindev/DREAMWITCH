@@ -9,6 +9,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { LOAD_USER_REQUEST, LOG_OUT_REQUEST } from "../reducers/user";
 import styled from 'styled-components';
 import propTypes from 'prop-types';
+import { LOAD_TODOS_REQUEST } from "../reducers/todo";
+import { LOAD_HISTORIES_REQUEST } from "../reducers/history";
 
 const User = ({id}) => {
   const dispatch = useDispatch();
@@ -32,11 +34,10 @@ const User = ({id}) => {
       <Wrap>
        <TopContent>
          <UserStatue>
-           
-            <Star>{userInfo && userInfo.star}</Star><Level>{userInfo && userInfo.level}레벨</Level>
+            <Star>{userInfo && userInfo.nickname}</Star><Level>{userInfo && userInfo.level}레벨</Level>
          </UserStatue>
          <LogoutButton onClick={onLogout}><i/></LogoutButton>
-          <Character></Character>
+          <Character id={id}/>
         <Tab>
           <ul>
             <TabItem onClick={onChangePage(1)} active={page===1}><TabIcon iconName={'star'}/></TabItem>
@@ -171,14 +172,14 @@ User.getInitialProps = async (context) => {
     type: LOAD_USER_REQUEST,
     data: id,
   })
-  // context.store.dispatch({
-  //   type: LOAD_TODOS_REQUEST,
-  //   data: id,
-  // })
-  // context.store.dispatch({
-  //   type: LOAD_HISTORIES_REQUEST,
-  //   data: id,
-  // })
+  context.store.dispatch({
+    type: LOAD_TODOS_REQUEST,
+    data: id,
+  })
+  context.store.dispatch({
+    type: LOAD_HISTORIES_REQUEST,
+    data: id,
+  })
   // context.store.dispatch({
   //   type: LOAD_EQUIPMENT_REQUEST,
   //   data: id,

@@ -26,20 +26,21 @@ import axios from 'axios';
 import { SAY_ADD_TODO, SAY_CHECK_TODO, SAY_EDIT_TODO, SAY_DELETE_TODO, SAY_LOAD_TODOS, SAY_HELLO} from "../reducers/character";
 import { UPDATE_LASTSTART_REQUEST } from "../reducers/user";
 
-function loadTodosAPI() {
-  return axios.get(`/todos`, {
+function loadTodosAPI(userId) {
+  return axios.get(userId?`/todos/${userId}`:`/todos`, {
     withCredentials: true
   });
 }
-function* loadTodos() {
+function* loadTodos(action) {
   try {
-    const result = yield call(loadTodosAPI);
+    const result = yield call(loadTodosAPI, action.data);
     yield put({
       type: LOAD_TODOS_SUCCESS,
       data: {
         todos: result.data.todos,
         date: result.data.date,
-      }
+      },
+      me: !action.data,
     });
   } catch (e) {
     console.error(e);

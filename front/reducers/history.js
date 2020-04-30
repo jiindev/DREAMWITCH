@@ -2,6 +2,7 @@ import produce from 'immer';
 
 export const initialState = {
     histories: [],
+    userHistories: [],
   };
   
   export const LOAD_HISTORIES_REQUEST = "LOAD_HISTORIES_REQUEST";
@@ -24,8 +25,13 @@ export const initialState = {
           break;
         }
         case LOAD_HISTORIES_SUCCESS: {
-          draft.histories = action.data;
-          break;
+          if(action.me){
+            draft.histories = action.data;
+            break;
+          }else{
+            draft.userHistories = action.data;
+            break;
+          }
         }
         case LOAD_HISTORIES_FAILURE: {
           break;
@@ -34,8 +40,13 @@ export const initialState = {
           break;
         }
         case LOAD_HISTORY_SUCCESS: {
-          let historyIndex = draft.histories.findIndex(v=>v.id === action.data.historyId);
-          draft.histories[historyIndex].todos = action.data.todos;
+          if(action.userHistory){
+            let historyIndex = draft.histories.findIndex(v=>v.id === action.data.historyId);
+            draft.histories[historyIndex].todos = action.data.todos;
+            break;
+          }
+          let historyIndex = draft.userHistories.findIndex(v=>v.id === action.data.historyId);
+          draft.userHistories[historyIndex].todos = action.data.todos;
           break;
         }
         case LOAD_HISTORY_FAILURE: {

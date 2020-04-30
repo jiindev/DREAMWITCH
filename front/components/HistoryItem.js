@@ -4,14 +4,15 @@ import { LOAD_HISTORY_REQUEST } from "../reducers/history";
 import styled from 'styled-components';
 import {Date} from './styledComponents/PageComponent';
 
-const HistoryItem = ({history}) => {
+const HistoryItem = ({history, userHistory}) => {
     const [openDiv, setOpenDiv] = useState(false);
     const dispatch = useDispatch();
     const onClickHistoryDiv = () => {
         if(!openDiv){
             dispatch({
                 type: LOAD_HISTORY_REQUEST,
-                data: history.id
+                data: history.id,
+                userHistory
             });
             setOpenDiv(true);
         }else setOpenDiv(false);

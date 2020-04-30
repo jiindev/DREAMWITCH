@@ -5,9 +5,10 @@ import { LOAD_HISTORIES_REQUEST } from "../reducers/history";
 import { SAY_RESET } from '../reducers/character';
 
 
-const Character = () => {
+const Character = ({id}) => {
   const { talking } = useSelector(state=>state.character);
   const { equipment } = useSelector(state=>state.item);
+  const { userInfo } = useSelector(state=>state.user);
   const dispatch = useDispatch();
   const timeoutRef = useRef();
 
@@ -26,17 +27,16 @@ const Character = () => {
 
   return (
     <>
-      <CharacterDiv index={equipment ? equipment.bg  : 0}>
-        {talking && <Talking><p>{talking}</p></Talking>}
+      <CharacterDiv index={!id ? equipment ? equipment.bg  : 0 : userInfo.Equipment.bg}>
+        {!id ? talking && <Talking><p>{talking}</p></Talking> : <Talking><p>hi</p></Talking>}
         <Witch>
-          <Cloths index={equipment ? equipment.clothes  : 0}/>
-          <FrontHat index={equipment ? equipment.hat : 0}/>
+          <Cloths index={!id ? equipment ? equipment.clothes  : 0 : userInfo.Equipment.clothes}/>
+          <FrontHat index={!id ? equipment ? equipment.hat : 0 : userInfo.Equipment.hat}/>
           <Emotion emotion={'mad'}/>
-          <Hair index={equipment ? equipment.hair  : 0}/>
-          <BackHat index={equipment ? equipment.hat  : 0}/>
+          <Hair index={!id ? equipment ? equipment.hair  : 0 : userInfo.Equipment.hair}/>
+          <BackHat index={!id ? equipment ? equipment.hat  : 0 : userInfo.Equipment.hat}/>
           <Effect effect={'happy'}/>
         </Witch>
-        {/* {head && <div>{head.itemId}번째 아이템 장착중!</div>} */}
       </CharacterDiv>
     </>
   );

@@ -32,7 +32,7 @@ router.get("/:id", async(req, res, next) => {
       },
       order: [['createdAt', 'ASC']]
     });
-    return res.send(todos);
+    return res.send({todos, date:today});
   } catch (e) {
     console.error(e);
     return next(e);

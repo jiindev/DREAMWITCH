@@ -70,11 +70,17 @@ const reducer = (state = initialState, action) => {
         break;
       }
       case LOAD_TODOS_SUCCESS: {
-        draft.date = action.data.date;
-        draft.isCleared = action.data.todos[0] ? action.data.todos[0].HistoryId ? true : false : false;
-        draft.todos = action.data.todos;
-        draft.clearPercentage = draft.todos[0] ? Math.floor(action.data.todos.filter(v=>v.checked===true).length/action.data.todos.length * 100) : 0;
+        if(action.me){
+          draft.date = action.data.date;
+          draft.isCleared = action.data.todos[0] ? action.data.todos[0].HistoryId ? true : false : false;
+          draft.todos = action.data.todos;
+          draft.clearPercentage = draft.todos[0] ? Math.floor(action.data.todos.filter(v=>v.checked===true).length/action.data.todos.length * 100) : 0;
         break;
+        }else{
+          draft.userTodos = action.data.todos;
+          break;
+        }
+        
       }
       case LOAD_TODOS_FAILURE: {
         break;

@@ -5,17 +5,18 @@ import { LOAD_HISTORIES_REQUEST, LOAD_HISTORIES_SUCCESS, LOAD_HISTORIES_FAILURE,
 import { SAY_LOAD_HISTORIES, SAY_ADD_HISTORY } from "../reducers/character";
 import { GET_STARS } from "../reducers/user";
 
-function loadHistoriesAPI() {
-  return axios.get("/histories", {
+function loadHistoriesAPI(userId) {
+  return axios.get(userId?`/histories/${userId}`:"/histories", {
     withCredentials: true
   });
 }
-function* loadHistories() {
+function* loadHistories(action) {
   try {
-    const result = yield call(loadHistoriesAPI);
+    const result = yield call(loadHistoriesAPI, action.data);
     yield put({
       type: LOAD_HISTORIES_SUCCESS,
-      data: result.data
+      data: result.data,
+      me: !action.data
     });
   } catch (e) {
     console.error(e);
@@ -40,7 +41,8 @@ function* loadHistory(action) {
       type: LOAD_HISTORY_SUCCESS,
       data: {
         todos : result.data,
-        historyId : action.data
+        historyId : action.data,
+        userHistory: action.userHistory
       }
     });
   } catch (e) {
