@@ -34,6 +34,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(20),
         allowNull: false,
         defaultValue: 0
+      },
+      greetings: {
+        type: DataTypes.STRING(50),
+        allowNull: true,
+        defaultValue: '안녕~ 반가워!'
       }
     },
     {
@@ -46,6 +51,7 @@ module.exports = (sequelize, DataTypes) => {
     db.User.hasMany(db.History);
     db.User.hasMany(db.Item, {as:'Items'});
     db.User.hasOne(db.Equipment);
+    db.User.hasMany(db.Comment);
   };
 
   return User;

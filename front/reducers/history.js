@@ -17,6 +17,10 @@ export const initialState = {
   export const ADD_HISTORIES_SUCCESS = "ADD_HISTORIES_SUCCESS";
   export const ADD_HISTORIES_FAILURE = "ADD_HISTORIES_FAILURE";
   
+  export const ADD_COMMENT_REQUEST = "ADD_COMMENT_REQUEST";
+  export const ADD_COMMENT_SUCCESS = "ADD_COMMENT_SUCCESS";
+  export const ADD_COMMENT_FAILURE = "ADD_COMMENT_FAILURE";
+  
   
   const reducer = (state = initialState, action) => {
     return produce(state, (draft)=>{
@@ -40,14 +44,15 @@ export const initialState = {
           break;
         }
         case LOAD_HISTORY_SUCCESS: {
-          if(action.userHistory){
-            let historyIndex = draft.histories.findIndex(v=>v.id === action.data.historyId);
-            draft.histories[historyIndex].todos = action.data.todos;
+          if(action.data.userHistory){
+            let historyIndex = draft.userHistories.findIndex(v=>v.id === action.data.historyId);
+            draft.userHistories[historyIndex].todos = action.data.todos;
+            draft.userHistories[historyIndex].comments = action.data.comments;
             break;
           }
-          let historyIndex = draft.userHistories.findIndex(v=>v.id === action.data.historyId);
-          draft.userHistories[historyIndex].todos = action.data.todos;
-          break;
+          let historyIndex = draft.histories.findIndex(v=>v.id === action.data.historyId);
+          draft.histories[historyIndex].todos = action.data.todos;
+          draft.histories[historyIndex].comments = action.data.comments;
         }
         case LOAD_HISTORY_FAILURE: {
           break;
@@ -60,6 +65,22 @@ export const initialState = {
           break;
         }
         case ADD_HISTORIES_FAILURE: {
+          break;
+        }
+        case ADD_COMMENT_REQUEST: {
+          break;
+        }
+        case ADD_COMMENT_SUCCESS: {
+          if(action.data.userHistory){
+            let historyIndex = draft.userHistories.findIndex(v=>v.id === action.data.historyId);
+            draft.userHistories[historyIndex].comments.push(action.data.comment);
+            break;
+          }
+          let historyIndex = draft.histories.findIndex(v=>v.id === action.data.historyId);
+          draft.histories[historyIndex].comments.push(action.data.comment);
+          break;
+        }
+        case ADD_COMMENT_FAILURE: {
           break;
         }
         default: {

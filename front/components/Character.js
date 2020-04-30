@@ -27,14 +27,14 @@ const Character = ({id}) => {
 
   return (
     <>
-      <CharacterDiv index={!id ? equipment ? equipment.bg  : 0 : userInfo.Equipment.bg}>
+      <CharacterDiv index={!id ? equipment ? equipment.bg  : 0 : userInfo && userInfo.Equipment.bg}>
         {!id ? talking && <Talking><p>{talking}</p></Talking> : <Talking><p>hi</p></Talking>}
         <Witch>
-          <Cloths index={!id ? equipment ? equipment.clothes  : 0 : userInfo.Equipment.clothes}/>
-          <FrontHat index={!id ? equipment ? equipment.hat : 0 : userInfo.Equipment.hat}/>
+          <Cloths index={!id ? equipment ? equipment.clothes  : 0 : userInfo && userInfo.Equipment.clothes}/>
+          <FrontHat index={!id ? equipment ? equipment.hat : 0 : userInfo && userInfo.Equipment.hat}/>
           <Emotion emotion={'mad'}/>
-          <Hair index={!id ? equipment ? equipment.hair  : 0 : userInfo.Equipment.hair}/>
-          <BackHat index={!id ? equipment ? equipment.hat  : 0 : userInfo.Equipment.hat}/>
+          <Hair index={!id ? equipment ? equipment.hair  : 0 : userInfo && userInfo.Equipment.hair}/>
+          <BackHat index={!id ? equipment ? equipment.hat  : 0 : userInfo && userInfo.Equipment.hat}/>
           <Effect effect={'happy'}/>
         </Witch>
       </CharacterDiv>

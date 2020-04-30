@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require('../models');
 const sequelize = require('sequelize');
-
+const {historyExists} = require('./middleware');
 
 router.post("/", async(req, res, next) => {
   // 히스토리 생성
@@ -46,7 +46,42 @@ router.get("/:id", async(req, res, next) => {
       order: [['createdAt', 'ASC']],
       attributes: ['content'],
     });
-    return res.json(todos);
+    const comments = await db.Comment.findAll({
+      where: {
+        HistoryId: req.params.id
+      },
+      order: [['createdAt', 'ASC']],
+      include:[{
+        model: db.User,
+        attributes: ['id', 'nickname'],
+      }]
+    });
+    return res.json({todos, comments});
+  }catch(e){
+    console.error(e);
+    return next(e);
+  }
+});
+
+router.post('/:id/comment', historyExists, async(req, res, next)=>{
+  try{
+    const history = req.history;
+    const newComment = await db.Comment.create({
+      UserId: req.user.id,
+      HistoryId: req.params.id,
+      content: req.body.content
+    });
+     await history.addComment(newComment.id);
+     const comment = await db.Comment.findOne({
+       where: {
+         id: newComment.id,
+       },
+       include:[{
+         model: db.User,
+         attributes: ['id', 'nickname', 'userId'],
+       }]
+     });
+     return res.json(comment);
   }catch(e){
     console.error(e);
     return next(e);

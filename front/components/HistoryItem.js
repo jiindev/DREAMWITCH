@@ -1,11 +1,14 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LOAD_HISTORY_REQUEST } from "../reducers/history";
+import { LOAD_HISTORY_REQUEST, ADD_COMMENT_REQUEST } from "../reducers/history";
 import styled from 'styled-components';
 import {Date} from './styledComponents/PageComponent';
+import Link from 'next/link';
 
 const HistoryItem = ({history, userHistory}) => {
+    const {me} = useSelector(state=>state.user);
     const [openDiv, setOpenDiv] = useState(false);
+    const [commentText, setCommentText] = useState('');
     const dispatch = useDispatch();
     const onClickHistoryDiv = () => {
         if(!openDiv){
@@ -15,26 +18,55 @@ const HistoryItem = ({history, userHistory}) => {
                 userHistory
             });
             setOpenDiv(true);
-        }else setOpenDiv(false);
-  }
-return (
-    <>  
-        <History>
-        <Star open={openDiv===true}/>
-            <HistoryContent onClick={onClickHistoryDiv} open={openDiv===true}>
-                <Content><b>{history.content}</b></Content>
-                <Date>{history.date}</Date>
-                {openDiv && 
-                    history.todos && 
-                    <Todos>
-                        {history.todos.map((v)=>{
-                            return <div>{v.content}</div>
-                        })}
-                    </Todos>
-                }
-            </HistoryContent>
-        </History>
-  </>
+        }
+        // else setOpenDiv(false);
+    }
+    const onChangeCommentText = useCallback((e) => {
+        setCommentText(e.target.value);
+    }, []);
+    const onSubmitComment = useCallback((e)=>{
+        if(!me){
+            return alert('로그인이 필요합니다.');
+        }
+        return dispatch({
+            type: ADD_COMMENT_REQUEST,
+            data: {
+                historyId: history.id,
+                content: commentText,
+                userHistory
+            }
+        })
+    }, [me && me.id, commentText]);
+
+    return (
+        <>  
+            <History>
+            <Star open={openDiv===true}/>
+                <HistoryContent onClick={onClickHistoryDiv} open={openDiv===true}>
+                    <Content><b>{history.content}</b></Content>
+                    <Date>{history.date}</Date>
+                    {openDiv && 
+                        <>
+                        {history.todos && 
+                        <Todos>
+                            {history.todos.map((v)=>{
+                                return <div>{v.content}</div>
+                            })}
+                        </Todos>}
+                        {history.comments && 
+                        <div>
+                            {history.comments.map((v)=>{
+                                return <div>{me.id ==v.User.id ? <p>{v.User.nickname}</p> : <Link href={{pathname: '/user', query:{id:v.User.id}}} as={`/user/${v.User.id}`}><p>{v.User.nickname}</p></Link>}{v.content}</div>
+                            })}
+                        </div>
+                        }
+                        <input type="text" value={commentText} onChange={onChangeCommentText}/>
+                            <button onClick = {onSubmitComment}>덧글 작성</button>
+                        </>
+                    }
+                </HistoryContent>
+            </History>
+        </>
   );
 };
 

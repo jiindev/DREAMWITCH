@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   History.associate = (db) => {
     db.History.belongsTo(db.User);
     db.History.hasMany(db.Todo);
+    db.History.hasMany(db.Comment);
   };
 
   return History;
