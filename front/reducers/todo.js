@@ -6,6 +6,7 @@ export const initialState = {
   todos: [],
   clearPercentage: 0,
   lastTodos: [],
+  userTodos: [],
 };
 
 export const ADD_TODO_REQUEST = "ADD_TODO_REQUEST";

@@ -4,7 +4,7 @@ const db = require('../models');
 const sequelize = require('sequelize');
       
 router.get("/", async(req, res, next) => {
-  // 사용자의 그날의 투두리스트 불러오기
+  // 나의 그날의 투두리스트 불러오기
   try {
     let today = new Date().toLocaleDateString().split('-').map((v)=>parseInt(v, 10)<10?'0'+v:v).join('-');
     const todos = await db.Todo.findAll({
@@ -15,6 +15,24 @@ router.get("/", async(req, res, next) => {
       order: [['createdAt', 'ASC']]
     });
     return res.send({todos, date:today});
+  } catch (e) {
+    console.error(e);
+    return next(e);
+  }
+});
+
+router.get("/:id", async(req, res, next) => {
+  // 특정 사용자의 그날의 투두리스트 불러오기
+  try {
+    let today = new Date().toLocaleDateString().split('-').map((v)=>parseInt(v, 10)<10?'0'+v:v).join('-');
+    const todos = await db.Todo.findAll({
+      where: {
+        userId: req.params.id,
+        date: today,
+      },
+      order: [['createdAt', 'ASC']]
+    });
+    return res.send(todos);
   } catch (e) {
     console.error(e);
     return next(e);

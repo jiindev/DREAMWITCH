@@ -3,16 +3,37 @@ const bcrypt = require("bcrypt");
 const passport = require("passport");
 const router = express.Router();
 const db = require("../models");
+const {isLoggedIn} = require('./middleware');
 
-router.get("/", async(req, res, next) => {
-  // 유저 정보 프론트로 전달
-  if(!req.user){
-    return res.status(401).send('로그인이 필요합니다.');
-  }
+router.get("/", isLoggedIn, async(req, res, next) => {
+  // 나의 정보 프론트로 전달
   const user = Object.assign({}, req.user.toJSON());
   delete user.password;
+  console.log('realinfo:', user);
   return res.json(user);
 });
+
+router.get("/:id", async(req, res, next) => {
+  // 특정 사용자 정보 프론트로 전달
+  try{
+    const user = await db.User.findOne({
+      where:{id:parseInt(req.params.id, 10)},
+      include:[{
+        model: db.Equipment,
+        as: 'Equipment',
+        attributes: ['id']
+      }],
+      attributes: ['id', 'nickname', 'level']
+    });
+    
+    const jsonUser = user.toJSON();
+    return res.json(jsonUser);
+  }catch(e){
+    console.error(e);
+    next(e);
+  }
+});
+
 router.post("/", async (req, res, next) => {
   // 회원가입
   try {

@@ -101,7 +101,7 @@ const TabItem = styled.li`
     background-color: ${props => (props.active ? props.theme.yellowLight : props.theme.purpleLight)};
     color: ${props => props.theme.purpleDark};
     padding: 12px 0;
-    flex: 0.33333;
+    flex: 0.25;
     border-radius: 20px 20px 0 0;
     text-align: center;
     transition: all .2s ease;

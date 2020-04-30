@@ -9,6 +9,7 @@ export const initialState = {
   signUpErrorReason: "", // 회원가입 실패 사유
   me: null, // 내 정보
   friends: [],
+  userInfo: null,
 };
 
 export const LOG_IN_REQUEST = "LOG_IN_REQUEST";
@@ -99,11 +100,13 @@ const reducer = (state = initialState, action) => {
         break;
       }
       case LOAD_USER_SUCCESS: {
-        draft.me = action.data;
+        console.log('action.me check:',action.me);
+        action.me ? draft.me = action.data : draft.userInfo = action.data;
+        console.log('draft.me:', draft.me);
         break;
       }
       case LOAD_USER_FAILURE: {
-        break;
+          break;
       }
       case UPDATE_LASTSTART_REQUEST: {
         break;

@@ -52,7 +52,7 @@ const Visit = () => {
     </AddFriend>
     <FriendList>
         {friends && friends.map((v, i)=>{
-            return <li>{v.nickname}<span>({v.userId})</span>{editingMode ? <DeleteButton onClick={onRemoveFriend(v.id)}>친구삭제</DeleteButton> : <Link href={`/user/${v.id}`}><VisitButton>방문하기</VisitButton></Link>}</li>
+            return <li>{v.nickname}<span>({v.userId})</span>{editingMode ? <DeleteButton onClick={onRemoveFriend(v.id)}>친구삭제</DeleteButton> : <Link href={{pathname: '/user', query:{id:v.id}}} as={`/user/${v.id}`}><VisitButton>방문하기</VisitButton></Link>}</li>
         })}
     </FriendList>
   </>);

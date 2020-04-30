@@ -4,7 +4,6 @@ import Link from "next/link";
 // import AppLaout from '../components/AppLayout';
 import propTypes from 'prop-types';
 import Character from "./Character";
-import History from "./HistoryList";
 import TodoList from "./TodoList";
 import Shop from "./Shop";
 import { useSelector, useDispatch } from "react-redux";

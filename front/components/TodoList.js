@@ -10,10 +10,10 @@ import { LOAD_LAST_TODOS_REQUEST, CLEAN_LAST_TODOS_REQUEST } from "../reducers/t
 import TodoCompletePopup from './TodoCompletePopup';
 import { ADD_HISTORIES_REQUEST } from "../reducers/history";
 
-const CheckList = () => {
+const CheckList = ({id}) => {
   const dispatch = useDispatch();
-  const { todos, date, isCleared, lastTodos } = useSelector((state) => state.todo);
-  const { me } = useSelector(state=>state.user);
+  const { todos, date, isCleared, lastTodos, userTodos } = useSelector((state) => state.todo);
+  const { me, userInfo } = useSelector(state=>state.user);
   const [started, setStarted] = useState(false);
   const [todosToCopy, setTodosToCopy] = useState([]);
   const [writingHistory, setWritingHistory] = useState(false);
@@ -27,7 +27,7 @@ const CheckList = () => {
   }, []);
 
   useEffect(() => {
-    if(!started && todos.length===0){
+    if(!started && todos.length===0 && !id){
       return dispatch({
         type: LOAD_LAST_TODOS_REQUEST,
         data: me && me.lastStart
@@ -81,58 +81,74 @@ const CheckList = () => {
 
   return (
     <>
-      
-      {todos && todos[0] || started ? (
-        <>
-        {writingHistory &&
-          <TodoCompletePopup clear={clear}/>
-        }
-          <TodoPage>
-            <div>
-              <H2>할 일 목록 <Date>{date}</Date></H2>
-            </div>
-            <TodoUl>
-              {isCleared ? 
-                <>
-                <FinishedList>
-                  {todos.map((c, i)=> {
-                    return <li key={i}>{c.content}</li>
+      {id ? 
+
+        <TodoPage>
+          <H2>{userInfo && userInfo.nickname}의 오늘의 할 일!</H2>
+          <TodoUl>
+          <UserTodoList>
+                  {userTodos.map((c, i)=>{
+                    return <LastTodo checked={c.checked} onClick = {onClickAddLast(c.content)}><Checked checked={c.checked}/>{c.content}</LastTodo>
                   })}
-                </FinishedList>
+          </UserTodoList>
+          </TodoUl>
+        </TodoPage>
+
+        :
+
+        todos && todos[0] || started ? (
+          <>
+          {writingHistory &&
+            <TodoCompletePopup clear={clear}/>
+          }
+            <TodoPage>
+              <div>
+                <H2>할 일 목록 <Date>{date}</Date></H2>
+              </div>
+              <TodoUl>
+                {isCleared ? 
+                  <>
+                  <FinishedList>
+                    {todos.map((c, i)=> {
+                      return <li key={i}>{c.content}</li>
+                    })}
+                  </FinishedList>
+                  </>
+                :
+                <>
+                  {todos.map((c, i) => {
+                    return <TodoItem todo={c}/>;
+                  })}
+                  <AddTodo/>
                 </>
-              :
-              <>
-                {todos.map((c, i) => {
-                  return <TodoItem todo={c}/>;
-                })}
-                <AddTodo/>
-              </>
-              }
-            </TodoUl>
-            <TodoBottom/>
-            <TodoStatue onClickWriteHistory={onClickWriteHistory}/>
-          </TodoPage>
-        </>
-      ) : lastTodos.length>0 ? (
-         <LastTodoPage>
-           <H2>지난 날의 기록 <Date>{lastTodos[0].date}</Date></H2>
-           <H3>{lastTodos[0].HistoryId ? '성공': '실패'}의 전당</H3>
-           <LastTodoList>
-                {lastTodos.map((c, i)=>{
-                  return <LastTodo checked={c.checked} onClick = {onClickAddLast(c.content)}><Checked checked={c.checked}/>{c.content}<CopyCheck checked={todosToCopy.includes(c.content)}/></LastTodo>
-                })}
-           </LastTodoList>
-            <Button onClick={onStartWithLastTodos}>{todosToCopy.length>0 ? `${todosToCopy.length}개의 할일과 함께 시작하기`: '새로운 미션 시작하기'}</Button>
-         </LastTodoPage>
-      ) : (
-        <StartTodo>
-          <div>
-            <H2>오늘도 꿈을 향해! 할 일 목록 적어볼까?</H2>
-          </div>
-          <StartIllust>지수 일러스트</StartIllust>
-          <Button onClick={onStartTodo}>시작하기</Button>
-        </StartTodo>
-      )}
+                }
+              </TodoUl>
+              <TodoBottom/>
+              <TodoStatue onClickWriteHistory={onClickWriteHistory}/>
+            </TodoPage>
+          </>
+        ) : lastTodos.length>0 ? (
+           <LastTodoPage>
+             <H2>지난 날의 기록 <Date>{lastTodos[0].date}</Date></H2>
+             <H3>{lastTodos[0].HistoryId ? '성공': '실패'}의 전당</H3>
+             <LastTodoList>
+                  {lastTodos.map((c, i)=>{
+                    return <LastTodo checked={c.checked} onClick = {onClickAddLast(c.content)}><Checked checked={c.checked}/>{c.content}<CopyCheck checked={todosToCopy.includes(c.content)}/></LastTodo>
+                  })}
+             </LastTodoList>
+              <Button onClick={onStartWithLastTodos}>{todosToCopy.length>0 ? `${todosToCopy.length}개의 할일과 함께 시작하기`: '새로운 미션 시작하기'}</Button>
+           </LastTodoPage>
+        ) : (
+          <StartTodo>
+            <div>
+              <H2>오늘도 꿈을 향해! 할 일 목록 적어볼까?</H2>
+            </div>
+            <StartIllust>지수 일러스트</StartIllust>
+            <Button onClick={onStartTodo}>시작하기</Button>
+          </StartTodo>
+        )
+      }
+      
     </>
   );
 };
@@ -165,6 +181,14 @@ const FinishedList = styled.ul`
       background: url('/static/icons/check_done.svg');
       display: inline-block;
       vertical-align: middle;
+    }
+  }
+`;
+
+const UserTodoList = styled(FinishedList)`
+  & li{
+    &:before{
+      display:none;
     }
   }
 `;

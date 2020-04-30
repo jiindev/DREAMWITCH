@@ -5,23 +5,15 @@ import Link from "next/link";
 import Character from "../components/Character";
 import History from "../components/History";
 import TodoList from "../components/TodoList";
-import Shop from "../components/Shop";
 import { useSelector, useDispatch } from "react-redux";
-import Router from "next/router";
 import { LOAD_USER_REQUEST, LOG_OUT_REQUEST } from "../reducers/user";
 import styled from 'styled-components';
+import propTypes from 'prop-types';
 
 const User = ({id}) => {
   const dispatch = useDispatch();
-  const { me, logInErrorReason } = useSelector((state) => state.user);
+  const { userInfo } = useSelector((state) => state.user);
   const [page, setPage] = useState(1);
-
-  useEffect(()=>{
-    if(!me){
-      Router.push('/login');
-    };
-    alert(id);
-  }, [me]);
 
   const onChangePage = useCallback(pageNum => () => {
     if(page!==pageNum){
@@ -40,9 +32,10 @@ const User = ({id}) => {
       <Wrap>
        <TopContent>
          <UserStatue>
-            <span>{me && me.star}별</span><span>{me && me.level}레벨</span>
-            <button onClick={onLogout}>로그아웃</button>
+           
+            <Star>{userInfo && userInfo.star}</Star><Level>{userInfo && userInfo.level}레벨</Level>
          </UserStatue>
+         <LogoutButton onClick={onLogout}><i/></LogoutButton>
           <Character></Character>
         <Tab>
           <ul>
@@ -53,9 +46,8 @@ const User = ({id}) => {
         </TopContent>
         
         <Page>
-          {page === 1 && <TodoList/>}
-          {page === 2 && <History/>}
-          {page === 3 && <Shop/>}
+          {page === 1 && <TodoList id={id}/>}
+          {page === 2 && <History id={id}/>}
         </Page>
         </Wrap>
     </>
@@ -76,11 +68,13 @@ const Page = styled.div`
   padding: 38px 15px 0 15px;
   box-sizing: border-box;
   flex: 1;
-  overflow: scroll;
+  overflow-y: auto;
   position: relative;
 `;
 
 const Tab = styled.nav`
+  position: relative;
+  z-index: 10;
   & ul {
     display: flex;
     position: absolute;
@@ -117,10 +111,79 @@ const UserStatue = styled.div`
   position: absolute;
   top: 0;
   z-index: 99;
+  width: 100%;
 `;
 
+const Level = styled.span`
+  background-color: ${props => props.theme.purpleDark}; 
+  color: ${props => props.theme.purpleLight}; 
+  font-size: 12px;
+  padding: 10px 15px;
+  display: inline-block;
+  border-radius: 0 0 0 20px;
+  float: right;
+`;
+
+const Star = styled(Level)`
+border-radius: 0 0 20px 0;
+float: left;
+  &:before{
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: red;
+    vertical-align: middle;
+    margin-right: 5px;
+    background: url('/static/icons/top_left_star.svg');
+    background-size: contain;
+  }
+`;
+
+const LogoutButton = styled.button`
+  position: absolute;
+  top: 32px;
+  right: 0;
+  z-index: 98;
+  width: 40px;
+  height: 34px;
+  background-color: ${props => props.theme.purpleLight}; 
+  outline: none;
+  border: 0;
+  border-radius: 0 0 0 20px;
+  & i{
+    width: 16px;
+    height: 16px;
+    background-image: url('/static/icons/back_to_home.svg');
+    display: inline-block;
+  }
+`;
+
+User.propTypes = {
+  id: propTypes.number.isRequired,
+}
+
 User.getInitialProps = async (context) => {
-  return {id:parseInt(context.query.id,10)};
+  const id = parseInt(context.query.id, 10);
+  console.log('user getInitialProps', context.query.id);
+  
+  context.store.dispatch({
+    type: LOAD_USER_REQUEST,
+    data: id,
+  })
+  // context.store.dispatch({
+  //   type: LOAD_TODOS_REQUEST,
+  //   data: id,
+  // })
+  // context.store.dispatch({
+  //   type: LOAD_HISTORIES_REQUEST,
+  //   data: id,
+  // })
+  // context.store.dispatch({
+  //   type: LOAD_EQUIPMENT_REQUEST,
+  //   data: id,
+  // })
+  return {id};
 }
 
 
