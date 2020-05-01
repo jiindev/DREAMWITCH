@@ -16,15 +16,12 @@ import {
   UPDATE_LASTSTART_SUCCESS,
   UPDATE_LASTSTART_FAILURE,
   UPDATE_LASTSTART_REQUEST,
-  LOAD_FRIENDS_SUCCESS,
-  LOAD_FRIENDS_FAILURE,
-  LOAD_FRIENDS_REQUEST,
-  REMOVE_FRIEND_SUCCESS,
-  REMOVE_FRIEND_FAILURE,
-  REMOVE_FRIEND_REQUEST,
-  ADD_FRIEND_SUCCESS,
-  ADD_FRIEND_FAILURE,
-  ADD_FRIEND_REQUEST,
+  REMOVE_FOLLOWING_SUCCESS,
+  REMOVE_FOLLOWING_FAILURE,
+  REMOVE_FOLLOWING_REQUEST,
+  ADD_FOLLOWING_SUCCESS,
+  ADD_FOLLOWING_FAILURE,
+  ADD_FOLLOWING_REQUEST,
 } from "../reducers/user";
 import Router from 'next/router';
 import { SAY_HELLO } from "../reducers/character";
@@ -159,77 +156,51 @@ function* updateLastStart(action) {
 function* watchupdateLastStart() {
   yield takeLatest(UPDATE_LASTSTART_REQUEST, updateLastStart);
 }
-
-function loadFriendsAPI() {
-  return axios.get("/users", {
-    withCredentials: true
-  });
-}
-
-function* loadFriends() {
-  try {
-    const result = yield call(loadFriendsAPI);
-    yield put({
-      type: LOAD_FRIENDS_SUCCESS,
-      data: result.data,
-    });
-  } catch (e) {
-    yield put({
-      type: LOAD_FRIENDS_FAILURE,
-      error: e,
-    });
-  }
-}
-
-function* watchLoadFriends() {
-  yield takeLatest(LOAD_FRIENDS_REQUEST, loadFriends);
-}
-
-function removeFriendAPI(friendId) {
-  return axios.delete(`user/friend/${friendId}`, {
+function removeFollowingAPI(userId) {
+  return axios.delete(`user/${userId}/follow`, {
     withCredentials: true,
   })
 }
-function* removeFriend(action) {
+function* removeFollowing(action) {
   try {
-    const result = yield call(removeFriendAPI, action.data);
+    const result = yield call(removeFollowingAPI, action.data);
     yield put({
-      type: REMOVE_FRIEND_SUCCESS,
+      type: REMOVE_FOLLOWING_SUCCESS,
       data: result.data,
     });
   } catch (e) {
     console.error(e);
     yield put({
-      type: REMOVE_FRIEND_FAILURE,
+      type: REMOVE_FOLLOWING_FAILURE,
       error: e,
     });
   }
 }
-function* watchRemoveFriend() {
-  yield takeLatest(REMOVE_FRIEND_REQUEST, removeFriend);
+function* watchRemoveFollowing() {
+  yield takeLatest(REMOVE_FOLLOWING_REQUEST, removeFollowing);
 }
-function addFriendAPI(friendData) {
-  return axios.post(`user/friend`, friendData, {
+function addFollowingAPI(userId) {
+  return axios.post(`user/${userId}/follow`, {}, {
     withCredentials: true,
   })
 }
-function* addFriend(action) {
+function* addFollowing(action) {
   try {
-    const result = yield call(addFriendAPI, action.data);
+    const result = yield call(addFollowingAPI, action.data);
     yield put({
-      type: ADD_FRIEND_SUCCESS,
+      type: ADD_FOLLOWING_SUCCESS,
       data: result.data,
     });
   } catch (e) {
     console.error(e);
     yield put({
-      type: ADD_FRIEND_FAILURE,
+      type: ADD_FOLLOWING_FAILURE,
       error: e,
     });
   }
 }
-function* watchAddFriend() {
-  yield takeLatest(ADD_FRIEND_REQUEST, addFriend);
+function* watchAddFollowing() {
+  yield takeLatest(ADD_FOLLOWING_REQUEST, addFollowing);
 }
 
 export default function* userSaga() {
@@ -239,8 +210,7 @@ export default function* userSaga() {
     fork(watchLoadUser),
     fork(watchLogOut),
     fork(watchupdateLastStart),
-    fork(watchLoadFriends),
-    fork(watchRemoveFriend),
-    fork(watchAddFriend),
+    fork(watchRemoveFollowing),
+    fork(watchAddFollowing),
   ]);
 }

@@ -19,7 +19,7 @@ const HistoryItem = ({history, userHistory}) => {
             });
             setOpenDiv(true);
         }
-        // else setOpenDiv(false);
+        else setOpenDiv(false);
     }
     const onChangeCommentText = useCallback((e) => {
         setCommentText(e.target.value);
@@ -50,9 +50,11 @@ const HistoryItem = ({history, userHistory}) => {
         <>  
             <History>
             <Star open={openDiv===true}/>
-                <HistoryContent onClick={onClickHistoryDiv} open={openDiv===true}>
-                    <Content><b>{history.content}</b></Content>
-                    <Date>{history.date}</Date>
+                <HistoryContent open={openDiv===true}>
+                    <HistoryTitle onClick={onClickHistoryDiv}>
+                        <Content><b>{history.content}</b></Content>
+                        <Date>{history.date}</Date>
+                    </HistoryTitle>
                     {openDiv && 
                         <>
                         {history.todos && 
@@ -107,7 +109,10 @@ const HistoryContent = styled.div`
     border-radius: 0 20px 20px 20px;
     flex: 1;
     margin: 10px 0 20px 20px;
-    transition: all .2s ease;
+    transition: all .5s ease;
+`;
+
+const HistoryTitle = styled.div`
     cursor: pointer;
 `;
 

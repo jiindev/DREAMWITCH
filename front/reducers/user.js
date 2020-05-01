@@ -8,7 +8,6 @@ export const initialState = {
   isSigningUp: false, // 회원가입 시도중
   signUpErrorReason: "", // 회원가입 실패 사유
   me: null, // 내 정보
-  friends: [],
   userInfo: null,
 };
 
@@ -28,17 +27,13 @@ export const LOAD_USER_REQUEST = 'LOAD_USER_REQUEST';
 export const LOAD_USER_SUCCESS = 'LOAD_USER_SUCCESS';
 export const LOAD_USER_FAILURE = 'LOAD_USER_FAILURE';
 
-export const LOAD_FRIENDS_REQUEST = 'LOAD_FRIENDS_REQUEST';
-export const LOAD_FRIENDS_SUCCESS = 'LOAD_FRIENDS_SUCCESS';
-export const LOAD_FRIENDS_FAILURE = 'LOAD_FRIENDS_FAILURE';
+export const ADD_FOLLOWING_REQUEST = 'ADD_FOLLOWING_REQUEST';
+export const ADD_FOLLOWING_SUCCESS = 'ADD_FOLLOWING_SUCCESS';
+export const ADD_FOLLOWING_FAILURE = 'ADD_FOLLOWING_FAILURE';
 
-export const ADD_FRIEND_REQUEST = 'ADD_FRIEND_REQUEST';
-export const ADD_FRIEND_SUCCESS = 'ADD_FRIEND_SUCCESS';
-export const ADD_FRIEND_FAILURE = 'ADD_FRIEND_FAILURE';
-
-export const REMOVE_FRIEND_REQUEST = 'REMOVE_FRIEND_REQUEST';
-export const REMOVE_FRIEND_SUCCESS = 'REMOVE_FRIEND_SUCCESS';
-export const REMOVE_FRIEND_FAILURE = 'REMOVE_FRIEND_FAILURE';
+export const REMOVE_FOLLOWING_REQUEST = 'REMOVE_FOLLOWING_REQUEST';
+export const REMOVE_FOLLOWING_SUCCESS = 'REMOVE_FOLLOWING_SUCCESS';
+export const REMOVE_FOLLOWING_FAILURE = 'REMOVE_FOLLOWING_FAILURE';
 
 export const UPDATE_LASTSTART_REQUEST = 'UPDATE_LASTSTART_REQUEST';
 export const UPDATE_LASTSTART_SUCCESS = 'UPDATE_LASTSTART_SUCCESS';
@@ -126,35 +121,25 @@ const reducer = (state = initialState, action) => {
         draft.me.star -= action.data;
         break;
       }
-      case LOAD_FRIENDS_REQUEST: {
+      case REMOVE_FOLLOWING_REQUEST: {
         break;
       }
-      case LOAD_FRIENDS_SUCCESS: {
-        draft.friends = action.data;
+      case REMOVE_FOLLOWING_SUCCESS: {
+        const followingIndex = draft.me.Followings.findIndex(v=>v.id===action.data);
+        draft.me.Followings.splice(followingIndex, 1);
         break;
       }
-      case LOAD_FRIENDS_FAILURE: {
+      case REMOVE_FOLLOWING_FAILURE: {
         break;
       }
-      case REMOVE_FRIEND_REQUEST: {
+      case ADD_FOLLOWING_REQUEST: {
         break;
       }
-      case REMOVE_FRIEND_SUCCESS: {
-        const friendIndex = draft.friends.findIndex(v=>v.id===action.data);
-        draft.friends.splice(friendIndex, 1);
+      case ADD_FOLLOWING_SUCCESS: {
+        draft.me.Followings.push(action.data);
         break;
       }
-      case REMOVE_FRIEND_FAILURE: {
-        break;
-      }
-      case ADD_FRIEND_REQUEST: {
-        break;
-      }
-      case ADD_FRIEND_SUCCESS: {
-        draft.friends.push(action.data);
-        break;
-      }
-      case ADD_FRIEND_FAILURE: {
+      case ADD_FOLLOWING_FAILURE: {
         break;
       }
       default: {

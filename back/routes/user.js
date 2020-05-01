@@ -34,7 +34,7 @@ router.get("/:id", async(req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", async(req, res, next) => {
   // 회원가입
   try {
     const exUser = await db.User.findOne({
@@ -60,7 +60,7 @@ router.post("/", async (req, res, next) => {
     return next(e);
   }
 });
-router.post("/login", async (req, res, next) => {
+router.post("/login", async(req, res, next) => {
   // 로그인
   passport.authenticate("local", (err, user, info) => {
     if (err) {
@@ -77,6 +77,11 @@ router.post("/login", async (req, res, next) => {
         }
         const fullUser = await db.User.findOne({
           where: {id: user.id},
+          include: [{
+            model: db.User,
+            as: 'Followings',
+            attributes: ['id', 'nickname', 'userId']
+          }],
           attributes: ['id', 'nickname', 'userId', 'level', 'exp', 'star','lastStart'],
         });
         return res.json(fullUser);
@@ -95,7 +100,7 @@ router.post("/logout", (req, res) => {
   res.send("logout 성공");
 });
 
-router.patch('/laststart', async (req, res, next) => {
+router.patch('/laststart', async(req, res, next) => {
   //마지막으로 미션을 시작한 시간 기록
   try{
     const changeLastStart = await db.User.update({
@@ -110,19 +115,38 @@ router.patch('/laststart', async (req, res, next) => {
   }
 });
 
-router.delete('/friend/:id', async (req, res, next) => {
+router.delete('/:id/follow', isLoggedIn, async(req, res, next) => {
   //친구 삭제
   try{
+    const me = await db.User.findOne({
+      where: {id:req.user.id}
+    });
+    await me.removeFollowing(req.params.id);
     res.send(req.params.id);
   }catch(e){
     console.error(e);
     next(e);
   }
 });
-router.post('/friend', async (req, res, next) => {
+
+router.post('/:id/follow', isLoggedIn, async(req, res, next) => {
   //친구 추가
   try{
-    res.send({id: 11, userId:'test', nickname:'추가된아이디'});
+    const following = await db.User.findOne({
+      where: {userId: req.params.id},
+      attributes: ['id', 'nickname', 'userId']
+    });
+    if(!following){
+      return res.status(403).send("존재하지 않는 아이디입니다.");
+    }
+    const me = await db.User.findOne({
+      where: {id:req.user.id}
+    });
+    if(following.id===me.id){
+      return res.status(403).send("자기 자신은 친구등록 할 수 없습니다.");
+    }
+    await me.addFollowing(following.id);
+    res.send(following);
   }catch(e){
     console.error(e);
     next(e);

@@ -22,14 +22,13 @@ router.post("/", async(req, res, next) => {
     }, {
       where: {id: req.user.id}
     });
-
     const fullHistory = await db.History.findOne({
       where: {id: newHistory.id},
       include: [{
         model: db.Todo,
         attributes: ['id', 'content'],
       }]
-    })
+    });
     res.json(fullHistory);
   }catch(e){
     console.error(e);

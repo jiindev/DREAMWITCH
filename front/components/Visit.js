@@ -2,20 +2,14 @@ import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {H2} from './styledComponents/PageComponent';
 import styled from 'styled-components';
-import { LOAD_FRIENDS_REQUEST, REMOVE_FRIEND_REQUEST, ADD_FRIEND_REQUEST } from "../reducers/user";
+import { ADD_FOLLOWING_REQUEST, REMOVE_FOLLOWING_REQUEST } from "../reducers/user";
 import Link from 'next/link';
 
 const Visit = () => {
   const dispatch = useDispatch();
   const [editingMode, setEditingMode] = useState(false);
-  const { friends } = useSelector(state=>state.user);
-  const [friendId, setFriendId] = useState('');
-  
-  useEffect(() => {
-    dispatch({
-        type: LOAD_FRIENDS_REQUEST
-    })
-  }, []);
+  const { me } = useSelector(state=>state.user);
+  const [followUserId, setfollowUserId] = useState('');
 
   const onEditMode = useCallback(() => {
     if(editingMode){
@@ -26,31 +20,31 @@ const Visit = () => {
 
   const onRemoveFriend = useCallback((id) => ()=>{
    dispatch({
-       type: REMOVE_FRIEND_REQUEST,
+       type: REMOVE_FOLLOWING_REQUEST,
        data: id
    })
-  }, [friends]);
+  }, [me && me.Followings]);
 
   const onAddFriend = useCallback(()=>{
     dispatch({
-        type: ADD_FRIEND_REQUEST,
-        data: friendId
+        type: ADD_FOLLOWING_REQUEST,
+        data: followUserId
     })
-   }, [friendId]);
+   }, [followUserId]);
 
    const onChangeFriendId = useCallback((e)=>{
-    setFriendId(e.target.value);
-   }, [friendId]);
+    setfollowUserId(e.target.value);
+   }, [followUserId]);
 
   return (
     <>
     <H2>놀러가기<EditButton on={editingMode} onClick={onEditMode}>수정모드</EditButton></H2>
     <AddFriend>
-        <input type="text" placeholder="친구 목록에 추가할 아이디를 입력하세요" value={friendId} onChange={onChangeFriendId}/>
+        <input type="text" placeholder="친구 목록에 추가할 아이디를 입력하세요" value={followUserId} onChange={onChangeFriendId}/>
         <button onClick={onAddFriend}><span>추가하기</span></button>
     </AddFriend>
     <FriendList>
-        {friends && friends.map((v, i)=>{
+        {me && me.Followings.map((v, i)=>{
             return <li>{v.nickname}<span>({v.userId})</span>{editingMode ? <DeleteButton onClick={onRemoveFriend(v.id)}>친구삭제</DeleteButton> : <Link href={{pathname: '/user', query:{id:v.id}}} as={`/user/${v.id}`}><VisitButton>방문하기</VisitButton></Link>}</li>
         })}
     </FriendList>
