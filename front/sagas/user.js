@@ -22,9 +22,13 @@ import {
   ADD_FOLLOWING_SUCCESS,
   ADD_FOLLOWING_FAILURE,
   ADD_FOLLOWING_REQUEST,
+  LEVEL_UP_SUCCESS,
+  LEVEL_UP_FAILURE,
+  LEVEL_UP_REQUEST,
 } from "../reducers/user";
 import Router from 'next/router';
 import { SAY_HELLO } from "../reducers/character";
+import { ADD_HISTORIES_REQUEST } from "../reducers/history";
 function logInAPI(loginData) {
   return axios.post("/user/login", loginData, {
     withCredentials: true
@@ -203,6 +207,39 @@ function* watchAddFollowing() {
   yield takeLatest(ADD_FOLLOWING_REQUEST, addFollowing);
 }
 
+function levelUpAPI(levelData) {
+  return axios.patch(`/user/level`, levelData, {
+    withCredentials: true
+  });
+}
+function* levelUp(action) {
+  try {
+    const result = yield call(levelUpAPI, action.data);
+    yield put({
+      type: LEVEL_UP_SUCCESS,
+      data: result.data,
+    });
+    yield put({
+      type: ADD_HISTORIES_REQUEST,
+      data: {
+        date: action.data.date,
+        type: 'levelUp',
+        content: `나는 이제 ${action.data.level}!`
+      }
+    })
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: LEVEL_UP_FAILURE,
+      error: e,
+    });
+  }
+}
+function* watchLevelUp() {
+  yield takeLatest(LEVEL_UP_REQUEST, levelUp);
+}
+
+
 export default function* userSaga() {
   yield all([
     fork(watchLogIn), 
@@ -212,5 +249,6 @@ export default function* userSaga() {
     fork(watchupdateLastStart),
     fork(watchRemoveFollowing),
     fork(watchAddFollowing),
+    fork(watchLevelUp),
   ]);
 }

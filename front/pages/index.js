@@ -9,15 +9,17 @@ import Shop from "../components/Shop";
 import Visit from '../components/Visit';
 import { useSelector, useDispatch } from "react-redux";
 import Router from "next/router";
-import { LOAD_USER_REQUEST, LOG_OUT_REQUEST } from "../reducers/user";
+import { LOAD_USER_REQUEST, LOG_OUT_REQUEST, LEVEL_UP_REQUEST } from "../reducers/user";
 import styled from 'styled-components';
 import { LOAD_HISTORIES_REQUEST } from "../reducers/history";
 import { LOAD_TODOS_REQUEST } from "../reducers/todo";
 import { LOAD_ITEMS_REQUEST, LOAD_EQUIPMENT_REQUEST } from "../reducers/item";
+import { levelCheck } from '../static/levelData';
 
 const Index = () => {
   const dispatch = useDispatch();
   const { me, logInErrorReason } = useSelector((state) => state.user);
+  const { date } = useSelector((state=>state.todo));
   const [page, setPage] = useState(1);
 
   useEffect(()=>{
@@ -26,6 +28,17 @@ const Index = () => {
     }
   }, [me]);
 
+  useEffect(()=>{
+    if(me && me.level !== levelCheck(me.exp)){
+      dispatch({
+        type: LEVEL_UP_REQUEST,
+        data: {
+          level: levelCheck(me.exp),
+          date,
+        }
+      })
+    }
+  }, [me && me.exp]);
   const onChangePage = useCallback(pageNum => () => {
     if(page!==pageNum){
       setPage(pageNum);
@@ -43,7 +56,7 @@ const Index = () => {
       <Wrap>
        <TopContent>
          <UserStatue>
-            <Star>{me && me.star}</Star><Level>{me && me.level}레벨</Level>
+            <Star>{me && me.star}</Star><Level>{me && me.level}</Level>
          </UserStatue>
          <LogoutButton onClick={onLogout}><i/></LogoutButton>
           <Character></Character>

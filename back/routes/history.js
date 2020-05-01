@@ -11,17 +11,21 @@ router.post("/", async(req, res, next) => {
       date: req.body.date,
       UserId: req.user.id,
       content: req.body.content,
+      type: req.body.type
     });
-    const clearedTodos = await db.Todo.update({
-      HistoryId: newHistory.id
-    }, {
-      where: {date: req.body.date, UserId: req.user.id}
-    });
-    const getStars = await db.User.update({
-      star: sequelize.literal(`star + 10`)
-    }, {
-      where: {id: req.user.id}
-    });
+    if(req.body.type==='clearTodos'){
+      const clearedTodos = await db.Todo.update({
+        HistoryId: newHistory.id
+      }, {
+        where: {date: req.body.date, UserId: req.user.id}
+      });
+      const userGet = await db.User.update({
+        star: sequelize.literal(`star + 10`),
+        exp: sequelize.literal(`exp + 1`)
+      }, {
+        where: {id: req.user.id}
+      });
+    }
     const fullHistory = await db.History.findOne({
       where: {id: newHistory.id},
       include: [{

@@ -39,6 +39,11 @@ export const UPDATE_LASTSTART_REQUEST = 'UPDATE_LASTSTART_REQUEST';
 export const UPDATE_LASTSTART_SUCCESS = 'UPDATE_LASTSTART_SUCCESS';
 export const UPDATE_LASTSTART_FAILURE = 'UPDATE_LASTSTART_FAILURE';
 
+export const LEVEL_UP_REQUEST = 'LEVEL_UP_REQUEST';
+export const LEVEL_UP_SUCCESS = 'LEVEL_UP_SUCCESS';
+export const LEVEL_UP_FAILURE = 'LEVEL_UP_FAILURE';
+
+export const GET_EXP = 'GET_EXP';
 export const GET_STARS = 'GET_STARS';
 export const USE_STARS = 'USE_STARS';
 
@@ -113,6 +118,10 @@ const reducer = (state = initialState, action) => {
       case UPDATE_LASTSTART_FAILURE: {
         break;
       }
+      case GET_EXP: {
+        draft.me.exp += 1;
+        break;
+      }
       case GET_STARS: {
         draft.me.star += action.data;
         break;
@@ -140,6 +149,16 @@ const reducer = (state = initialState, action) => {
         break;
       }
       case ADD_FOLLOWING_FAILURE: {
+        break;
+      }
+      case LEVEL_UP_REQUEST: {
+        break;
+      }
+      case LEVEL_UP_SUCCESS: {
+        draft.me.level = action.data;
+        break;
+      }
+      case LEVEL_UP_FAILURE: {
         break;
       }
       default: {

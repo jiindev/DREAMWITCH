@@ -10,6 +10,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(50),
         allowNull: true,
       },
+      type: {
+        type: DataTypes.STRING(10),
+        allowNull: false,
+      },
     },
     {
       charset: "utf8",

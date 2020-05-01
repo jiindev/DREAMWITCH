@@ -9,7 +9,7 @@ router.get("/", async(req, res, next) => {
       where: {
         userId: req.user.id
       },
-      order: [['createdAt', 'DESC']]
+      order: [['id', 'DESC']]
     });
     return res.json(histories);
   }catch(e){
@@ -25,7 +25,7 @@ router.get("/:id", async(req, res, next) => {
       where: {
         userId: req.params.id
       },
-      order: [['createdAt', 'DESC']]
+      order: [['id', 'DESC']]
     });
     return res.json(histories);
   }catch(e){

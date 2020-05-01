@@ -153,4 +153,19 @@ router.post('/:id/follow', isLoggedIn, async(req, res, next) => {
   }
 });
 
+router.patch("/level", isLoggedIn, async(req, res, next) => {
+  //레벨업
+  try{
+    const levelUp = await db.User.update({
+      level: req.body.level
+    }, {
+      where: {id: req.user.id}
+    });
+    res.send(req.body.level);
+  }catch(e){
+    console.error(e);
+    next(e);
+  }
+});
+
 module.exports = router;

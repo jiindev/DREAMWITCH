@@ -72,7 +72,8 @@ const CheckList = ({id}) => {
       type: ADD_HISTORIES_REQUEST,
       data: {
         date,
-        content: historyContent ? historyContent : '오늘도 힘냈다! 아자아자!'
+        content: historyContent ? historyContent : '오늘도 힘냈다! 아자아자!',
+        type: 'clearTodos'
       }
     });
     setWritingHistory(false);

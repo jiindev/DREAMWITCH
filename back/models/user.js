@@ -16,9 +16,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       level: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING(10),
         allowNull: false,
-        defaultValue: 0,
+        defaultValue: '풋내기마녀',
       },
       exp: {
         type: DataTypes.INTEGER,
