@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LOAD_HISTORY_REQUEST, ADD_COMMENT_REQUEST } from "../reducers/history";
+import { LOAD_HISTORY_REQUEST, ADD_COMMENT_REQUEST, REMOVE_COMMENT_REQUEST } from "../reducers/history";
 import styled from 'styled-components';
 import {Date} from './styledComponents/PageComponent';
 import Link from 'next/link';
@@ -24,19 +24,27 @@ const HistoryItem = ({history, userHistory}) => {
     const onChangeCommentText = useCallback((e) => {
         setCommentText(e.target.value);
     }, []);
-    const onSubmitComment = useCallback((e)=>{
+    const onSubmitComment = useCallback(()=>{
         if(!me){
             return alert('로그인이 필요합니다.');
         }
-        return dispatch({
+        dispatch({
             type: ADD_COMMENT_REQUEST,
             data: {
                 historyId: history.id,
                 content: commentText,
                 userHistory
             }
-        })
+        });
+        return setCommentText('');
     }, [me && me.id, commentText]);
+
+    const onClickRemoveComment = useCallback(commentId => ()=>{
+        dispatch({
+            type: REMOVE_COMMENT_REQUEST,
+            data: {commentId, historyId:history.id, userHistory },
+        })
+    }, []);
 
     return (
         <>  
@@ -56,7 +64,21 @@ const HistoryItem = ({history, userHistory}) => {
                         {history.comments && 
                         <div>
                             {history.comments.map((v)=>{
-                                return <div>{me && me.id ==v.User.id ? <p>{v.User.nickname}</p> : <Link href={{pathname: '/user', query:{id:v.User.id}}} as={`/user/${v.User.id}`}><p>{v.User.nickname}</p></Link>}{v.content}</div>
+                                if(v){
+                                    return (
+                                        <div>
+                                            {me && me.id == v.User.id ?
+                                                <p>{v && v.User.nickname}</p> 
+                                                : 
+                                                <Link href={{pathname: '/user', query:{id:v.User.id}}} as={`/user/${v.User.id}`}><p>{v.User.nickname}</p></Link>
+                                            }
+                                            {v.content}
+                                            {me && (history.UserId===me.id || v.UserId===me.id) && 
+                                                <button onClick={onClickRemoveComment(v.id)}>삭제</button>
+                                            }
+                                        </div>)
+                                }
+                                
                             })}
                         </div>
                         }

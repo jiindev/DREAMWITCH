@@ -2,7 +2,6 @@ import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {H2} from './styledComponents/PageComponent';
 import styled from 'styled-components';
-import {  } from "../reducers/character";
 import { LOAD_FRIENDS_REQUEST, REMOVE_FRIEND_REQUEST, ADD_FRIEND_REQUEST } from "../reducers/user";
 import Link from 'next/link';
 

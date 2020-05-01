@@ -20,6 +20,11 @@ export const initialState = {
   export const ADD_COMMENT_REQUEST = "ADD_COMMENT_REQUEST";
   export const ADD_COMMENT_SUCCESS = "ADD_COMMENT_SUCCESS";
   export const ADD_COMMENT_FAILURE = "ADD_COMMENT_FAILURE";
+
+  export const REMOVE_COMMENT_REQUEST = "REMOVE_COMMENT_REQUEST";
+  export const REMOVE_COMMENT_SUCCESS = "REMOVE_COMMENT_SUCCESS";
+  export const REMOVE_COMMENT_FAILURE = "REMOVE_COMMENT_FAILURE";
+
   
   
   const reducer = (state = initialState, action) => {
@@ -44,7 +49,7 @@ export const initialState = {
           break;
         }
         case LOAD_HISTORY_SUCCESS: {
-          if(action.data.userHistory){
+          if(action.userHistory){
             let historyIndex = draft.userHistories.findIndex(v=>v.id === action.data.historyId);
             draft.userHistories[historyIndex].todos = action.data.todos;
             draft.userHistories[historyIndex].comments = action.data.comments;
@@ -71,7 +76,7 @@ export const initialState = {
           break;
         }
         case ADD_COMMENT_SUCCESS: {
-          if(action.data.userHistory){
+          if(action.userHistory){
             let historyIndex = draft.userHistories.findIndex(v=>v.id === action.data.historyId);
             draft.userHistories[historyIndex].comments.push(action.data.comment);
             break;
@@ -80,7 +85,22 @@ export const initialState = {
           draft.histories[historyIndex].comments.push(action.data.comment);
           break;
         }
-        case ADD_COMMENT_FAILURE: {
+        case REMOVE_COMMENT_FAILURE: {
+          break;
+        }
+        case REMOVE_COMMENT_SUCCESS: {
+          if(action.userHistory){
+            let historyIndex = draft.userHistories.findIndex(v=>v.id === action.data.historyId);
+            let commentIndex = draft.userHistories[historyIndex].comments.findIndex(v=>v.id===action.data.commentId);
+            draft.userHistories[historyIndex].comments.splice(commentIndex, 1);
+            break;
+          }
+          let historyIndex = draft.histories.findIndex(v=>v.id === action.data.historyId);
+          let commentIndex = draft.histories[historyIndex].comments.findIndex(v=>v.id===action.data.commentId);
+          draft.histories[historyIndex].comments.splice(commentIndex, 1);
+          break;
+        }
+        case REMOVE_COMMENT_FAILURE: {
           break;
         }
         default: {

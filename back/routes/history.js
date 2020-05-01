@@ -88,6 +88,20 @@ router.post('/:id/comment', historyExists, async(req, res, next)=>{
   }
 });
 
+router.delete('/comment/:id', async(req, res, next)=>{
+  try{
+    await db.Comment.destroy({
+      where: {
+        id: req.params.id
+      }
+    });
+     return res.send(req.params.id);
+  }catch(e){
+    console.error(e);
+    return next(e);
+  }
+});
+
 router.patch("/:id/content", (req, res) => {
   // 특정 히스토리 텍스트 변경
 });

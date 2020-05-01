@@ -1,7 +1,7 @@
 import { all, fork, takeLatest, call, put, delay } from "redux-saga/effects";
 import { TODOS_CLEAR } from "../reducers/todo";
 import axios from 'axios';
-import { LOAD_HISTORIES_REQUEST, LOAD_HISTORIES_SUCCESS, LOAD_HISTORIES_FAILURE, ADD_HISTORIES_SUCCESS, ADD_HISTORIES_FAILURE, ADD_HISTORIES_REQUEST, LOAD_HISTORY_FAILURE, LOAD_HISTORY_REQUEST, LOAD_HISTORY_SUCCESS, ADD_COMMENT_REQUEST, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAILURE } from "../reducers/history";
+import { LOAD_HISTORIES_REQUEST, LOAD_HISTORIES_SUCCESS, LOAD_HISTORIES_FAILURE, ADD_HISTORIES_SUCCESS, ADD_HISTORIES_FAILURE, ADD_HISTORIES_REQUEST, LOAD_HISTORY_FAILURE, LOAD_HISTORY_REQUEST, LOAD_HISTORY_SUCCESS, ADD_COMMENT_REQUEST, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAILURE, REMOVE_COMMENT_SUCCESS, REMOVE_COMMENT_FAILURE, REMOVE_COMMENT_REQUEST } from "../reducers/history";
 import { SAY_LOAD_HISTORIES, SAY_ADD_HISTORY } from "../reducers/character";
 import { GET_STARS } from "../reducers/user";
 
@@ -43,8 +43,8 @@ function* loadHistory(action) {
         todos : result.data.todos,
         comments : result.data.comments,
         historyId : action.data,
-        userHistory: action.userHistory
-      }
+      },
+      userHistory: action.userHistory
     });
   } catch (e) {
     console.error(e);
@@ -105,8 +105,8 @@ function addHistoryAPI(historyData) {
         data: {
           historyId: action.data.historyId,
           comment: result.data,
-          userHistory: action.data.userHistory
-        }
+        },
+        userHistory: action.data.userHistory
       });
     } catch (e) {
       console.error(e);
@@ -120,6 +120,35 @@ function addHistoryAPI(historyData) {
     yield takeLatest(ADD_COMMENT_REQUEST, addComment);
   }
 
+  function removeCommentAPI(commentId) {
+    return axios.delete(`/history/comment/${commentId}`, {
+      withCredentials: true
+    });
+  }
+  function* removeComment(action) {
+    try {
+      const result = yield call(removeCommentAPI, action.data.commentId);
+      
+      yield put({
+        type: REMOVE_COMMENT_SUCCESS,
+        data: {
+          commentId: result.data,
+          historyId: action.data.historyId,
+        },
+        userHistory: action.data.userHistory
+      });
+    } catch (e) {
+      console.error(e);
+      yield put({
+        type: REMOVE_COMMENT_FAILURE,
+        error: e,
+      });
+    }
+  }
+  function* watchRemoveComment() {
+    yield takeLatest(REMOVE_COMMENT_REQUEST, removeComment);
+  }
+
 
 export default function* historySaga() {
   yield all([
@@ -127,5 +156,6 @@ export default function* historySaga() {
     fork(watchAddHistory),
     fork(watchLoadHistory),
     fork(watchAddComment),
+    fork(watchRemoveComment),
   ]);
 }
