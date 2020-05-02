@@ -58,6 +58,7 @@ export const initialState = {
           let historyIndex = draft.histories.findIndex(v=>v.id === action.data.historyId);
           draft.histories[historyIndex].todos = action.data.todos;
           draft.histories[historyIndex].comments = action.data.comments;
+          break;
         }
         case LOAD_HISTORY_FAILURE: {
           break;

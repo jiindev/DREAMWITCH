@@ -38,7 +38,7 @@ const User = ({id}) => {
       <Wrap>
        <TopContent>
          <UserStatue>
-            <Star>{userInfo && userInfo.nickname}</Star><Level>{userInfo && userInfo.level}레벨</Level>
+            <Star>{userInfo && userInfo.nickname}</Star><Level>{userInfo && userInfo.level}</Level>
          </UserStatue>
          <LogoutButton onClick={onLogout}><i/></LogoutButton>
           <Character id={id}/>

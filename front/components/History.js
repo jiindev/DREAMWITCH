@@ -12,10 +12,12 @@ const History = ({id}) => {
   const {userInfo} = useSelector(state=>state.user);
 
   useEffect(() => {
-    dispatch({
-      type: SAY_LOAD_HISTORIES,
-      data: histories.length
-    })
+    if(!id){
+      dispatch({
+        type: SAY_LOAD_HISTORIES,
+        data: histories.length
+      })
+    }
   }, [histories.length]);
 
 return (
@@ -27,7 +29,11 @@ return (
         {userHistories ? 
             <div>
               {userHistories.map((c, i)=>{
-                return (<HistoryItem history={c} userHistory={true}/>)
+                if(i===histories.length-1){
+                  return (<HistoryItem history={c} lastChild={true} userHistory={true}/>)
+                }else{
+                  return (<HistoryItem history={c} userHistory={true}/>)
+                }
               })}
               </div>
           :
@@ -40,7 +46,11 @@ return (
           {histories ? 
             <div>
               {histories.map((c, i)=>{
-                return (<HistoryItem history={c}/>)
+                if(i===histories.length-1){
+                  return (<HistoryItem history={c} lastChild={true}/>)
+                }else{
+                  return (<HistoryItem history={c}/>)
+                }
               })}
               </div>
           :
@@ -58,5 +68,6 @@ const HistoryPage = styled.div`
   width: 100%;
   height: 100%;
 `;
+
 
 export default History;

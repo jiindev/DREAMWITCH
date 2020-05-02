@@ -20,7 +20,7 @@ const Index = () => {
   const dispatch = useDispatch();
   const { me, logInErrorReason } = useSelector((state) => state.user);
   const { date } = useSelector((state=>state.todo));
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(2);
 
   useEffect(()=>{
     if(!me){
