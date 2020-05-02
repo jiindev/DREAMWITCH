@@ -46,72 +46,94 @@ const Shop = () => {
   return (
     <>
     <H2>마녀의 옷장</H2>
-    <Illust/>
-    <HAT>
-      <H3>HAT</H3>
+    <Section>
+      <HatIllust/>
+      <H3 type='hat'>HAT</H3>
       <ItemList>
         {hatItems.map((v, i)=>{
           return (
           <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
+            {items && !items[v.type].includes(v.id) && <LockIcon/>}
             <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
-            {items && !items[v.type].includes(v.id) && <div>{v.price}</div>}
+            {items && !items[v.type].includes(v.id) && <Price>{v.price}</Price>}
             {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
           </Item>)
         })}
       </ItemList>
-    </HAT>
-    <HAT>
-      <H3>CLOTHES</H3>
-      <ItemList>
-        {clothesItems.map((v, i)=>{
-          return (
-          <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
-            <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
-            {items && !items[v.type].includes(v.id) && <div>{v.price}</div>}
-            {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
-          </Item>)
-        })}
-      </ItemList>
-    </HAT>
-    <HAT>
-      <H3>HAIR</H3>
+    </Section>
+    <Section>
+      <HairIllust/>
+      <H3 type='hair'>HAIR</H3>
       <ItemList>
         {hairItems.map((v, i)=>{
           return (
           <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
+            {items && !items[v.type].includes(v.id) && <LockIcon/>}
             <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
-            {items && !items[v.type].includes(v.id) && <div>{v.price}</div>}
+            {items && !items[v.type].includes(v.id) && <Price>{v.price}</Price>}
             {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
           </Item>)
         })}
       </ItemList>
-    </HAT>
-    <HAT>
-      <H3>BACKGROUND</H3>
+    </Section>
+    <Section>
+      <ClothesIllust/>
+      <H3 type='clothes'>CLOTHES</H3>
+      <ItemList>
+        {clothesItems.map((v, i)=>{
+          return (
+          <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
+            {items && !items[v.type].includes(v.id) && <LockIcon/>}
+            <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
+            {items && !items[v.type].includes(v.id) && <Price>{v.price}</Price>}
+            {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
+          </Item>)
+        })}
+      </ItemList>
+    </Section>
+    <Section>
+      <BgIllust/>
+      <H3 type='background'>BACKGROUND</H3>
       <ItemList>
         {bgItems.map((v, i)=>{
           return (
           <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
+            {items && !items[v.type].includes(v.id) && <LockIcon/>}
             <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
-            {items && !items[v.type].includes(v.id) && <div>{v.price}</div>}
+            {items && !items[v.type].includes(v.id) && <Price>{v.price}</Price>}
             {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
           </Item>)
         })}
       </ItemList>
-    </HAT>
+    </Section>
   </>);
 };
 
-const Illust = styled.div`
+const HatIllust = styled.div`
   background: url();
   width: 100%;
   height: 100px;
   background-color: black;
-  margin-bottom: 18px;
+  margin-bottom: 40px;
   border-radius: 20px;
 `;
 
-const HAT = styled.div`
+const HairIllust = styled(HatIllust)`
+  width: 200px;
+  height: 200px;
+  margin: 0 0 40px auto;
+`;
+
+const ClothesIllust = styled(HatIllust)`
+
+`;
+
+const BgIllust = styled(HairIllust)`
+  margin: 0 auto 40px 0;
+`;
+
+const Section = styled.div`
+  margin: 0 0 40px 0;
 `;
 
 const ItemList = styled.ul`
@@ -119,6 +141,7 @@ const ItemList = styled.ul`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
+  margin-bottom: 20px;
 `;
 const Item = styled.li`
   width: 90px;
@@ -130,6 +153,16 @@ const Item = styled.li`
   box-sizing: border-box;
   position: relative;
   border: ${props=> props.equip ? `3px solid ${props.theme.purpleLight}`: '0'};
+`;
+
+const LockIcon = styled.span`
+  width: 14px;
+  height: 16px;
+  display: inline-block;
+  background: url('/static/icons/item_lock.svg');
+  position: absolute;
+  top: 10px;
+  left: 10px;
 `;
 
 const EquipLabel = styled.div`
@@ -152,8 +185,32 @@ const Image = styled.span`
   background-size: contain;
 `;
 
+const Price = styled.div`
+margin-top: 5px;
+  &:before{
+    content: '';
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    background: url('/static/icons/top_left_star.svg');
+    background-size: contain;
+    vertical-align: middle;
+    margin-right: 3px;
+  }
+`;
+
 const H3 = styled.h3`
   color: ${props => props.theme.purpleMedium};
+  &:before{
+    content: '';
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    background: ${props=>`url('/static/icons/shop_${props.type}.svg')`};
+    background-size: contain;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
 `;
 
 export default Shop;
