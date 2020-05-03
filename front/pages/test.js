@@ -11,7 +11,7 @@ import { LOAD_TODOS_REQUEST } from "../reducers/todo";
 
 const TodoList = () => {
   const dispatch = useDispatch();
-  const { todos, date, isCleared } = useSelector((state) => state.todo);
+  const { todos, isCleared } = useSelector((state) => state.todo);
   const [started, setStarted] = useState(false);
 
   
@@ -26,7 +26,7 @@ const TodoList = () => {
       {todos && todos[0] || started ? (
         <TodoPage>
           <div>
-            <H2>할 일 목록 <Date>{date}</Date></H2>
+            <H2>할 일 목록 <Date>{todos[0] ? todos[0].createdAt.substring(0,10) : new Date().getFullYear() + "-" + ("0"+(new Date().getMonth()+1)).slice(-2) + "-" + ("0"+(new Date().getDate())).slice(-2)}</Date></H2>
             
           </div>
           <TodoUl>

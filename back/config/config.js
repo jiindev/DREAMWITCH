@@ -9,6 +9,15 @@ module.exports = {
     host: "127.0.0.1",
     dialect: "mysql",
     operatorAliases: false,
+    timezone: '+09:00',
+    dialectOptions: {
+        charset: 'utf8mb4',
+        dateStrings: true,
+        typeCast: true
+    },
+    define: {
+      timestamps: true
+    }
   },
   test: {
     username: "root",
@@ -17,6 +26,15 @@ module.exports = {
     host: "127.0.0.1",
     dialect: "mysql",
     operatorAliases: false,
+    timezone: '+09:00',
+    dialectOptions: {
+        charset: 'utf8mb4',
+        dateStrings: true,
+        typeCast: true
+    },
+    define: {
+      timestamps: true
+    }
   },
   production: {
     username: "root",
@@ -25,5 +43,14 @@ module.exports = {
     host: "127.0.0.1",
     dialect: "mysql",
     operatorAliases: false,
+    timezone: '+09:00',
+    dialectOptions: {
+        charset: 'utf8mb4',
+        dateStrings: true,
+        typeCast: true
+    },
+    define: {
+      timestamps: true
+    }
   },
 };

@@ -11,10 +11,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: false,
       },
-      date: {
-        type: DataTypes.STRING(20),
-        allowNull: false
-      }
     },
     {
       charset: "utf8",

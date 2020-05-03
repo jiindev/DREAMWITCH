@@ -6,7 +6,7 @@ import { Button } from './styledComponents/PageComponent';
 
 const TodoStatue = ({onClickWriteHistory}) => {
   const dispatch = useDispatch();
-  const { date, clearPercentage, isCleared } = useSelector((state) => state.todo);
+  const { clearPercentage, isCleared } = useSelector((state) => state.todo);
   
 
   useEffect(()=>{

@@ -222,7 +222,6 @@ function* levelUp(action) {
     yield put({
       type: ADD_HISTORIES_REQUEST,
       data: {
-        date: action.data.date,
         type: 'levelUp',
         content: `나는 이제 ${action.data.level}!`
       }

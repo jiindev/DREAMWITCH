@@ -63,7 +63,7 @@ const HistoryItem = ({history, userHistory, lastChild}) => {
                                     }
                                     <p>{history.content}</p>
                                     {history.type==='clearTodos' &&
-                                        <Date>{history.date}</Date>
+                                        <Date>{history.createdAt.substring(0,10)}</Date>
                                     }
                                 </Content>
                     </HistoryTitle>

@@ -1,7 +1,6 @@
 import produce from 'immer';
 
 export const initialState = {
-  date: '',
   isCleared: false,
   todos: [],
   clearPercentage: 0,
@@ -71,7 +70,6 @@ const reducer = (state = initialState, action) => {
       }
       case LOAD_TODOS_SUCCESS: {
         if(action.me){
-          draft.date = action.data.date;
           draft.isCleared = action.data.todos[0] ? action.data.todos[0].HistoryId ? true : false : false;
           draft.todos = action.data.todos;
           draft.clearPercentage = draft.todos[0] ? Math.floor(action.data.todos.filter(v=>v.checked===true).length/action.data.todos.length * 100) : 0;

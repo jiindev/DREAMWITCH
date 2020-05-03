@@ -9,7 +9,6 @@ const AddTodo = () => {
   const [adding, setAdding] = useState(false);
   const [content, setContent] = useState('');
   const addTodoInput = createRef();
-  const { date } = useSelector((state) => state.todo);
 
   useEffect(()=>{
     if(adding){
@@ -29,8 +28,7 @@ const AddTodo = () => {
     dispatch({
       type: ADD_TODO_REQUEST,
       data: {
-        content,
-        date
+        content
       }
     })
     setContent('');

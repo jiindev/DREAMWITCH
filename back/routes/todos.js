@@ -2,19 +2,24 @@ const express = require("express");
 const router = express.Router();
 const db = require('../models');
 const sequelize = require('sequelize');
+
       
 router.get("/", async(req, res, next) => {
   // 나의 그날의 투두리스트 불러오기
   try {
-    let today = new Date().toLocaleDateString().split('-').map((v)=>parseInt(v, 10)<10?'0'+v:v).join('-');
+    let day = new Date();
+    let today = day.getFullYear() + "-" + ("0"+(day.getMonth()+1)).slice(-2) + "-" + ("0"+(day.getDate())).slice(-2);
     const todos = await db.Todo.findAll({
       where: {
         userId: req.user.id,
-        date: today,
+        createdAt: {
+          [sequelize.Op.gte]:today+' 00:00:00',
+          [sequelize.Op.lte]:today+' 23:59:59'
+        }
       },
       order: [['createdAt', 'ASC']]
     });
-    return res.send({todos, date:today});
+    return res.send(todos);
   } catch (e) {
     console.error(e);
     return next(e);
@@ -24,15 +29,19 @@ router.get("/", async(req, res, next) => {
 router.get("/:id", async(req, res, next) => {
   // 특정 사용자의 그날의 투두리스트 불러오기
   try {
-    let today = new Date().toLocaleDateString().split('-').map((v)=>parseInt(v, 10)<10?'0'+v:v).join('-');
+    let day = new Date();
+    let today = day.getFullYear() + "-" + ("0"+(day.getMonth()+1)).slice(-2) + "-" + ("0"+(day.getDate())).slice(-2);
     const todos = await db.Todo.findAll({
       where: {
         userId: req.params.id,
-        date: today,
+        createdAt: {
+          [sequelize.Op.gte]:today+' 00:00:00',
+          [sequelize.Op.lte]:today+' 23:59:59'
+        }
       },
       order: [['createdAt', 'ASC']]
     });
-    return res.send({todos, date:today});
+    return res.send(todos);
   } catch (e) {
     console.error(e);
     return next(e);
@@ -45,16 +54,20 @@ router.get("/last/:lastStart", async(req, res, next) => {
     const lastDate = await db.Todo.findOne({
       where: {
         userId: req.user.id,
-        date: {[sequelize.Op.gte]:req.params.lastStart}
+        createdAt: {[sequelize.Op.gte]:req.params.lastStart+' 00:00:00'}
       },
       order: [['createdAt', 'DESC']],
+      attributes: ['createdAt']
     });
     let lastTodos = [];
     if(lastDate){
       lastTodos = await db.Todo.findAll({
         where: {
           userId: req.user.id,
-          date: lastDate.date,
+          createdAt: {
+            [sequelize.Op.gte]:lastDate.createdAt.substring(0,10)+' 00:00:00',
+            [sequelize.Op.lte]:lastDate.createdAt.substring(0,10)+' 23:59:59'
+          },
         },
         order: [['createdAt', 'ASC']]
       });
@@ -70,7 +83,10 @@ router.delete("/last/:date", async(req, res, next) => {
   try{
     await db.Todo.destroy({
       where: {
-        date: req.params.date,
+        createdAt: {
+          [sequelize.Op.gte]:req.params.date+' 00:00:00',
+          [sequelize.Op.lte]:req.params.date+' 23:59:59'
+        },
         UserId: req.user.id,
       }
     });
@@ -85,13 +101,21 @@ router.post("/", async(req, res, next) => {
   //지난 할일 목록에서 투두 복사
   try{
     let fullTodos = [];
+    let day = new Date();
+    let today = day.getFullYear() + "-" + ("0"+(day.getMonth()+1)).slice(-2) + "-" + ("0"+(day.getDate())).slice(-2);
     if(req.body.todosToCopy){
       const copiedTodos = req.body.todosToCopy.map((v, i)=>{
-        return {content: v, UserId: req.user.id, date: req.body.date};
+        return {content: v, UserId: req.user.id};
       })
       coppyTodos = await db.Todo.bulkCreate(copiedTodos);
       fullTodos = await db.Todo.findAll({
-        where: {UserId: req.user.id, date: req.body.date}
+        where: {
+          UserId: req.user.id,
+          createdAt: {
+            [sequelize.Op.gte]:today+' 00:00:00',
+            [sequelize.Op.lte]:today+' 23:59:59'
+          }
+        }
       })
     }
     res.json(fullTodos);

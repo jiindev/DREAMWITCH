@@ -19,8 +19,7 @@ import { levelCheck } from '../static/levelData';
 const Index = () => {
   const dispatch = useDispatch();
   const { me, logInErrorReason } = useSelector((state) => state.user);
-  const { date } = useSelector((state=>state.todo));
-  const [page, setPage] = useState(3);
+  const [page, setPage] = useState(1);
 
   useEffect(()=>{
     if(!me){
@@ -34,7 +33,6 @@ const Index = () => {
         type: LEVEL_UP_REQUEST,
         data: {
           level: levelCheck(me.exp),
-          date,
         }
       })
     }

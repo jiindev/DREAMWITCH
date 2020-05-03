@@ -9,7 +9,6 @@ const TodoCompletePopup = ({clear}) => {
   const dispatch = useDispatch();
   const [historyContent, setHistoryContent] = useState('');
   const historyContentInput = useRef();
-  const { date, clearPercentage, isCleared } = useSelector((state) => state.todo);
   
   const onChangeHistoryContent = (e) => {
     setHistoryContent(e.target.value);

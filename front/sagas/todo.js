@@ -37,8 +37,7 @@ function* loadTodos(action) {
     yield put({
       type: LOAD_TODOS_SUCCESS,
       data: {
-        todos: result.data.todos,
-        date: result.data.date,
+        todos: result.data,
       },
       me: !action.data,
     });

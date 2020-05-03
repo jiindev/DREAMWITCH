@@ -9,7 +9,6 @@ router.post("/", async(req, res, next) => {
     const newTodo = await db.Todo.create({
       content: req.body.content,
       UserId: req.user.id,
-      date: req.body.date,
     });
     const me = await db.User.findOne({
       where: {id:req.user.id}

@@ -7,8 +7,9 @@ const {historyExists} = require('./middleware');
 router.post("/", async(req, res, next) => {
   // 히스토리 생성
   try{
+    let day = new Date();
+    let today = day.getFullYear() + "-" + ("0"+(day.getMonth()+1)).slice(-2) + "-" + ("0"+(day.getDate())).slice(-2);
     let newHistory = await db.History.create({
-      date: req.body.date,
       UserId: req.user.id,
       content: req.body.content,
       type: req.body.type
@@ -17,7 +18,13 @@ router.post("/", async(req, res, next) => {
       const clearedTodos = await db.Todo.update({
         HistoryId: newHistory.id
       }, {
-        where: {date: req.body.date, UserId: req.user.id}
+        where: {
+          createdAt: {
+            [sequelize.Op.gte]:today+' 00:00:00',
+            [sequelize.Op.lte]:today+' 23:59:59'
+          },
+          UserId: req.user.id
+        }
       });
       const userGet = await db.User.update({
         star: sequelize.literal(`star + 10`),

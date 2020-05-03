@@ -2,10 +2,6 @@ module.exports = (sequelize, DataTypes) => {
   const History = sequelize.define(
     "History",
     {
-      date: {
-        type: DataTypes.STRING(20),
-        allowNull: false
-      },
       content: {
         type: DataTypes.STRING(50),
         allowNull: true,
