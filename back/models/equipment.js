@@ -22,6 +22,16 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: false,
           defaultValue: 0
         },
+        wand: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          defaultValue: 0
+        },
+        cat: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          defaultValue: 0
+        },
       },
       {
         charset: "utf8",

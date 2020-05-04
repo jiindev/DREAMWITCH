@@ -29,7 +29,7 @@ return (
         {userHistories ? 
             <div>
               {userHistories.map((c, i)=>{
-                if(i===histories.length-1){
+                if(i===userHistories.length-1){
                   return (<HistoryItem history={c} lastChild={true} userHistory={true}/>)
                 }else{
                   return (<HistoryItem history={c} userHistory={true}/>)

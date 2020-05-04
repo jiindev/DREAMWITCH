@@ -126,3 +126,54 @@ export const bgItems = [
         price: 50
     },
 ]
+
+export const wandItems = [
+    {
+        id: 1,
+        type: 'wand',
+        price: 10
+    },
+    {
+        id: 2,
+        type: 'wand',
+        price: 20
+    },
+    {
+        id: 3,
+        type: 'wand',
+        price: 30
+    },
+    {
+        id: 4,
+        type: 'wand',
+        price: 45
+    },
+    {
+        id: 5,
+        type: 'wand',
+        price: 50
+    },
+    {
+        id: 6,
+        type: 'wand',
+        price: 50
+    },
+]
+
+export const catItems = [
+    {
+        id: 1,
+        type: 'cat',
+        price: 10
+    },
+    {
+        id: 2,
+        type: 'cat',
+        price: 20
+    },
+    {
+        id: 3,
+        type: 'cat',
+        price: 30
+    },
+]

@@ -82,9 +82,9 @@ const HistoryItem = ({history, userHistory, lastChild}) => {
                                     return (
                                         <Comment>
                                             {me && me.id == v.User.id ?
-                                                <span>{v && v.User.nickname}</span> 
+                                                <Link href='/'><a><span>{v.User.nickname}</span></a></Link>
                                                 : 
-                                                <Link href={{pathname: '/user', query:{id:v.User.id}}} as={`/user/${v.User.id}`}><span>{v.User.nickname}</span></Link>
+                                                <Link href={{pathname: '/user', query:{id:v.User.id}}} as={`/user/${v.User.id}`}><a><span>{v.User.nickname}</span></a></Link>
                                             }
                                             <span>{v.createdAt.substring(0,10)}</span>
                                             {me && (history.UserId===me.id || v.UserId===me.id) && 

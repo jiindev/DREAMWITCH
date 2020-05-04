@@ -16,7 +16,7 @@ router.get("/", async(req, res, next) => {
       where: {
         userId: req.user.id
       },
-      attributes: ['hat', 'hair', 'clothes', 'bg'],
+      attributes: ['hat', 'hair', 'clothes', 'bg', 'wand', 'cat'],
     })
     return res.json(items);
   }catch(e){
@@ -32,7 +32,7 @@ router.get("/equipment", async(req, res, next) => {
       where: {
         userId: req.user.id
       },
-      attributes: ['hat', 'hair', 'clothes', 'bg'],
+      attributes: ['hat', 'hair', 'clothes', 'bg', 'wand', 'cat'],
     })
     return res.json(equipment);
   }catch(e){

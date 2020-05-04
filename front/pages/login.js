@@ -36,39 +36,47 @@ const Login = () => {
   };
   return (
     <>
-      <Wrap>
-        <LoginIllust></LoginIllust>
-        <form onSubmit={onSubmit}>
-          <Input>
-            <label htmlFor="userId">ID</label>
-            <input type="text" name="userId" value={id} onChange={onChangeId} />
-          </Input>
-          <Input>
-            <label htmlFor="userPassword">PW</label>
-            <input
-              type="password"
-              name="userPassword"
-              value={password}
-              onChange={onChangePassword}
-            />
-          </Input>
-          <div>
-            <Button htmlFor="submit" onClick={onSubmit}>
-              로그인
-            </Button>
-          </div>
-          <div>
-            <Link href="/signup">
-              <a>
-                <SignupButton>회원가입</SignupButton>
-              </a>
-            </Link>
-          </div>
-        </form>
-      </Wrap>
+      <Bg>
+        <Wrap>
+          <LoginIllust></LoginIllust>
+          <form onSubmit={onSubmit}>
+            <Input>
+              <label htmlFor="userId">ID</label>
+              <input type="text" name="userId" value={id} onChange={onChangeId} />
+            </Input>
+            <Input>
+              <label htmlFor="userPassword">PW</label>
+              <input
+                type="password"
+                name="userPassword"
+                value={password}
+                onChange={onChangePassword}
+              />
+            </Input>
+            <div>
+              <Button htmlFor="submit" onClick={onSubmit}>
+                로그인
+              </Button>
+            </div>
+            <div>
+              <Link href="/signup">
+                <a>
+                  <SignupButton>회원가입</SignupButton>
+                </a>
+              </Link>
+            </div>
+          </form>
+        </Wrap>
+      </Bg>
     </>
   );
 };
+
+const Bg = styled.div`
+  background: url('./static/img/login_pattern_blur.png');
+  background-size: 300px 300px;
+  background-position: center center;
+`;
 
 const Wrap = styled.div`
   display: flex;

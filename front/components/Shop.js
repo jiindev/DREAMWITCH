@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {hatItems, clothesItems, hairItems, bgItems} from '../static/itemData';
+import {hatItems, clothesItems, hairItems, bgItems, wandItems, catItems} from '../static/itemData';
 import { LOAD_ITEMS_REQUEST, BUY_ITEM_REQUEST, EQUIP_ITEM_REQUEST, UNEQUIP_ITEM_REQUEST } from "../reducers/item";
 import {H2} from './styledComponents/PageComponent';
 import styled from 'styled-components';
@@ -47,7 +47,6 @@ const Shop = () => {
     <>
     <H2>마녀의 옷장</H2>
     <Section>
-      <HatIllust/>
       <H3 type='hat'>HAT</H3>
       <ItemList>
         {hatItems.map((v, i)=>{
@@ -62,7 +61,6 @@ const Shop = () => {
       </ItemList>
     </Section>
     <Section>
-      <HairIllust/>
       <H3 type='hair'>HAIR</H3>
       <ItemList>
         {hairItems.map((v, i)=>{
@@ -77,7 +75,6 @@ const Shop = () => {
       </ItemList>
     </Section>
     <Section>
-      <ClothesIllust/>
       <H3 type='clothes'>CLOTHES</H3>
       <ItemList>
         {clothesItems.map((v, i)=>{
@@ -92,10 +89,37 @@ const Shop = () => {
       </ItemList>
     </Section>
     <Section>
-      <BgIllust/>
       <H3 type='background'>BACKGROUND</H3>
       <ItemList>
         {bgItems.map((v, i)=>{
+          return (
+          <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
+            {items && !items[v.type].includes(v.id) && <LockIcon/>}
+            <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
+            {items && !items[v.type].includes(v.id) && <Price>{v.price}</Price>}
+            {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
+          </Item>)
+        })}
+      </ItemList>
+    </Section>
+    <Section>
+      <H3 type='wand'>WAND</H3>
+      <ItemList>
+        {wandItems.map((v, i)=>{
+          return (
+          <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
+            {items && !items[v.type].includes(v.id) && <LockIcon/>}
+            <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
+            {items && !items[v.type].includes(v.id) && <Price>{v.price}</Price>}
+            {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
+          </Item>)
+        })}
+      </ItemList>
+    </Section>
+    <Section>
+      <H3 type='cat'>CAT</H3>
+      <ItemList>
+        {catItems.map((v, i)=>{
           return (
           <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
             {items && !items[v.type].includes(v.id) && <LockIcon/>}

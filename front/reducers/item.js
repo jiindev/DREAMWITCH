@@ -1,8 +1,8 @@
 import produce from 'immer';
 
 export const initialState = {
-    items: {hat: [], hair: [], clothes: [], bg: []},
-    equipment: {hat: 0, hair:0, clothes: 0, bg: 0}
+    items: {hat: [], hair: [], clothes: [], bg: [], wand: [], cat: [],},
+    equipment: {hat: 0, hair:0, clothes: 0, bg: 0, wand: 0, cat: 0,}
   };
   
   export const LOAD_ITEMS_REQUEST = "LOAD_ITEMS_REQUEST";
@@ -35,7 +35,7 @@ export const initialState = {
             break;
         }
         case LOAD_ITEMS_SUCCESS: {
-            draft.items = {hat: [], hair: [], clothes: [], bg: []};
+            draft.items = {hat: [], hair: [], clothes: [], bg: [], wand: [], cat: []};
             action.data.forEach((v)=>{
                 draft.items[v.itemType].push(v.itemId);
             })

@@ -21,7 +21,7 @@ router.get("/:id", async(req, res, next) => {
       include:[{
         model: db.Equipment,
         as: 'Equipment',
-        attributes: ['id', 'hat', 'clothes', 'hair', 'bg']
+        attributes: ['id', 'hat', 'clothes', 'hair', 'bg', 'wand', 'cat']
       }],
       attributes: ['id', 'nickname', 'level']
     });

@@ -142,7 +142,7 @@ const CheckList = ({id}) => {
             <div>
               <H2>오늘도 꿈을 향해! 할 일 목록 적어볼까?</H2>
             </div>
-            <StartIllust>지수 일러스트</StartIllust>
+            <StartIllust/>
             <Button onClick={onStartTodo}>시작하기</Button>
           </StartTodo>
         )
@@ -198,9 +198,12 @@ const StartIllust = styled.span`
   display: flex;
   flex: 1;
   display: inline-block;
-  border: 1px solid black;
   border-radius: 20px;
   text-align: center;
+  background: url('./static/img/checklist_start_illust.png');
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
 `;
 
 const StartTodo = styled.div`

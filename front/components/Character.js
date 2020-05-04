@@ -30,12 +30,14 @@ const Character = ({id}) => {
       <CharacterDiv index={!id ? equipment ? equipment.bg  : 0 : userInfo && userInfo.Equipment.bg}>
         {!id ? talking && <Talking><p>{talking}</p></Talking> : <Talking><p>hi</p></Talking>}
         <Witch>
+          <Cat index={!id ? equipment ? equipment.cat  : 0 : userInfo && userInfo.Equipment.cat}/>
+          <Wand index={!id ? equipment ? equipment.wand  : 0 : userInfo && userInfo.Equipment.wand}/>
           <Cloths index={!id ? equipment ? equipment.clothes  : 0 : userInfo && userInfo.Equipment.clothes}/>
           <FrontHat index={!id ? equipment ? equipment.hat : 0 : userInfo && userInfo.Equipment.hat}/>
-          <Emotion emotion={'mad'}/>
+          <Emotion emotion={'basic'}/>
           <Hair index={!id ? equipment ? equipment.hair  : 0 : userInfo && userInfo.Equipment.hair}/>
           <BackHat index={!id ? equipment ? equipment.hat  : 0 : userInfo && userInfo.Equipment.hat}/>
-          <Effect effect={'happy'}/>
+          <Effect effect={'none'}/>
         </Witch>
       </CharacterDiv>
     </>
@@ -51,64 +53,81 @@ const CharacterDiv = styled.div`
 `;
 
 const Witch = styled.div`
-  width: 300px;
+  width: 326px;
   height: 200px;
   margin: 0 auto;
   position: relative;
   & div{
     position: absolute;
     background-size: contain;
-    opacity: .5;
   }
+`;
+
+const Wand = styled.div`
+  bottom: 0;
+  left: 136px;
+  width: 150px;
+  height:160px;
+  z-index: 7;
+  background: ${props=>`url(/static/img/item_wand${props.index}.png)`};
+`;
+
+const Cat = styled.div`
+  bottom: 0;
+  left: 27px;
+  width: 110px;
+  height:120px;
+  z-index: 7;
+  background: ${props=>props.index===0?'none' : `url(/static/img/item_cat${props.index}.png)`};
 `;
 
 const Cloths = styled.div`
   bottom: 0;
-  left: 54px;
-  width: 200px;
-  height:85px;
+  left: 56px;
+  width: 220px;
+  height:100px;
   z-index: 6;
-  background: ${props=>`url(/static/img/item_clothes${props.index}.png)`};
+  background: ${props=>props.index===0?'none' : `url(/static/img/item_clothes${props.index}.png)`};
 `;
 const FrontHat = styled.div`
   top: 0;
-  left: 20px;
-  width: 260px;
-  height: 80px;
+  left: 40px;
+  width: 244px;
+  height: 90px;
   z-index: 5;
-  background: ${props=>`url(/static/img/item_hat_front${props.index}.png)`};
+  background: ${props=>props.index===0?'none' : `url(/static/img/item_hat_front${props.index}.png)`};
 `;
 const Emotion = styled.div`
   top: 30px;
-  left:105px;
-  width: 90px;
+  left:114px;
+  width: 100px;
   height: 70px;
   z-index: 4;
   background: ${props=>`url(/static/img/character_emotion_${props.emotion}.png)`};
 `;
 const Hair = styled.div`
   top: 0;
-  left: 54px;
-  width: 200px;
-  height: 160px;
+  left: 53px;
+  width: 220px;
+  height: 200px;
   z-index: 3;
   background: ${props=>`url(/static/img/item_hair${props.index}.png)`};
 `;
 const BackHat = styled.div`
   top: 0;
-  left: 20px;
-  width: 260px;
-  height: 160px;
+  left: 47px;
+  width: 236px;
+  height: 200px;
   z-index: 2;
-  background: ${props=>`url(/static/img/item_hat_back${props.index}.png)`};
+  background: ${props=>props.index===0?'none' : `url(/static/img/item_hat_back${props.index}.png)`};
 `;
 const Effect = styled.div`
-  width: 300px;
-  height: 120px;
-  top: 0;
-  left: 0;
+  width: 140px;
+  height: 70px;
+  top: 40px;
+  left: 43px;
   z-index:1;
-  background: ${props=>`url(/static/img/character_effect_${props.effect}.png)`};
+  background: ${props=>props.effect === 'none' ? 'none' : `url(/static/img/character_effect_${props.effect}.png)`};
 `;
 
 const Talking = styled.div`
