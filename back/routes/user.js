@@ -23,7 +23,7 @@ router.get("/:id", async(req, res, next) => {
         as: 'Equipment',
         attributes: ['id', 'hat', 'clothes', 'hair', 'bg', 'wand', 'cat']
       }],
-      attributes: ['id', 'nickname', 'level']
+      attributes: ['id', 'nickname', 'level', 'greetings']
     });
     
     const jsonUser = user.toJSON();

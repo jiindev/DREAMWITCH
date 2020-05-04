@@ -5,6 +5,7 @@ import { LOAD_ITEMS_REQUEST, BUY_ITEM_REQUEST, EQUIP_ITEM_REQUEST, UNEQUIP_ITEM_
 import {H2} from './styledComponents/PageComponent';
 import styled from 'styled-components';
 import { SAY_LOAD_ITEMS } from "../reducers/character";
+import {Animated} from 'react-animated-css';
 
 
 const Shop = () => {
@@ -46,90 +47,120 @@ const Shop = () => {
   return (
     <>
     <H2>마녀의 옷장</H2>
-    <Section>
-      <H3 type='hat'>HAT</H3>
-      <ItemList>
-        {hatItems.map((v, i)=>{
-          return (
-          <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
-            {items && !items[v.type].includes(v.id) && <LockIcon/>}
-            <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
-            {items && !items[v.type].includes(v.id) && <Price>{v.price}</Price>}
-            {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
-          </Item>)
-        })}
-      </ItemList>
-    </Section>
+      <Animated animationIn="fadeIn" animationInDelay={50} animationInDuration={500} isVisible={true}>
+      <Section>
+        <H3 type='hat'>HAT</H3>
+        <ItemList>
+          {hatItems.map((v, i)=>{
+            return (
+            <Animated animationIn="fadeInUp" animationInDelay={i*50} animationInDuration={500} isVisible={true}>
+              <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
+                {items && !items[v.type].includes(v.id) && <LockIcon/>}
+                <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
+                {items && !items[v.type].includes(v.id) && <Price>{v.price}</Price>}
+                {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
+              </Item>
+            </Animated>
+            )
+          })}
+        </ItemList>
+      </Section>
+    </Animated>
+    <Animated animationIn="fadeIn" animationInDelay={100} animationInDuration={500} isVisible={true}>
     <Section>
       <H3 type='hair'>HAIR</H3>
       <ItemList>
         {hairItems.map((v, i)=>{
           return (
-          <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
-            {items && !items[v.type].includes(v.id) && <LockIcon/>}
-            <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
-            {items && !items[v.type].includes(v.id) && <Price>{v.price}</Price>}
-            {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
-          </Item>)
+          <Animated animationIn="fadeInUp" animationInDelay={i*50} animationInDuration={500} isVisible={true}>
+            <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
+              {items && !items[v.type].includes(v.id) && <LockIcon/>}
+              <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
+              {items && !items[v.type].includes(v.id) && <Price>{v.price}</Price>}
+              {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
+            </Item>
+          </Animated>
+          )
         })}
       </ItemList>
     </Section>
+    </Animated>
+    <Animated animationIn="fadeIn" animationInDelay={150} animationInDuration={500} isVisible={true}>
     <Section>
       <H3 type='clothes'>CLOTHES</H3>
       <ItemList>
         {clothesItems.map((v, i)=>{
           return (
-          <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
-            {items && !items[v.type].includes(v.id) && <LockIcon/>}
-            <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
-            {items && !items[v.type].includes(v.id) && <Price>{v.price}</Price>}
-            {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
-          </Item>)
+          <Animated animationIn="fadeInUp" animationInDelay={i*50} animationInDuration={500} isVisible={true}>
+            <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
+              {items && !items[v.type].includes(v.id) && <LockIcon/>}
+              <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
+              {items && !items[v.type].includes(v.id) && <Price>{v.price}</Price>}
+              {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
+            </Item>
+          </Animated>
+          )
         })}
       </ItemList>
     </Section>
+    </Animated>
+    <Animated animationIn="fadeIn" animationInDelay={200} animationInDuration={500} isVisible={true}>
     <Section>
       <H3 type='background'>BACKGROUND</H3>
       <ItemList>
         {bgItems.map((v, i)=>{
           return (
-          <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
-            {items && !items[v.type].includes(v.id) && <LockIcon/>}
-            <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
-            {items && !items[v.type].includes(v.id) && <Price>{v.price}</Price>}
-            {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
-          </Item>)
+          <Animated animationIn="fadeInUp" animationInDelay={i*50} animationInDuration={500} isVisible={true}>
+            <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
+              {items && !items[v.type].includes(v.id) && <LockIcon/>}
+              <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
+              {items && !items[v.type].includes(v.id) && <Price>{v.price}</Price>}
+              {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
+            </Item>
+          </Animated>
+          )
         })}
       </ItemList>
     </Section>
+    </Animated>
+    <Animated animationIn="fadeIn" animationInDelay={250} animationInDuration={500} isVisible={true}>
     <Section>
       <H3 type='wand'>WAND</H3>
       <ItemList>
         {wandItems.map((v, i)=>{
           return (
-          <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
-            {items && !items[v.type].includes(v.id) && <LockIcon/>}
-            <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
-            {items && !items[v.type].includes(v.id) && <Price>{v.price}</Price>}
-            {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
-          </Item>)
+          <Animated animationIn="fadeInUp" animationInDelay={i*50} animationInDuration={500} isVisible={true}>
+              <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
+              {items && !items[v.type].includes(v.id) && <LockIcon/>}
+              <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
+              {items && !items[v.type].includes(v.id) && <Price>{v.price}</Price>}
+              {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
+            </Item>
+          </Animated>
+          )
         })}
       </ItemList>
     </Section>
+    </Animated>
+    <Animated animationIn="fadeIn" animationInDelay={300} animationInDuration={500} isVisible={true}>
     <Section>
       <H3 type='cat'>CAT</H3>
       <ItemList>
         {catItems.map((v, i)=>{
           return (
-          <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
-            {items && !items[v.type].includes(v.id) && <LockIcon/>}
-            <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
-            {items && !items[v.type].includes(v.id) && <Price>{v.price}</Price>}
-            {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
-          </Item>)
+          <Animated animationIn="fadeInUp" animationInDelay={i*50} animationInDuration={500} isVisible={true}>
+            <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
+              {items && !items[v.type].includes(v.id) && <LockIcon/>}
+              <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
+              {items && !items[v.type].includes(v.id) && <Price>{v.price}</Price>}
+              {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
+            </Item>
+          </Animated>
+          )
         })}
       </ItemList>
     </Section>
+    </Animated>
   </>);
 };
 

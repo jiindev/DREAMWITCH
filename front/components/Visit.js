@@ -4,6 +4,7 @@ import {H2} from './styledComponents/PageComponent';
 import styled from 'styled-components';
 import { ADD_FOLLOWING_REQUEST, REMOVE_FOLLOWING_REQUEST } from "../reducers/user";
 import Link from 'next/link';
+import {Animated} from 'react-animated-css';
 
 const Visit = () => {
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ const Visit = () => {
     </AddFriend>
     <FriendList>
         {me && me.Followings.map((v, i)=>{
-            return <li>{v.nickname}<span>({v.userId})</span>{editingMode ? <DeleteButton onClick={onRemoveFriend(v.id)}>친구삭제</DeleteButton> : <Link href={{pathname: '/user', query:{id:v.id}}} as={`/user/${v.id}`}><VisitButton>방문하기</VisitButton></Link>}</li>
+            return <Animated animationIn="fadeInUp" animationOut="fadeOutDown" animationInDelay={i*100} animationInDuration={500} animationOutDuration={1000} isVisible={true}><li>{v.nickname}<span>({v.userId})</span>{editingMode ? <DeleteButton onClick={onRemoveFriend(v.id)}>친구삭제</DeleteButton> : <Link href={{pathname: '/user', query:{id:v.id}}} as={`/user/${v.id}`}><VisitButton>방문하기</VisitButton></Link>}</li></Animated>
         })}
     </FriendList>
   </>);

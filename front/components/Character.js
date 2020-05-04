@@ -28,7 +28,7 @@ const Character = ({id}) => {
   return (
     <>
       <CharacterDiv index={!id ? equipment ? equipment.bg  : 0 : userInfo && userInfo.Equipment.bg}>
-        {!id ? talking && <Talking><p>{talking}</p></Talking> : <Talking><p>hi</p></Talking>}
+        {!id ? talking && <Talking><p>{talking}</p></Talking> : <Talking><p>{userInfo.greetings}</p></Talking>}
         <Witch>
           <Cat index={!id ? equipment ? equipment.cat  : 0 : userInfo && userInfo.Equipment.cat}/>
           <Wand index={!id ? equipment ? equipment.wand  : 0 : userInfo && userInfo.Equipment.wand}/>

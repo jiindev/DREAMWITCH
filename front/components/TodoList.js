@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import { LOAD_LAST_TODOS_REQUEST, CLEAN_LAST_TODOS_REQUEST } from "../reducers/todo";
 import TodoCompletePopup from './TodoCompletePopup';
 import { ADD_HISTORIES_REQUEST } from "../reducers/history";
+import {Animated} from 'react-animated-css';
 
 const CheckList = ({id}) => {
   const dispatch = useDispatch();
@@ -87,7 +88,11 @@ const CheckList = ({id}) => {
           <TodoUl>
           <UserTodoList>
                   {userTodos.map((c, i)=>{
-                    return <LastTodo checked={c.checked} onClick = {onClickAddLast(c.content)}><Checked checked={c.checked}/>{c.content}</LastTodo>
+                    return (
+                    <Animated animationIn="fadeInUp" animationInDelay={i*100} animationInDuration={500} isVisible={true}>
+                      <LastTodo checked={c.checked} onClick = {onClickAddLast(c.content)}><Checked checked={c.checked}/>{c.content}</LastTodo>
+                    </Animated>
+                    );
                   })}
           </UserTodoList>
           </TodoUl>
@@ -108,9 +113,11 @@ const CheckList = ({id}) => {
                 {isCleared ? 
                   <>
                   <FinishedList>
+                  <Animated animationIn="fadeInLeft" animationInDuration={500} isVisible={true}>
                     {todos.map((c, i)=> {
-                      return <li key={i}>{c.content}</li>
+                      return <li key={i}>{c.content}</li>;
                     })}
+                    </Animated>
                   </FinishedList>
                   </>
                 :
@@ -132,7 +139,11 @@ const CheckList = ({id}) => {
              <H3>{lastTodos[0].HistoryId ? '성공': '실패'}의 전당</H3>
              <LastTodoList>
                   {lastTodos.map((c, i)=>{
-                    return <LastTodo checked={c.checked} onClick = {onClickAddLast(c.content)}><Checked checked={c.checked}/>{c.content}<CopyCheck checked={todosToCopy.includes(c.content)}/></LastTodo>
+                    return (
+                      <Animated animationIn="fadeInLeft" animationInDelay={i*100} animationInDuration={500} isVisible={true}>
+                            <LastTodo checked={c.checked} onClick = {onClickAddLast(c.content)}><Checked checked={c.checked}/>{c.content}<CopyCheck checked={todosToCopy.includes(c.content)}/></LastTodo>
+                      </Animated>
+                    )
                   })}
              </LastTodoList>
               <Button onClick={onStartWithLastTodos}>{todosToCopy.length>0 ? `${todosToCopy.length}개의 할일과 함께 시작하기`: '새로운 미션 시작하기'}</Button>
@@ -142,7 +153,7 @@ const CheckList = ({id}) => {
             <div>
               <H2>오늘도 꿈을 향해! 할 일 목록 적어볼까?</H2>
             </div>
-            <StartIllust/>
+            <Animated animationIn="bounceIn" animationInDuration={1000} isVisible={true}><StartIllust/></Animated>
             <Button onClick={onStartTodo}>시작하기</Button>
           </StartTodo>
         )

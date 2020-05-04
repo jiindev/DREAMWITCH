@@ -81,9 +81,6 @@ function addHistoryAPI(historyData) {
         yield put({
           type: GET_EXP
         });
-        yield put({
-          type: SAY_ADD_HISTORY
-        });
       }
     } catch (e) {
       console.error(e);

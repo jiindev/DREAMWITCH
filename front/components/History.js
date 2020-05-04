@@ -5,6 +5,7 @@ import HistoryItem from './HistoryItem';
 import { H2 } from './styledComponents/PageComponent';
 import styled from 'styled-components';
 import { SAY_LOAD_HISTORIES } from "../reducers/character";
+import {Animated} from 'react-animated-css';
 
 const History = ({id}) => {
   const dispatch = useDispatch();
@@ -46,11 +47,13 @@ return (
           {histories ? 
             <div>
               {histories.map((c, i)=>{
-                if(i===histories.length-1){
-                  return (<HistoryItem history={c} lastChild={true}/>)
-                }else{
-                  return (<HistoryItem history={c}/>)
-                }
+                return(
+                  <Animated animationIn="fadeIn" animationInDelay={i*100} animationInDuration={500} isVisible={true}>
+                  {
+                  i===histories.length-1 ? <HistoryItem history={c} lastChild={true}/> : <HistoryItem history={c}/>
+                  }
+                  </Animated>
+                )
               })}
               </div>
           :

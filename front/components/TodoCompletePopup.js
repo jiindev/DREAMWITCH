@@ -1,23 +1,34 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ADD_HISTORIES_REQUEST } from "../reducers/history";
-import {SAY_COMPLETE_TODOS} from '../reducers/character';
+import {SAY_COMPLETE_TODOS, SAY_ADD_HISTORY} from '../reducers/character';
 import styled from 'styled-components';
 import { Button } from './styledComponents/PageComponent';
+import {Animated} from 'react-animated-css';
 
 const TodoCompletePopup = ({clear}) => {
   const dispatch = useDispatch();
   const [historyContent, setHistoryContent] = useState('');
   const historyContentInput = useRef();
+  const [popUpOn, setPopUpOn] = useState(true);
   
   const onChangeHistoryContent = (e) => {
     setHistoryContent(e.target.value);
   }
   
+  const popUpDisappear = useCallback(() => {
+    setPopUpOn(false);
+    setTimeout(clear(historyContent),1000);
+    dispatch({
+      type: SAY_ADD_HISTORY
+    });
+  }, [historyContent]);
+
   return (
     <>
-      
+        <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={1000} animationOutDuration={1000} isVisible={popUpOn}>
           <CompletePopUp>
+          <Animated animationIn="bounceInUp" animationOut="fadeOutDown" animationInDelay={500} animationInDuration={1000} animationOutDuration={1000} isVisible={popUpOn}>
             <div>
               <StarImage/>
               <GetStarText>완료 시 <span>+10</span></GetStarText>
@@ -33,9 +44,11 @@ const TodoCompletePopup = ({clear}) => {
                 />
                 <span>{historyContent.length}/40</span>
               </HistoryContentInput>
-              <CompleteButton onClick={clear(historyContent)}>완료</CompleteButton>
+              <CompleteButton onClick={popUpDisappear}>완료</CompleteButton>
             </div>
+            </Animated>
           </CompletePopUp>
+        </Animated>
     </>
   );
 };
