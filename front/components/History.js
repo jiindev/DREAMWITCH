@@ -30,11 +30,13 @@ return (
         {userHistories ? 
             <div>
               {userHistories.map((c, i)=>{
-                if(i===userHistories.length-1){
-                  return (<HistoryItem history={c} lastChild={true} userHistory={true}/>)
-                }else{
-                  return (<HistoryItem history={c} userHistory={true}/>)
-                }
+                return(
+                  <Animated animationIn="fadeIn" animationInDelay={i*100} animationInDuration={500} isVisible={true}>
+                  {
+                  i===userHistories.length-1 ? <HistoryItem history={c} lastChild={true} userHistory={true}/> : <HistoryItem history={c} userHistory={true}/>
+                  }
+                  </Animated>
+                )
               })}
               </div>
           :

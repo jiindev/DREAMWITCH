@@ -113,7 +113,7 @@ const CheckList = ({id}) => {
                 {isCleared ? 
                   <>
                   <FinishedList>
-                  <Animated animationIn="fadeInLeft" animationInDuration={500} isVisible={true}>
+                  <Animated animationIn="fadeInUp" animationInDuration={500} isVisible={true}>
                     {todos.map((c, i)=> {
                       return <li key={i}>{c.content}</li>;
                     })}

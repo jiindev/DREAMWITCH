@@ -7,14 +7,19 @@ import { Button } from './styledComponents/PageComponent';
 import {Animated} from 'react-animated-css';
 
 const TodoCompletePopup = ({clear}) => {
+  
   const dispatch = useDispatch();
   const [historyContent, setHistoryContent] = useState('');
   const historyContentInput = useRef();
-  const [popUpOn, setPopUpOn] = useState(true);
+  const [popUpOn, setPopUpOn] = useState(false);
   
   const onChangeHistoryContent = (e) => {
     setHistoryContent(e.target.value);
   }
+
+  useEffect(() => {
+    setPopUpOn(true);
+  }, []);
   
   const popUpDisappear = useCallback(() => {
     setPopUpOn(false);
@@ -26,8 +31,7 @@ const TodoCompletePopup = ({clear}) => {
 
   return (
     <>
-        <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={1000} animationOutDuration={1000} isVisible={popUpOn}>
-          <CompletePopUp>
+        <CompletePopUp on={popUpOn}>
           <Animated animationIn="bounceInUp" animationOut="fadeOutDown" animationInDelay={500} animationInDuration={1000} animationOutDuration={1000} isVisible={popUpOn}>
             <div>
               <StarImage/>
@@ -48,7 +52,6 @@ const TodoCompletePopup = ({clear}) => {
             </div>
             </Animated>
           </CompletePopUp>
-        </Animated>
     </>
   );
 };
@@ -61,7 +64,9 @@ const CompletePopUp = styled.div`
   position: absolute;
   top: 0;
   left: 0;
+  opacity: ${props=>props.on===true ? '1' : '0'};
   background-color: rgba(255, 255, 148, .8);
+  transition: all .5s ease;
   z-index:99;
   & input {
     opacity: 100%;

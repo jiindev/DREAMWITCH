@@ -3,17 +3,18 @@ import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LOAD_HISTORIES_REQUEST } from "../reducers/history";
 import { SAY_RESET } from '../reducers/character';
+import { Animated } from 'react-animated-css';
 
 
 const Character = ({id}) => {
-  const { talking } = useSelector(state=>state.character);
+  const { character } = useSelector(state=>state.character);
   const { equipment } = useSelector(state=>state.item);
   const { userInfo } = useSelector(state=>state.user);
   const dispatch = useDispatch();
   const timeoutRef = useRef();
 
   useEffect(()=>{
-    if(talking){
+    if(character.talking || character.emotion || character.effect){
       timeoutRef.current = setTimeout(()=>{
         dispatch({
           type: SAY_RESET
@@ -23,21 +24,24 @@ const Character = ({id}) => {
     return () => {
       clearTimeout(timeoutRef.current);
     }
-  }, [talking]);
+  }, [character]);
 
   return (
     <>
       <CharacterDiv index={!id ? equipment ? equipment.bg  : 0 : userInfo && userInfo.Equipment.bg}>
-        {!id ? talking && <Talking><p>{talking}</p></Talking> : <Talking><p>{userInfo.greetings}</p></Talking>}
+        {!id ? character && character.talking && <Talking><p>{character.talking}</p></Talking> : <Talking><p>{userInfo && userInfo.greetings}</p></Talking>}
         <Witch>
           <Cat index={!id ? equipment ? equipment.cat  : 0 : userInfo && userInfo.Equipment.cat}/>
           <Wand index={!id ? equipment ? equipment.wand  : 0 : userInfo && userInfo.Equipment.wand}/>
           <Cloths index={!id ? equipment ? equipment.clothes  : 0 : userInfo && userInfo.Equipment.clothes}/>
           <FrontHat index={!id ? equipment ? equipment.hat : 0 : userInfo && userInfo.Equipment.hat}/>
-          <Emotion emotion={'basic'}/>
+          <Emotion emotion={!id ? character.emotion ? character.emotion : 'basic' : 'basic'}/>
           <Hair index={!id ? equipment ? equipment.hair  : 0 : userInfo && userInfo.Equipment.hair}/>
           <BackHat index={!id ? equipment ? equipment.hat  : 0 : userInfo && userInfo.Equipment.hat}/>
-          <Effect effect={'none'}/>
+          {!id &&
+            character.effect &&
+            <Effect effect={character.effect}/>
+          }
         </Witch>
       </CharacterDiv>
     </>
@@ -122,12 +126,13 @@ const BackHat = styled.div`
   background: ${props=>props.index===0?'none' : `url(/static/img/item_hat_back${props.index}.png)`};
 `;
 const Effect = styled.div`
-  width: 140px;
+  width: 240px;
   height: 70px;
   top: 40px;
   left: 43px;
-  z-index:1;
+  z-index:10;
   background: ${props=>props.effect === 'none' ? 'none' : `url(/static/img/character_effect_${props.effect}.png)`};
+  background-size: contain;
 `;
 
 const Talking = styled.div`

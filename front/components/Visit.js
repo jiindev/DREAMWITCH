@@ -46,7 +46,7 @@ const Visit = () => {
     </AddFriend>
     <FriendList>
         {me && me.Followings.map((v, i)=>{
-            return <Animated animationIn="fadeInUp" animationOut="fadeOutDown" animationInDelay={i*100} animationInDuration={500} animationOutDuration={1000} isVisible={true}><li>{v.nickname}<span>({v.userId})</span>{editingMode ? <DeleteButton onClick={onRemoveFriend(v.id)}>친구삭제</DeleteButton> : <Link href={{pathname: '/user', query:{id:v.id}}} as={`/user/${v.id}`}><VisitButton>방문하기</VisitButton></Link>}</li></Animated>
+            return <Animated animationIn="fadeInUp" animationInDelay={i*100} animationInDuration={500} isVisible={true}><li>{v.nickname}<span>({v.userId})</span>{editingMode ? <DeleteButton onClick={onRemoveFriend(v.id)}>친구삭제</DeleteButton> : <Link href={{pathname: '/user', query:{id:v.id}}} as={`/user/${v.id}`}><VisitButton>방문하기</VisitButton></Link>}</li></Animated>
         })}
     </FriendList>
   </>);
