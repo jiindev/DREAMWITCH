@@ -6,6 +6,8 @@ import { H2 } from './styledComponents/PageComponent';
 import styled from 'styled-components';
 import { SAY_LOAD_HISTORIES } from "../reducers/character";
 import {Animated} from 'react-animated-css';
+import propTypes from 'prop-types';
+import { SET_PAGE } from "../reducers/user";
 
 const History = ({id}) => {
   const dispatch = useDispatch();
@@ -73,6 +75,10 @@ const HistoryPage = styled.div`
   width: 100%;
   height: 100%;
 `;
+
+History.propTypes = {
+  id: propTypes.number
+}
 
 
 export default History;

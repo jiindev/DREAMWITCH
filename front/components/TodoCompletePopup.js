@@ -5,6 +5,7 @@ import {SAY_COMPLETE_TODOS, SAY_ADD_HISTORY} from '../reducers/character';
 import styled from 'styled-components';
 import { Button } from './styledComponents/PageComponent';
 import {Animated} from 'react-animated-css';
+import propTypes from 'prop-types';
 
 const TodoCompletePopup = ({clear}) => {
   
@@ -154,5 +155,9 @@ const CompleteButton = styled(Button)`
   display: block;
   margin: 20px auto;
 `;
+
+TodoCompletePopup.propTypes = {
+  clear: propTypes.func.isRequired
+}
 
 export default TodoCompletePopup;

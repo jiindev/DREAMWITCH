@@ -38,7 +38,7 @@ const User = ({id}) => {
       <Wrap>
        <TopContent>
          <UserStatue>
-            <Star>{userInfo && userInfo.nickname}</Star><Level>{userInfo && userInfo.level}</Level>
+            <HomeButton><Link href='/'>돌아가기</Link></HomeButton><Level>{userInfo && `${userInfo.nickname} (${userInfo.userId})`}</Level>
          </UserStatue>
          <LogoutButton onClick={onLogout}><i/></LogoutButton>
           <Character id={id}/>
@@ -129,9 +129,13 @@ const Level = styled.span`
   float: right;
 `;
 
-const Star = styled(Level)`
+const HomeButton = styled(Level)`
 border-radius: 0 0 20px 0;
 float: left;
+& a{
+  text-decoration: none;
+  color: ${props => props.theme.purpleLight}; 
+}
   &:before{
     content: '';
     display: inline-block;
@@ -140,7 +144,7 @@ float: left;
     background-color: red;
     vertical-align: middle;
     margin-right: 5px;
-    background: url('/static/icons/top_left_star.svg');
+    background: url('/static/icons/friend_back.svg');
     background-size: contain;
   }
 `;

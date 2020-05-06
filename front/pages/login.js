@@ -5,6 +5,7 @@ import Router from "next/router";
 import Link from "next/link";
 import styled from 'styled-components';
 import {Button} from '../components/styledComponents/PageComponent';
+import {Animated} from 'react-animated-css';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -38,7 +39,9 @@ const Login = () => {
     <>
       <Bg>
         <Wrap>
+          <Animated animationIn="bounceInDown" animationInDuration={1200} isVisible={true}>
           <LoginIllust></LoginIllust>
+          </Animated>
           <form onSubmit={onSubmit}>
             <Input>
               <label htmlFor="userId">ID</label>
@@ -73,7 +76,7 @@ const Login = () => {
 };
 
 const Bg = styled.div`
-  background: url('./static/img/login_pattern_blur.png');
+  background: url('./static/img/login_pattern.png') ${props=>props.theme.yellowMedium};
   background-size: 300px 300px;
   background-position: center center;
 `;
@@ -93,7 +96,9 @@ const LoginIllust = styled.span`
   width: 100%;
   height: 300px;
   display: inline-block;
-  background: white;
+  background: url('./static/img/login_logo.png');
+  background-size: contain;
+  background-position: center center;
   margin-bottom: 20px;
   border-radius: 20px;
 `;

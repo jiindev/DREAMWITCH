@@ -15,7 +15,7 @@ module.exports = () => {
           as: 'Followings',
           attributes: ['id', 'nickname', 'userId']
         }],
-        attributes: ['id', 'nickname', 'userId', 'level', 'exp', 'star', 'lastStart'],
+        attributes: ['id', 'nickname', 'userId', 'level', 'exp', 'star', 'lastStart', 'greetings'],
       });
       return done(null, user);
     } catch (e) {

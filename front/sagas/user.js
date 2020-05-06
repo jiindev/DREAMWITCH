@@ -25,6 +25,9 @@ import {
   LEVEL_UP_SUCCESS,
   LEVEL_UP_FAILURE,
   LEVEL_UP_REQUEST,
+  EDIT_GREETINGS_SUCCESS,
+  EDIT_GREETINGS_FAILURE,
+  EDIT_GREETINGS_REQUEST,
 } from "../reducers/user";
 import Router from 'next/router';
 import { SAY_HELLO } from "../reducers/character";
@@ -238,6 +241,31 @@ function* watchLevelUp() {
   yield takeLatest(LEVEL_UP_REQUEST, levelUp);
 }
 
+function editGreetingsAPI(GreetingsData) {
+  return axios.patch(`/user/greetings`, GreetingsData, {
+    withCredentials: true
+  });
+}
+function* editGreetings(action) {
+  try {
+    const result = yield call(editGreetingsAPI, action.data);
+    yield put({
+      type: EDIT_GREETINGS_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: EDIT_GREETINGS_FAILURE,
+      error: e,
+    });
+  }
+}
+function* watchEditGreetings() {
+  yield takeLatest(EDIT_GREETINGS_REQUEST, editGreetings);
+}
+
+
 
 export default function* userSaga() {
   yield all([
@@ -249,5 +277,6 @@ export default function* userSaga() {
     fork(watchRemoveFollowing),
     fork(watchAddFollowing),
     fork(watchLevelUp),
+    fork(watchEditGreetings)
   ]);
 }

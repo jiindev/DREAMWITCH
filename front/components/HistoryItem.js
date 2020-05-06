@@ -4,6 +4,7 @@ import { LOAD_HISTORY_REQUEST, ADD_COMMENT_REQUEST, REMOVE_COMMENT_REQUEST } fro
 import styled from 'styled-components';
 import {} from './styledComponents/PageComponent';
 import Link from 'next/link';
+import propTypes from 'prop-types';
 
 const HistoryItem = ({history, userHistory, lastChild}) => {
     const {me} = useSelector(state=>state.user);
@@ -260,5 +261,12 @@ const CommentInput = styled.div`
         }
     }
 `;
+
+HistoryItem.propTypes = {
+    history: propTypes.object.isRequired, 
+    userHistory: propTypes.bool,
+    lastChild: propTypes.bool
+  }
+  
 
 export default HistoryItem;

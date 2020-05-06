@@ -23,7 +23,7 @@ router.get("/:id", async(req, res, next) => {
         as: 'Equipment',
         attributes: ['id', 'hat', 'clothes', 'hair', 'bg', 'wand', 'cat']
       }],
-      attributes: ['id', 'nickname', 'level', 'greetings']
+      attributes: ['id', 'nickname', 'level', 'greetings', 'userId']
     });
     
     const jsonUser = user.toJSON();
@@ -82,7 +82,7 @@ router.post("/login", async(req, res, next) => {
             as: 'Followings',
             attributes: ['id', 'nickname', 'userId']
           }],
-          attributes: ['id', 'nickname', 'userId', 'level', 'exp', 'star','lastStart'],
+          attributes: ['id', 'nickname', 'userId', 'level', 'exp', 'star','lastStart', 'greetings'],
         });
         return res.json(fullUser);
       }catch(e){
@@ -162,6 +162,21 @@ router.patch("/level", isLoggedIn, async(req, res, next) => {
       where: {id: req.user.id}
     });
     res.send(req.body.level);
+  }catch(e){
+    console.error(e);
+    next(e);
+  }
+});
+
+router.patch("/greetings", isLoggedIn, async(req, res, next) => {
+  //인삿말 수정
+  try{
+    const greetings = await db.User.update({
+      greetings: req.body.greetings
+    }, {
+      where: {id: req.user.id}
+    });
+    res.send(req.body.greetings);
   }catch(e){
     console.error(e);
     next(e);

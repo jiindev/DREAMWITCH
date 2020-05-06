@@ -1,5 +1,6 @@
 import React, { useState, useRef, createRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import propTypes from 'prop-types';
 import TodoItem from "./TodoItem";
 import AddTodo from './AddTodo';
 import TodoStatue from './TodoStatue';
@@ -10,6 +11,7 @@ import { LOAD_LAST_TODOS_REQUEST, CLEAN_LAST_TODOS_REQUEST } from "../reducers/t
 import TodoCompletePopup from './TodoCompletePopup';
 import { ADD_HISTORIES_REQUEST } from "../reducers/history";
 import {Animated} from 'react-animated-css';
+import { SET_PAGE } from "../reducers/user";
 
 const CheckList = ({id}) => {
   const dispatch = useDispatch();
@@ -140,7 +142,7 @@ const CheckList = ({id}) => {
              <LastTodoList>
                   {lastTodos.map((c, i)=>{
                     return (
-                      <Animated animationIn="fadeInLeft" animationInDelay={i*100} animationInDuration={500} isVisible={true}>
+                      <Animated animationIn="fadeIn" animationInDelay={i*100} animationInDuration={500} isVisible={true}>
                             <LastTodo checked={c.checked} onClick = {onClickAddLast(c.content)}><Checked checked={c.checked}/>{c.content}<CopyCheck checked={todosToCopy.includes(c.content)}/></LastTodo>
                       </Animated>
                     )
@@ -263,10 +265,13 @@ const LastTodo = styled.li`
 `;
 
 const CopyCheck = styled(Checked)`
-  background:${props=>props.checked? "url('/static/icons/import_todo_active(temp).png')" : "url('/static/icons/import_todo(temp).png')" };
+  background:${props=>props.checked? "url('/static/icons/import_todo_active.svg')" : "url('/static/icons/import_todo.svg')" };
   background-size: contain;
   float:right;
 `;
 
+CheckList.propTypes = {
+  id: propTypes.number
+}
 
 export default CheckList;

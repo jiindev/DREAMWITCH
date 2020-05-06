@@ -9,6 +9,7 @@ export const initialState = {
   signUpErrorReason: "", // 회원가입 실패 사유
   me: null, // 내 정보
   userInfo: null,
+  page: 1,
 };
 
 export const LOG_IN_REQUEST = "LOG_IN_REQUEST";
@@ -43,9 +44,15 @@ export const LEVEL_UP_REQUEST = 'LEVEL_UP_REQUEST';
 export const LEVEL_UP_SUCCESS = 'LEVEL_UP_SUCCESS';
 export const LEVEL_UP_FAILURE = 'LEVEL_UP_FAILURE';
 
+export const EDIT_GREETINGS_REQUEST = 'EDIT_GREETINGS_REQUEST';
+export const EDIT_GREETINGS_SUCCESS = 'EDIT_GREETINGS_SUCCESS';
+export const EDIT_GREETINGS_FAILURE = 'EDIT_GREETINGS_FAILURE';
+
 export const GET_EXP = 'GET_EXP';
 export const GET_STARS = 'GET_STARS';
 export const USE_STARS = 'USE_STARS';
+
+export const SET_PAGE = 'SET_PAGE';
 
 const reducer = (state = initialState, action) => {
   return produce(state, (draft)=>{
@@ -159,6 +166,20 @@ const reducer = (state = initialState, action) => {
         break;
       }
       case LEVEL_UP_FAILURE: {
+        break;
+      }
+      case EDIT_GREETINGS_REQUEST: {
+        break;
+      }
+      case EDIT_GREETINGS_SUCCESS: {
+        draft.me.greetings = action.data;
+        break;
+      }
+      case EDIT_GREETINGS_FAILURE: {
+        break;
+      }
+      case SET_PAGE:{
+        draft.page = action.data;
         break;
       }
       default: {

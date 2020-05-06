@@ -9,7 +9,7 @@ import Shop from "../components/Shop";
 import Visit from '../components/Visit';
 import { useSelector, useDispatch } from "react-redux";
 import Router from "next/router";
-import { LOAD_USER_REQUEST, LOG_OUT_REQUEST, LEVEL_UP_REQUEST } from "../reducers/user";
+import { LOAD_USER_REQUEST, LOG_OUT_REQUEST, LEVEL_UP_REQUEST, SET_PAGE } from "../reducers/user";
 import styled from 'styled-components';
 import { LOAD_HISTORIES_REQUEST } from "../reducers/history";
 import { LOAD_TODOS_REQUEST } from "../reducers/todo";
@@ -18,8 +18,7 @@ import { levelCheck } from '../static/levelData';
 
 const Index = () => {
   const dispatch = useDispatch();
-  const { me, logInErrorReason } = useSelector((state) => state.user);
-  const [page, setPage] = useState(1);
+  const { me, logInErrorReason, page } = useSelector((state) => state.user);
 
   useEffect(()=>{
     if(!me){
@@ -39,7 +38,10 @@ const Index = () => {
   }, [me && me.exp]);
   const onChangePage = useCallback(pageNum => () => {
     if(page!==pageNum){
-      setPage(pageNum);
+      dispatch({
+        type: SET_PAGE,
+        data: pageNum
+      })
     }
   }, [page]);
 

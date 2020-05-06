@@ -1,17 +1,28 @@
 import styled from 'styled-components';
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useRef, useCallback, useEffect, createRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LOAD_HISTORIES_REQUEST } from "../reducers/history";
 import { SAY_RESET } from '../reducers/character';
 import { Animated } from 'react-animated-css';
+import propTypes from 'prop-types';
+import { EDIT_GREETINGS_REQUEST } from '../reducers/user';
 
 
 const Character = ({id}) => {
   const { character } = useSelector(state=>state.character);
   const { equipment } = useSelector(state=>state.item);
-  const { userInfo } = useSelector(state=>state.user);
+  const { me, userInfo, page } = useSelector(state=>state.user);
   const dispatch = useDispatch();
   const timeoutRef = useRef();
+  const [editingMode, setEditingMode] = useState(false);
+  const [userGreetings, setUserGreetings] = useState(me && me.greetings);
+  const greetingsInput = createRef();
+
+  useEffect(() => {
+    if (editingMode) {
+      greetingsInput.current.focus();
+    }
+  }, [editingMode]);
 
   useEffect(()=>{
     if(character.talking || character.emotion || character.effect){
@@ -26,10 +37,41 @@ const Character = ({id}) => {
     }
   }, [character]);
 
+  const editModeStart = useCallback(() => {
+    setEditingMode(true);
+  }, []);
+
+  const onChangeGreetings = useCallback(
+    (e) => {
+      setUserGreetings(e.target.value);
+    },
+    [userGreetings]
+  );
+
+  const editModeEnd = useCallback(() => {
+    setEditingMode(false);
+    if(userGreetings!==me.greetings){
+      dispatch({
+        type: EDIT_GREETINGS_REQUEST,
+        data: {
+          greetings: userGreetings,
+        },
+      });
+    }
+  }, [me && me.greetings, userGreetings]);
+
   return (
     <>
       <CharacterDiv index={!id ? equipment ? equipment.bg  : 0 : userInfo && userInfo.Equipment.bg}>
-        {!id ? character && character.talking && <Talking><p>{character.talking}</p></Talking> : <Talking><p>{userInfo && userInfo.greetings}</p></Talking>}
+        {!id ? 
+          page===4 ? 
+            <Talking>
+              <p>{editingMode ? <input type="text" value={userGreetings} onChange={onChangeGreetings} onBlur={editModeEnd} ref={greetingsInput} /> : me && me.greetings}<EditButton onClick={editModeStart}/></p>
+            </Talking> 
+            : 
+            character && character.talking && 
+            <Talking><p>{character.talking}</p></Talking> 
+        : <Talking><p>{userInfo && userInfo.greetings}</p></Talking>}
         <Witch>
           <Cat index={!id ? equipment ? equipment.cat  : 0 : userInfo && userInfo.Equipment.cat}/>
           <Wand index={!id ? equipment ? equipment.wand  : 0 : userInfo && userInfo.Equipment.wand}/>
@@ -151,5 +193,21 @@ const Talking = styled.div`
   }
   
 `;
+
+const EditButton = styled.button`
+  width: 12px;
+  height: 12px;
+  background: url('/static/icons/chatter_box_edit.svg');
+  background-size: contain;
+  border: 0;
+  outline: none;
+  vertical-align: middle;
+  margin-left: 5px;
+  cursor: pointer;
+`;
+
+Character.propTypes = {
+  id: propTypes.number
+}
 
 export default Character;

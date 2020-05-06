@@ -12,6 +12,7 @@ import {
   REMOVE_TODO_REQUEST,
 } from "../reducers/todo";
 import styled from 'styled-components';
+import propTypes from 'prop-types';
 
 const TodoItem = ({ todo }) => {
   const dispatch = useDispatch();
@@ -162,5 +163,9 @@ const DeleteButton = styled.button`
   border: 0;
   cursor: pointer;
 `;
+
+TodoItem.propTypes = {
+  todo: propTypes.object.isRequired
+}
 
 export default TodoItem;

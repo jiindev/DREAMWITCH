@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {SAY_COMPLETE_TODOS} from '../reducers/character';
 import styled from 'styled-components';
 import { Button } from './styledComponents/PageComponent';
+import propTypes from 'prop-types';
 
 const TodoStatue = ({onClickWriteHistory}) => {
   const dispatch = useDispatch();
@@ -82,5 +83,9 @@ const StarButtonActive = styled(StarBase)`
   text-indent: -9999px;
   cursor: pointer;
 `;
+
+TodoStatue.propTypes = {
+  onClickWriteHistory: propTypes.func.isRequired
+}
 
 export default TodoStatue;
