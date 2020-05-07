@@ -103,12 +103,14 @@ router.post("/logout", (req, res) => {
 router.patch('/laststart', async(req, res, next) => {
   //마지막으로 미션을 시작한 시간 기록
   try{
+    let day = new Date();
+    let today = day.getFullYear() + "-" + ("0"+(day.getMonth()+1)).slice(-2) + "-" + ("0"+(day.getDate())).slice(-2);
     const changeLastStart = await db.User.update({
-      lastStart: req.body.date
+      lastStart: today
     }, {
       where: {id: req.user.id}
     });
-    res.send(req.body.date);
+    res.send(today);
   }catch(e){
     console.error(e);
     next(e);
