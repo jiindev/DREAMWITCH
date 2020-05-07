@@ -9,7 +9,6 @@ router.get("/", isLoggedIn, async(req, res, next) => {
   // 나의 정보 프론트로 전달
   const user = Object.assign({}, req.user.toJSON());
   delete user.password;
-  console.log('realinfo:', user);
   return res.json(user);
 });
 

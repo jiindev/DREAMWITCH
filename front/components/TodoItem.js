@@ -4,6 +4,7 @@ import React, {
   useRef,
   useEffect,
   createRef,
+  memo
 } from "react";
 import { useDispatch } from "react-redux";
 import {
@@ -14,7 +15,7 @@ import {
 import styled from 'styled-components';
 import propTypes from 'prop-types';
 
-const TodoItem = ({ todo }) => {
+const TodoItem = memo(({ todo }) => {
   const dispatch = useDispatch();
   const [todoContent, setTodoContent] = useState(todo.content);
   const [editingMode, setEditingMode] = useState(false);
@@ -105,7 +106,7 @@ const TodoItem = ({ todo }) => {
       </Todo>
     </>
   );
-};
+});
 
 const Todo = styled.li`
   display: flex;

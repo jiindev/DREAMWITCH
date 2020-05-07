@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, memo } from "react";
 import Link from "next/link";
 // import Head from 'next/head';
 // import AppLaout from '../components/AppLayout';
 import Character from "../components/Character";
 import History from "../components/History";
 import TodoList from "../components/TodoList";
-import Shop from "../components/Shop";
+import Closet from "../components/Closet";
 import Visit from '../components/Visit';
 import { useSelector, useDispatch } from "react-redux";
 import Router from "next/router";
@@ -17,7 +17,7 @@ import { LOAD_ITEMS_REQUEST, LOAD_EQUIPMENT_REQUEST } from "../reducers/item";
 import { levelCheck } from '../static/levelData';
 import AppLayout from "../components/AppLayout";
 
-const Index = () => {
+const Index = memo(() => {
   const dispatch = useDispatch();
   const { me, logInErrorReason, page } = useSelector((state) => state.user);
 
@@ -52,6 +52,9 @@ const Index = () => {
     })
   }
 
+  if(!me){
+    return null;
+  }
   return (
     <>
     <AppLayout>
@@ -75,7 +78,7 @@ const Index = () => {
         <Page>
           {page === 1 && <TodoList/>}
           {page === 2 && <History/>}
-          {page === 3 && <Shop/>}
+          {page === 3 && <Closet/>}
           {page === 4 && <Visit/>}
         </Page>
         </Wrap>
@@ -83,7 +86,7 @@ const Index = () => {
     </>
   );
   
-};
+});
 
 const Wrap = styled.div`
   display: flex;

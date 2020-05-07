@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LOG_IN_REQUEST } from "../reducers/user";
 import Router from "next/router";
@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import {Button} from '../components/styledComponents/PageComponent';
 import {Animated} from 'react-animated-css';
 
-const Login = () => {
+const Login = memo(() => {
   const dispatch = useDispatch();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
@@ -73,10 +73,10 @@ const Login = () => {
       </Background>
     </>
   );
-};
+});
 
 const Background = styled.div`
-  background: url('./static/img/login_pattern.png') ${props=>props.theme.yellowMedium};
+  background: url('./static/img/login_pattern.png');
   background-size: 300px 300px;
   background-position: center center;
 `;

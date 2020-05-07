@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useRef, useCallback, useEffect, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LOAD_HISTORIES_REQUEST } from "../reducers/history";
 import HistoryItem from './HistoryItem';
@@ -9,7 +9,7 @@ import {Animated} from 'react-animated-css';
 import propTypes from 'prop-types';
 import { SET_PAGE } from "../reducers/user";
 
-const History = ({id}) => {
+const History = memo(({id}) => {
   const dispatch = useDispatch();
   const { histories, userHistories } = useSelector(state=>state.history);
   const {userInfo} = useSelector(state=>state.user);
@@ -33,7 +33,7 @@ return (
             <div>
               {userHistories.map((c, i)=>{
                 return(
-                  <Animated animationIn="fadeIn" animationInDelay={i*100} animationInDuration={500} isVisible={true}>
+                  <Animated animationIn="fadeIn" animationInDelay={i*100} animationInDuration={500} isVisible={true} key={i}>
                   {
                   i===userHistories.length-1 ? <HistoryItem history={c} lastChild={true} userHistory={true}/> : <HistoryItem history={c} userHistory={true}/>
                   }
@@ -52,7 +52,7 @@ return (
             <div>
               {histories.map((c, i)=>{
                 return(
-                  <Animated animationIn="fadeIn" animationInDelay={i*100} animationInDuration={500} isVisible={true}>
+                  <Animated animationIn="fadeIn" animationInDelay={i*100} animationInDuration={500} isVisible={true} key={i}>
                   {
                   i===histories.length-1 ? <HistoryItem history={c} lastChild={true}/> : <HistoryItem history={c}/>
                   }
@@ -69,7 +69,7 @@ return (
     </HistoryPage>
   </>
   );
-};
+});
 
 const HistoryPage = styled.div`
   width: 100%;

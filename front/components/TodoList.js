@@ -1,4 +1,4 @@
-import React, { useState, useRef, createRef, useCallback, useEffect } from "react";
+import React, { useState, useRef, createRef, useCallback, useEffect, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import propTypes from 'prop-types';
 import TodoItem from "./TodoItem";
@@ -11,11 +11,10 @@ import { LOAD_LAST_TODOS_REQUEST, CLEAN_LAST_TODOS_REQUEST } from "../reducers/t
 import TodoCompletePopup from './TodoCompletePopup';
 import { ADD_HISTORIES_REQUEST } from "../reducers/history";
 import {Animated} from 'react-animated-css';
-import { SET_PAGE } from "../reducers/user";
 
-const CheckList = ({id}) => {
+const CheckList = memo(({id}) => {
   const dispatch = useDispatch();
-  const { todos, date, isCleared, lastTodos, userTodos } = useSelector((state) => state.todo);
+  const { todos, isCleared, lastTodos, userTodos } = useSelector((state) => state.todo);
   const { me, userInfo } = useSelector(state=>state.user);
   const [started, setStarted] = useState(false);
   const [todosToCopy, setTodosToCopy] = useState([]);
@@ -36,11 +35,11 @@ const CheckList = ({id}) => {
         data: me && me.lastStart
       })
     }
-  }, [todos, isCleared, me])
+  }, [todos, isCleared, me]); // 시작하지 않았다면 지난 날의 투두 데이터 가져오기
 
   const onStartTodo = useCallback(() => {
     setStarted(true);
-  }, []);
+  }, []); //시작하기 버튼 눌렀을 때
 
   const onStartWithLastTodos = useCallback(()=>{
     dispatch({
@@ -52,7 +51,7 @@ const CheckList = ({id}) => {
       }
     });
     setStarted(true);
-  }, [lastTodos, todosToCopy]);
+  }, [lastTodos, todosToCopy]); // 지난 투두 확인 후 시작 (복사 기능 제공)
 
   const onClickAddLast = useCallback((lastTodo) => ()=>{
     if(todosToCopy.includes(lastTodo)){
@@ -63,11 +62,11 @@ const CheckList = ({id}) => {
     }else {
       setTodosToCopy(todosToCopy.concat(lastTodo));
     }
-  }, [todosToCopy]);
+  }, [todosToCopy]); // 복사할 지난 투두 선택
 
   const onClickWriteHistory = () => {
     setWritingHistory(true);
-  }
+  } // 히스토리에 저장모드
 
   const clear = useCallback((historyContent) => () => {
     dispatch({
@@ -78,13 +77,12 @@ const CheckList = ({id}) => {
       }
     });
     setWritingHistory(false);
-  }, []);
+  }, []); // 히스토리 내용 설정 안할 시 기본 텍스트로 히스토리 추가
 
 
   return (
     <>
-      {id ? 
-
+      {id ? //다른 사용자의 할일 목록 보기
         <TodoPage>
           <H2>{userInfo && userInfo.nickname}의 오늘의 할 일!</H2>
           <TodoUl>
@@ -99,11 +97,9 @@ const CheckList = ({id}) => {
           </UserTodoList>
           </TodoUl>
         </TodoPage>
-
-        :
-
-        todos && todos[0] || started ? (
-          <>
+        : //자신의 할 일 목록
+        todos && todos[0] || started ? ( //이미 오늘의 할 일을 추가했다면
+          <> 
           {writingHistory &&
             <TodoCompletePopup clear={clear}/>
           }
@@ -112,7 +108,7 @@ const CheckList = ({id}) => {
               <H2>할 일 목록 <Date>{todos[0] && todos[0].createdAt.substring(0,10)}</Date></H2>
               </div>
               <TodoUl>
-                {isCleared ? 
+                {isCleared ? // 오늘의 투두 클리어 했다면
                   <>
                   <FinishedList>
                   <Animated animationIn="fadeInUp" animationInDuration={500} isVisible={true}>
@@ -122,10 +118,10 @@ const CheckList = ({id}) => {
                     </Animated>
                   </FinishedList>
                   </>
-                :
-                <>
+                : // 아직 클리어 못했다면 (진행중인 투두리스트)
+                <> 
                   {todos.map((c, i) => {
-                    return <TodoItem todo={c}/>;
+                    return <TodoItem todo={c} key={i}/>;
                   })}
                   <AddTodo/>
                 </>
@@ -135,7 +131,7 @@ const CheckList = ({id}) => {
               <TodoStatue onClickWriteHistory={onClickWriteHistory}/>
             </TodoPage>
           </>
-        ) : lastTodos.length>0 ? (
+        ) : lastTodos.length>0 ? ( // 오늘의 투두를 아직 시작하지 않았을 때 지난날의 투두 조회
            <LastTodoPage>
              <H2>지난 날의 기록 <Date>{lastTodos[0].createdAt.substring(0,10)}</Date></H2>
              <H3>{lastTodos[0].HistoryId ? '성공': '실패'}의 전당</H3>
@@ -150,7 +146,7 @@ const CheckList = ({id}) => {
              </LastTodoList>
               <Button onClick={onStartWithLastTodos}>{todosToCopy.length>0 ? `${todosToCopy.length}개의 할일과 함께 시작하기`: '새로운 미션 시작하기'}</Button>
            </LastTodoPage>
-        ) : (
+        ) : ( // 지난날의 기록 이미 확인했다면
           <StartTodo>
             <div>
               <H2>오늘도 꿈을 향해! 할 일 목록 적어볼까?</H2>
@@ -163,7 +159,7 @@ const CheckList = ({id}) => {
       
     </>
   );
-};
+});
 
 const TodoPage = styled.div`
   width: 100%;

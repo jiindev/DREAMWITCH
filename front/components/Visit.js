@@ -1,18 +1,17 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useRef, useCallback, useEffect, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {H2} from './styledComponents/PageComponent';
 import styled from 'styled-components';
-import { ADD_FOLLOWING_REQUEST, REMOVE_FOLLOWING_REQUEST } from "../reducers/user";
+import { REMOVE_FOLLOWING_REQUEST } from "../reducers/user";
 import Link from 'next/link';
 import {Animated} from 'react-animated-css';
+import AddFriend from "./AddFriend";
 
-const Visit = () => {
+const Visit = memo(() => {
   const dispatch = useDispatch();
   const [editingMode, setEditingMode] = useState(false);
   const { me } = useSelector(state=>state.user);
-  const [followUserId, setfollowUserId] = useState('');
-
-
+  
   const onEditMode = useCallback(() => {
     if(editingMode){
         return setEditingMode(false);
@@ -27,31 +26,25 @@ const Visit = () => {
    })
   }, [me && me.Followings]);
 
-  const onAddFriend = useCallback(()=>{
-    dispatch({
-        type: ADD_FOLLOWING_REQUEST,
-        data: followUserId
-    })
-   }, [followUserId]);
-
-   const onChangeFriendId = useCallback((e)=>{
-    setfollowUserId(e.target.value);
-   }, [followUserId]);
-
   return (
     <>
-    <H2>놀러가기<EditButton on={editingMode} onClick={onEditMode}>수정모드</EditButton></H2>
-    <AddFriend>
-        <input type="text" placeholder="친구 목록에 추가할 아이디를 입력하세요" value={followUserId} onChange={onChangeFriendId}/>
-        <button onClick={onAddFriend}><span>추가하기</span></button>
-    </AddFriend>
+    <H2>놀러가기<EditButton on={editingMode.toString()} onClick={onEditMode}>수정모드</EditButton></H2>
+    <AddFriend/>
     <FriendList>
         {me && me.Followings.map((v, i)=>{
-            return <Animated animationIn="fadeInUp" animationInDelay={i*100} animationInDuration={500} isVisible={true}><li>{v.nickname}<span>({v.userId})</span>{editingMode ? <DeleteButton onClick={onRemoveFriend(v.id)}>친구삭제</DeleteButton> : <Link href={{pathname: '/user', query:{id:v.id}}} as={`/user/${v.id}`}><VisitButton>방문하기</VisitButton></Link>}</li></Animated>
+            return (
+            <Animated animationIn="fadeInUp" animationInDelay={i*100} animationInDuration={500} isVisible={true} key={i}>
+              <li>
+                {v.nickname}<span>({v.userId})</span>
+                {editingMode ? 
+                  <DeleteButton onClick={onRemoveFriend(v.id)}>친구삭제</DeleteButton> 
+                  : <Link href={{pathname: '/user', query:{id:v.id}}} as={`/user/${v.id}`}><VisitButton>방문하기</VisitButton></Link>}
+              </li>
+            </Animated>);
         })}
     </FriendList>
   </>);
-};
+});
 
 
 
@@ -66,48 +59,6 @@ const EditButton = styled.button`
     vertical-align: middle;
     outline: none;
 `;
-
-const AddFriend = styled.div`
-  width: 100%;
-  box-sizing: border-box;
-  
-  margin-bottom: 10px;
-  display: flex;
-  overflow: hidden;
-
-  & button {
-    background-color: ${props=>props.theme.purpleMedium};
-    width: 50px;
-    display: inline-block;
-    border-radius: 0 20px 20px 0;
-    border: 0;
-    & span {
-        width: 16px;
-        height: 16px;
-        display: inline-block;
-        background-image: url('/static/icons/friend_add_click.svg');
-        text-indent: -9999px;
-        background-repeat: no-repeat;
-    }
-  }
-  & input {
-    background-color: white;
-    border: 0;
-    flex: 1;
-    outline: 0;
-    font-size: 14px;
-    border-radius: 20px 0 0 20px;
-    padding: 12px 20px;
-    font-family: 'GmarketSansMedium';
-    display: inline-block;
-    color: ${props=>props.theme.purpleDark};
-    &::placeholder{
-      color: ${props=>props.theme.purpleMedium};
-      opacity: .3;
-    }
-  }
-`;
-
 
 const FriendList = styled.ul`
     & li {

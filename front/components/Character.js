@@ -1,29 +1,18 @@
 import styled from 'styled-components';
-import React, { useState, useRef, useCallback, useEffect, createRef } from "react";
+import React, { useRef, useEffect, memo} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LOAD_HISTORIES_REQUEST } from "../reducers/history";
 import { SAY_RESET } from '../reducers/character';
 import { Animated } from 'react-animated-css';
 import propTypes from 'prop-types';
-import { EDIT_GREETINGS_REQUEST } from '../reducers/user';
+import TalkingBox from './TalkingBox';
 
-
-const Character = ({id}) => {
+const Character = memo(({id}) => {
   const { character } = useSelector(state=>state.character);
   const { equipment } = useSelector(state=>state.item);
-  const { me, userInfo, page } = useSelector(state=>state.user);
+  const { userInfo } = useSelector(state=>state.user);
   const dispatch = useDispatch();
   const timeoutRef = useRef();
-  const [editingMode, setEditingMode] = useState(false);
-  const [userGreetings, setUserGreetings] = useState(me && me.greetings);
-  const greetingsInput = createRef();
-
-  useEffect(() => {
-    if (editingMode) {
-      greetingsInput.current.focus();
-    }
-  }, [editingMode]);
-
+ 
   useEffect(()=>{
     if(character.talking || character.emotion || character.effect){
       timeoutRef.current = setTimeout(()=>{
@@ -37,49 +26,33 @@ const Character = ({id}) => {
     }
   }, [character]);
 
-  const editModeStart = useCallback(() => {
-    setEditingMode(true);
-  }, []);
-
-  const onChangeGreetings = useCallback(
-    (e) => {
-      setUserGreetings(e.target.value);
-    },
-    [userGreetings]
-  );
-
-  const editModeEnd = useCallback(() => {
-    setEditingMode(false);
-    if(userGreetings!==me.greetings){
-      dispatch({
-        type: EDIT_GREETINGS_REQUEST,
-        data: {
-          greetings: userGreetings,
-        },
-      });
-    }
-  }, [me && me.greetings, userGreetings]);
-
   return (
     <>
       <CharacterDiv index={!id ? equipment ? equipment.bg  : 0 : userInfo && userInfo.Equipment.bg}>
-        {!id ? 
-          page===4 ? 
-            <Talking>
-              <p>{editingMode ? <input type="text" value={userGreetings} onChange={onChangeGreetings} onBlur={editModeEnd} ref={greetingsInput} /> : me && me.greetings}<EditButton onClick={editModeStart}/></p>
-            </Talking> 
-            : 
-            character && character.talking && 
-            <Talking><p>{character.talking}</p></Talking> 
-        : <Talking><p>{userInfo && userInfo.greetings}</p></Talking>}
+        <TalkingBox id={id}/>
         <Witch>
-          <Cat index={!id ? equipment ? equipment.cat  : 0 : userInfo && userInfo.Equipment.cat}/>
-          <Wand index={!id ? equipment ? equipment.wand  : 0 : userInfo && userInfo.Equipment.wand}/>
-          <Cloths index={!id ? equipment ? equipment.clothes  : 0 : userInfo && userInfo.Equipment.clothes}/>
-          <FrontHat index={!id ? equipment ? equipment.hat : 0 : userInfo && userInfo.Equipment.hat}/>
-          <Emotion emotion={!id ? character.emotion ? character.emotion : 'basic' : 'basic'}/>
-          <Hair index={!id ? equipment ? equipment.hair  : 0 : userInfo && userInfo.Equipment.hair}/>
-          <BackHat index={!id ? equipment ? equipment.hat  : 0 : userInfo && userInfo.Equipment.hat}/>
+          <Cat index={!id ? //id 유무 체크
+                      equipment && equipment.cat // 자신의 정보
+                      : userInfo && userInfo.Equipment.cat} //다른 유저의 정보 
+                      />
+          <Wand index={!id ? 
+                      equipment && equipment.wand 
+                      : userInfo && userInfo.Equipment.wand}/>
+          <Cloths index={!id ? 
+                        equipment && equipment.clothes 
+                        : userInfo && userInfo.Equipment.clothes}/>
+          <FrontHat index={!id ? 
+                          equipment && equipment.hat
+                          : userInfo && userInfo.Equipment.hat}/>
+          <Emotion emotion={!id ? 
+                            character.emotion ? character.emotion : 'basic' 
+                            : 'basic'}/>
+          <Hair index={!id ? 
+                      equipment && equipment.hair
+                      : userInfo && userInfo.Equipment.hair}/>
+          <BackHat index={!id ? 
+                          equipment && equipment.hat
+                          : userInfo && userInfo.Equipment.hat}/>
           {!id &&
             character.effect &&
             <Effect effect={character.effect}/>
@@ -88,7 +61,7 @@ const Character = ({id}) => {
       </CharacterDiv>
     </>
   );
-};
+});
 
 const CharacterDiv = styled.div`
   background: ${props=>`url(/static/img/item_bg${props.index}.png)`};
@@ -175,35 +148,6 @@ const Effect = styled.div`
   z-index:10;
   background: ${props=>props.effect === 'none' ? 'none' : `url(/static/img/character_effect_${props.effect}.png)`};
   background-size: contain;
-`;
-
-const Talking = styled.div`
-  width: 100%;
-  position: absolute;
-  bottom: 55px;
-  z-index: 10;
-  & p {
-    color: ${props => props.theme.purpleDark};
-    margin: 0 15px;
-    background-color: white;
-    border-radius: 20px;
-    padding: 13px 0;
-    font-family: 'CookieRun-Regular';
-    font-size: 12px;
-  }
-  
-`;
-
-const EditButton = styled.button`
-  width: 12px;
-  height: 12px;
-  background: url('/static/icons/chatter_box_edit.svg');
-  background-size: contain;
-  border: 0;
-  outline: none;
-  vertical-align: middle;
-  margin-left: 5px;
-  cursor: pointer;
 `;
 
 Character.propTypes = {

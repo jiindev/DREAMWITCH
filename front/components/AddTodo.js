@@ -1,10 +1,10 @@
-import React, { useState, useRef, useCallback, useEffect, createRef } from "react";
+import React, { useState, useRef, useCallback, useEffect, createRef, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ADD_TODO_REQUEST } from "../reducers/todo";
 import styled from 'styled-components';
 import {Button} from './styledComponents/PageComponent'
 
-const AddTodo = () => {
+const AddTodo = memo(() => {
   const dispatch = useDispatch();
   const [adding, setAdding] = useState(false);
   const [content, setContent] = useState('');
@@ -49,7 +49,7 @@ const AddTodo = () => {
     {adding && <AddTodoDiv><PlusIcon/><TodoContentInput type="text" ref={addTodoInput} onBlur={AddTodoOff} value={content} onChange={onChangeContent} onKeyPress={handleKeyPress}/></AddTodoDiv>}
     {!adding && <AddButton onClick={AddTodoOn}><i/></AddButton>}
   </>);
-};
+});
 
 const AddButton = styled(Button)`
   background-color: ${props => props.theme.yellowMedium};

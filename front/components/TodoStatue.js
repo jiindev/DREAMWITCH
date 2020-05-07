@@ -59,7 +59,7 @@ const Percentage = styled.div`
   }
 `;
 
-const StarBase = styled.button`
+const StarBase = styled.div`
   width: 70px;
   height: 70px;
   margin: 15px;

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useRef, useCallback, useEffect, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LOAD_HISTORY_REQUEST, ADD_COMMENT_REQUEST, REMOVE_COMMENT_REQUEST } from "../reducers/history";
 import styled from 'styled-components';
@@ -6,7 +6,7 @@ import {} from './styledComponents/PageComponent';
 import Link from 'next/link';
 import propTypes from 'prop-types';
 
-const HistoryItem = ({history, userHistory, lastChild}) => {
+const HistoryItem = memo(({history, userHistory, lastChild}) => {
     const {me} = useSelector(state=>state.user);
     const [openDiv, setOpenDiv] = useState(false);
     const [commentText, setCommentText] = useState('');
@@ -25,6 +25,7 @@ const HistoryItem = ({history, userHistory, lastChild}) => {
     const onChangeCommentText = useCallback((e) => {
         setCommentText(e.target.value);
     }, []);
+
     const onSubmitComment = useCallback(()=>{
         if(commentText){
             if(!me){
@@ -57,7 +58,7 @@ const HistoryItem = ({history, userHistory, lastChild}) => {
                 }
             <Star open={openDiv===true} type={history.type}/>
                 <HistoryContent open={openDiv===true} type={history.type}>
-                    <HistoryTitle onClick={ history.type === 'clearTodos' && onClickHistoryDiv} type={history.type}>
+                    <HistoryTitle onClick={ history.type === 'clearTodos' ? onClickHistoryDiv : undefined} type={history.type}>
                                 <Content type={history.type}>
                                     {history.type === 'levelUp' &&
                                         <span>LEVEL UP!</span>
@@ -72,16 +73,16 @@ const HistoryItem = ({history, userHistory, lastChild}) => {
                         <>
                         {history.todos && 
                         <Todos>
-                            {history.todos.map((v)=>{
-                                return <div>{v.content}</div>
+                            {history.todos.map((v, i)=>{
+                                return <div key={i}>{v.content}</div>
                             })}
                         </Todos>}
                         {history.comments && history.comments[0] &&
                         <Comments>
-                            {history.comments.map((v)=>{
+                            {history.comments.map((v, i)=>{
                                 if(v){
                                     return (
-                                        <Comment>
+                                        <Comment key={i}>
                                             {me && me.id == v.User.id ?
                                                 <Link href='/'><a><span>{v.User.nickname}</span></a></Link>
                                                 : 
@@ -110,7 +111,7 @@ const HistoryItem = ({history, userHistory, lastChild}) => {
             </History>
         </>
   );
-};
+});
 
 const Star = styled.span`
     width: 20px;

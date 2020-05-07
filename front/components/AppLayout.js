@@ -1,8 +1,8 @@
-import React from "react";
+import React, {memo} from "react";
 import propTypes from 'prop-types';
 import styled from 'styled-components';
 
-const AppLayout = ({children}) => {
+const AppLayout = memo(({children}) => {
   return (
       <Background>
         <Logo/>
@@ -13,9 +13,9 @@ const AppLayout = ({children}) => {
       </Background>
   );
   
-};
+});
 const Background = styled.div`
-  background: url('/static/img/login_pattern.png'), ${props=>props.theme.yellowMedium};
+  background: url('/static/img/login_pattern.png');
   background-size: 300px 300px;
   background-position: center center;
   height: 100vh;

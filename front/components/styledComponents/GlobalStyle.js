@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle`
     @font-face { font-family: 'GmarketSansMedium'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff'); font-weight: normal; font-style: normal; }
     html, body {
         height: 100%;
-        background-color: ${props => props.theme.yellowLight};
+        background-color: ${props => props.theme.yellowMedium};
         font-family: 'GmarketSansMedium';
         font-size: 14px;
     }

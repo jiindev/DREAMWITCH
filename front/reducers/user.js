@@ -107,9 +107,7 @@ const reducer = (state = initialState, action) => {
         break;
       }
       case LOAD_USER_SUCCESS: {
-        console.log('action.me check:',action.me);
         action.me ? draft.me = action.data : draft.userInfo = action.data;
-        console.log('draft.me:', draft.me);
         break;
       }
       case LOAD_USER_FAILURE: {
