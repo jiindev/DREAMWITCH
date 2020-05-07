@@ -148,11 +148,9 @@ const CheckList = memo(({id}) => {
            </LastTodoPage>
         ) : ( // 지난날의 기록 이미 확인했다면
           <StartTodo>
-            <div>
-              <H2>오늘도 꿈을 향해! 할 일 목록 적어볼까?</H2>
-            </div>
+            <H2>오늘도 꿈을 향해! 할 일 목록 적어볼까?</H2>
             <Animated animationIn="bounceIn" animationInDuration={1000} isVisible={true}><StartIllust/></Animated>
-            <Button onClick={onStartTodo}>시작하기</Button>
+            <StartButton onClick={onStartTodo}>시작하기</StartButton>
           </StartTodo>
         )
       }
@@ -264,6 +262,10 @@ const CopyCheck = styled(Checked)`
   background:${props=>props.checked? "url('/static/icons/import_todo_active.svg')" : "url('/static/icons/import_todo.svg')" };
   background-size: contain;
   float:right;
+`;
+
+const StartButton = styled(Button)`
+  margin: 0;
 `;
 
 CheckList.propTypes = {

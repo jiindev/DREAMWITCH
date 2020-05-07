@@ -49,6 +49,7 @@ router.post("/", async(req, res, next) => {
       nickname: req.body.nickname,
       userId: req.body.userId,
       password: hashedPassword,
+      greetings: req.body.greetings ? req.body.greetings : '안녕~ 반가워!'
     });
     const newEquipment = await db.Equipment.create({
       UserId: newUser.id

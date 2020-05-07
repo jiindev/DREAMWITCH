@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, memo } from "react";
 import Link from "next/link";
 // import Head from 'next/head';
 // import AppLaout from '../components/AppLayout';
@@ -13,7 +13,7 @@ import { LOAD_TODOS_REQUEST } from "../reducers/todo";
 import { LOAD_HISTORIES_REQUEST } from "../reducers/history";
 import AppLayout from "../components/AppLayout";
 
-const User = ({id}) => {
+const User = memo(({id}) => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
   const [page, setPage] = useState(1);
@@ -61,7 +61,7 @@ const User = ({id}) => {
     </>
   );
   
-};
+});
 
 const Wrap = styled.div`
   display: flex;

@@ -10,6 +10,14 @@ const GlobalStyle = createGlobalStyle`
         background-color: ${props => props.theme.yellowMedium};
         font-family: 'GmarketSansMedium';
         font-size: 14px;
+        & ::-webkit-scrollbar {
+            width: 4px;
+            background: transparent;
+        }
+        & ::-webkit-scrollbar-thumb {
+            background: ${props => props.theme.purpleMedium};
+            border-radius: 4px;
+        }
     }
 `;
 
