@@ -207,7 +207,7 @@ const Item = styled.li`
   margin: 10px;
   box-sizing: border-box;
   position: relative;
-  border: ${props=> props.equip ? `3px solid ${props.theme.purpleLight}`: '0'};
+  border: ${props=> props.equip ? `3px solid ${props.theme.purpleLight}`: `3px solid ${props.theme.yellowMedium}`};
 `;
 
 const LockIcon = styled.span`

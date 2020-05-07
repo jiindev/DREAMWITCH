@@ -15,6 +15,7 @@ import { LOAD_HISTORIES_REQUEST } from "../reducers/history";
 import { LOAD_TODOS_REQUEST } from "../reducers/todo";
 import { LOAD_ITEMS_REQUEST, LOAD_EQUIPMENT_REQUEST } from "../reducers/item";
 import { levelCheck } from '../static/levelData';
+import AppLayout from "../components/AppLayout";
 
 const Index = () => {
   const dispatch = useDispatch();
@@ -53,6 +54,7 @@ const Index = () => {
 
   return (
     <>
+    <AppLayout>
       <Wrap>
        <TopContent>
          <UserStatue>
@@ -77,6 +79,7 @@ const Index = () => {
           {page === 4 && <Visit/>}
         </Page>
         </Wrap>
+        </AppLayout>
     </>
   );
   
@@ -86,6 +89,9 @@ const Wrap = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  @media only screen and (min-width: 769px) {
+    height: 100%;
+  }
 `;
 
 

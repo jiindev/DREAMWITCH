@@ -37,7 +37,7 @@ const Login = () => {
   };
   return (
     <>
-      <Bg>
+      <Background>
         <Wrap>
           <Animated animationIn="bounceInDown" animationInDuration={1200} isVisible={true}>
           <LoginIllust></LoginIllust>
@@ -70,12 +70,12 @@ const Login = () => {
             </div>
           </form>
         </Wrap>
-      </Bg>
+      </Background>
     </>
   );
 };
 
-const Bg = styled.div`
+const Background = styled.div`
   background: url('./static/img/login_pattern.png') ${props=>props.theme.yellowMedium};
   background-size: 300px 300px;
   background-position: center center;

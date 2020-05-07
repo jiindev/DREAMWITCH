@@ -35,7 +35,7 @@ const TodoStatue = ({onClickWriteHistory}) => {
 };
 
 const TodoStatueBar = styled.div`
-  position: fixed;
+  position: absolute;
   width: 100%;
   height: ${props => props.complete ? '110px' : '100px'};
   bottom: 0;

@@ -11,6 +11,7 @@ import styled from 'styled-components';
 import propTypes from 'prop-types';
 import { LOAD_TODOS_REQUEST } from "../reducers/todo";
 import { LOAD_HISTORIES_REQUEST } from "../reducers/history";
+import AppLayout from "../components/AppLayout";
 
 const User = ({id}) => {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const User = ({id}) => {
 
   return (
     <>
+    <AppLayout>
       <Wrap>
        <TopContent>
          <UserStatue>
@@ -54,7 +56,8 @@ const User = ({id}) => {
           {page === 1 && <TodoList id={id}/>}
           {page === 2 && <History id={id}/>}
         </Page>
-        </Wrap>
+      </Wrap>
+    </AppLayout>
     </>
   );
   
@@ -64,6 +67,9 @@ const Wrap = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  @media only screen and (min-width: 769px) {
+    height: 100%;
+  }
 `;
 
 
