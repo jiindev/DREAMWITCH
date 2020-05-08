@@ -1,1 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10" height="10" viewBox="0 0 10 10"><defs><style>.a{fill:none;}.b{clip-path:url(#a);}.c{fill:#7917c7;}</style><clipPath id="a"><rect class="a" width="10" height="10"/></clipPath></defs><g class="b"><path class="c" d="M6.7,8.1,2,3.4,3.4,2,6.7,5.3,10,2l1.4,1.4Z" transform="translate(10.1 -2) rotate(90)"/><rect class="a" width="10" height="10"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10" height="10" viewBox="0 0 10 10">
+  <defs>
+    <clipPath id="clip-path">
+      <rect width="10" height="10" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="Symbol_132_7" data-name="Symbol 132 – 7" clip-path="url(#clip-path)">
+    <path id="패스_36" data-name="패스 36" d="M6.7,8.1,2,3.4,3.4,2,6.7,5.3,10,2l1.4,1.4Z" transform="translate(10.1 -2) rotate(90)" fill="#ffff94"/>
+    <rect id="사각형_1464" data-name="사각형 1464" width="10" height="10" fill="none"/>
+  </g>
+</svg>
