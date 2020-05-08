@@ -10,6 +10,7 @@ export const initialState = {
   me: null, // 내 정보
   userInfo: null,
   page: 1,
+  todayUsers: []
 };
 
 export const LOG_IN_REQUEST = "LOG_IN_REQUEST";
@@ -47,6 +48,10 @@ export const LEVEL_UP_FAILURE = 'LEVEL_UP_FAILURE';
 export const EDIT_GREETINGS_REQUEST = 'EDIT_GREETINGS_REQUEST';
 export const EDIT_GREETINGS_SUCCESS = 'EDIT_GREETINGS_SUCCESS';
 export const EDIT_GREETINGS_FAILURE = 'EDIT_GREETINGS_FAILURE';
+
+export const LOAD_TODAY_USERS_REQUEST = 'LOAD_TODAY_USERS_REQUEST';
+export const LOAD_TODAY_USERS_SUCCESS = 'LOAD_TODAY_USERS_SUCCESS';
+export const LOAD_TODAY_USERS_FAILURE = 'LOAD_TODAY_USERS_FAILURE';
 
 export const GET_EXP = 'GET_EXP';
 export const GET_STARS = 'GET_STARS';
@@ -174,6 +179,16 @@ const reducer = (state = initialState, action) => {
         break;
       }
       case EDIT_GREETINGS_FAILURE: {
+        break;
+      }
+      case LOAD_TODAY_USERS_REQUEST: {
+        break;
+      }
+      case LOAD_TODAY_USERS_SUCCESS: {
+        draft.todayUsers = action.data;
+        break;
+      }
+      case LOAD_TODAY_USERS_FAILURE: {
         break;
       }
       case SET_PAGE:{

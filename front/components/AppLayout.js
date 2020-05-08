@@ -29,7 +29,7 @@ const Logo = styled.span`
   height: 200px;
   margin: 10px auto 0 auto;
   display: none;
-  background: url('./static/img/login_logo.png');
+  background: url('/static/img/login_logo.png');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;

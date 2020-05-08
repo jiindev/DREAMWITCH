@@ -2,7 +2,7 @@ import React, { useState, useRef, useCallback, useEffect, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {H2} from './styledComponents/PageComponent';
 import styled from 'styled-components';
-import { REMOVE_FOLLOWING_REQUEST } from "../reducers/user";
+import { REMOVE_FOLLOWING_REQUEST, LOAD_RECENT_USERS_REQUEST, LOAD_TODAY_USERS_REQUEST } from "../reducers/user";
 import Link from 'next/link';
 import {Animated} from 'react-animated-css';
 import AddFriend from "./AddFriend";
@@ -10,7 +10,7 @@ import AddFriend from "./AddFriend";
 const Visit = memo(() => {
   const dispatch = useDispatch();
   const [editingMode, setEditingMode] = useState(false);
-  const { me } = useSelector(state=>state.user);
+  const { me, todayUsers } = useSelector(state=>state.user);
   
   const onEditMode = useCallback(() => {
     if(editingMode){
@@ -26,11 +26,13 @@ const Visit = memo(() => {
    })
   }, [me && me.Followings]);
 
+
   return (
     <>
     <H2>놀러가기<EditButton on={editingMode.toString()} onClick={onEditMode}>수정모드</EditButton></H2>
     <AddFriend/>
     <FriendList>
+        <h3>나의 동료 목록</h3>
         {me && me.Followings.map((v, i)=>{
             return (
             <Animated animationIn="fadeInUp" animationInDelay={i*100} animationInDuration={500} isVisible={true} key={i}>
@@ -43,6 +45,18 @@ const Visit = memo(() => {
             </Animated>);
         })}
     </FriendList>
+    <TodayList>
+        <h3>오늘의 마녀 목록</h3>
+        {todayUsers && todayUsers.map((v, i)=>{
+                return (
+                <Animated animationIn="fadeInUp" animationInDelay={i*100} animationInDuration={500} isVisible={true} key={i}>
+                <li>
+                    {v.nickname}<span>({v.userId})</span>
+                    <Link href={{pathname: '/user', query:{id:v.id}}} as={`/user/${v.id}`}><VisitButton>방문하기</VisitButton></Link>
+                </li>
+                </Animated>);
+            })}
+    </TodayList>
   </>);
 });
 
@@ -71,7 +85,13 @@ const FriendList = styled.ul`
             color: ${props=>props.theme.purpleMedium};
         }
     }
+    & h3{
+        color: ${props => props.theme.purpleMedium};
+        margin : 30px 10px 10px 10px;
+    }
 `;
+
+const TodayList = styled(FriendList)``;
 const VisitButton = styled.span`
     float: right;
     width: 16px;

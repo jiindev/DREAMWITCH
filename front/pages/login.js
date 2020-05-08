@@ -96,7 +96,7 @@ const LoginIllust = styled.span`
   width: 100%;
   height: 300px;
   display: inline-block;
-  background: url('./static/img/login_logo.png');
+  background: url('/static/img/login_logo.png');
   background-size: contain;
   background-position: center center;
   margin-bottom: 20px;

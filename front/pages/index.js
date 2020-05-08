@@ -9,7 +9,7 @@ import Closet from "../components/Closet";
 import Visit from '../components/Visit';
 import { useSelector, useDispatch } from "react-redux";
 import Router from "next/router";
-import { LOAD_USER_REQUEST, LOG_OUT_REQUEST, LEVEL_UP_REQUEST, SET_PAGE } from "../reducers/user";
+import { LOAD_USER_REQUEST, LOG_OUT_REQUEST, LEVEL_UP_REQUEST, SET_PAGE, LOAD_TODAY_USERS_REQUEST } from "../reducers/user";
 import styled from 'styled-components';
 import { LOAD_HISTORIES_REQUEST } from "../reducers/history";
 import { LOAD_TODOS_REQUEST } from "../reducers/todo";
@@ -207,6 +207,9 @@ Index.getInitialProps = async (context) => {
   })
   context.store.dispatch({
     type: LOAD_EQUIPMENT_REQUEST
+  })
+  context.store.dispatch({
+    type: LOAD_TODAY_USERS_REQUEST
   })
 }
 

@@ -28,6 +28,12 @@ import {
   EDIT_GREETINGS_SUCCESS,
   EDIT_GREETINGS_FAILURE,
   EDIT_GREETINGS_REQUEST,
+  LOAD_RECENT_USERS_SUCCESS,
+  LOAD_RECENT_USERS_FAILURE,
+  LOAD_RECENT_USERS_REQUEST,
+  LOAD_TODAY_USERS_SUCCESS,
+  LOAD_TODAY_USERS_FAILURE,
+  LOAD_TODAY_USERS_REQUEST,
 } from "../reducers/user";
 import Router from 'next/router';
 import { SAY_HELLO } from "../reducers/character";
@@ -265,6 +271,30 @@ function* watchEditGreetings() {
   yield takeLatest(EDIT_GREETINGS_REQUEST, editGreetings);
 }
 
+function loadTodayUsersAPI() {
+  return axios.get('/users/today', {
+    withCredentials: true
+  });
+}
+
+function* loadTodayUsers() {
+  try {
+    const result = yield call(loadTodayUsersAPI);
+    yield put({
+      type: LOAD_TODAY_USERS_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    yield put({
+      type: LOAD_TODAY_USERS_FAILURE,
+      error: e,
+    });
+  }
+}
+
+function* watchLoadTodayUsers() {
+  yield takeLatest(LOAD_TODAY_USERS_REQUEST, loadTodayUsers);
+}
 
 
 export default function* userSaga() {
@@ -277,6 +307,7 @@ export default function* userSaga() {
     fork(watchRemoveFollowing),
     fork(watchAddFollowing),
     fork(watchLevelUp),
-    fork(watchEditGreetings)
+    fork(watchEditGreetings),
+    fork(watchLoadTodayUsers)
   ]);
 }

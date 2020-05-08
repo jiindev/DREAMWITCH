@@ -123,7 +123,7 @@ const CheckList = memo(({id}) => {
                   {todos.map((c, i) => {
                     return <TodoItem todo={c} key={i}/>;
                   })}
-                  <AddTodo/>
+                  {todos.length < 15 ? <AddTodo/> : <CannotAdd>더 이상 추가할 수 없어요!</CannotAdd>}
                 </>
                 }
               </TodoUl>
@@ -167,7 +167,7 @@ const TodoPage = styled.div`
 `;
 
 const TodoBottom = styled.div`
-  height: 120px;
+  height: 100px;
 `;
 
 const TodoUl = styled.ul`
@@ -266,6 +266,12 @@ const CopyCheck = styled(Checked)`
 
 const StartButton = styled(Button)`
   margin: 0;
+`;
+
+const CannotAdd = styled.p`
+  margin-top: 15px;
+  text-align: center;
+  color: ${props=>props.theme.purpleLight};
 `;
 
 CheckList.propTypes = {
