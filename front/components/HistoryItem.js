@@ -6,7 +6,7 @@ import {} from './styledComponents/PageComponent';
 import Link from 'next/link';
 import propTypes from 'prop-types';
 
-const HistoryItem = memo(({history, userHistory, lastChild}) => {
+const HistoryItem = memo(({history, lastChild}) => {
     const {me} = useSelector(state=>state.user);
     const [openDiv, setOpenDiv] = useState(false);
     const [commentText, setCommentText] = useState('');
@@ -16,7 +16,6 @@ const HistoryItem = memo(({history, userHistory, lastChild}) => {
             dispatch({
                 type: LOAD_HISTORY_REQUEST,
                 data: history.id,
-                userHistory
             });
             setOpenDiv(true);
         }
@@ -36,7 +35,6 @@ const HistoryItem = memo(({history, userHistory, lastChild}) => {
                 data: {
                     historyId: history.id,
                     content: commentText,
-                    userHistory
                 }
             });
             return setCommentText('');
@@ -46,7 +44,7 @@ const HistoryItem = memo(({history, userHistory, lastChild}) => {
     const onClickRemoveComment = useCallback(commentId => ()=>{
         dispatch({
             type: REMOVE_COMMENT_REQUEST,
-            data: {commentId, historyId:history.id, userHistory },
+            data: {commentId, historyId:history.id},
         })
     }, []);
 
@@ -265,7 +263,6 @@ const CommentInput = styled.div`
 
 HistoryItem.propTypes = {
     history: propTypes.object.isRequired, 
-    userHistory: propTypes.bool,
     lastChild: propTypes.bool
   }
   

@@ -18,69 +18,81 @@ const Closet = () => {
 
   return (
     <>
-    <H2>마녀의 옷장</H2>
-      <Animated animationIn="fadeIn" animationInDelay={50} animationInDuration={500} isVisible={true}>
+    <ClosetPage>
+      <H2>마녀의 옷장</H2>
+        <Animated animationIn="fadeIn" animationInDelay={50} animationInDuration={500} isVisible={true}>
+        <Section>
+          <H3 type='hat'>HAT</H3>
+          <ItemList>
+            {hatItems.map((v, i)=>{
+              return <ClosetItem v={v} i={i} key={i}/>
+            })}
+          </ItemList>
+        </Section>
+      </Animated>
+      <Animated animationIn="fadeIn" animationInDelay={100} animationInDuration={500} isVisible={true}>
       <Section>
-        <H3 type='hat'>HAT</H3>
+        <H3 type='hair'>HAIR</H3>
         <ItemList>
-          {hatItems.map((v, i)=>{
+          {hairItems.map((v, i)=>{
             return <ClosetItem v={v} i={i} key={i}/>
           })}
         </ItemList>
       </Section>
-    </Animated>
-    <Animated animationIn="fadeIn" animationInDelay={100} animationInDuration={500} isVisible={true}>
-    <Section>
-      <H3 type='hair'>HAIR</H3>
-      <ItemList>
-        {hairItems.map((v, i)=>{
-          return <ClosetItem v={v} i={i} key={i}/>
-        })}
-      </ItemList>
-    </Section>
-    </Animated>
-    <Animated animationIn="fadeIn" animationInDelay={150} animationInDuration={500} isVisible={true}>
-    <Section>
-      <H3 type='clothes'>CLOTHES</H3>
-      <ItemList>
-        {clothesItems.map((v, i)=>{
-          return <ClosetItem v={v} i={i} key={i}/>
-        })}
-      </ItemList>
-    </Section>
-    </Animated>
-    <Animated animationIn="fadeIn" animationInDelay={200} animationInDuration={500} isVisible={true}>
-    <Section>
-      <H3 type='background'>BACKGROUND</H3>
-      <ItemList>
-        {bgItems.map((v, i)=>{
-          return <ClosetItem v={v} i={i} key={i}/>
-        })}
-      </ItemList>
-    </Section>
-    </Animated>
-    <Animated animationIn="fadeIn" animationInDelay={250} animationInDuration={500} isVisible={true}>
-    <Section>
-      <H3 type='wand'>WAND</H3>
-      <ItemList>
-        {wandItems.map((v, i)=>{
-          return <ClosetItem v={v} i={i} key={i}/>
-        })}
-      </ItemList>
-    </Section>
-    </Animated>
-    <Animated animationIn="fadeIn" animationInDelay={300} animationInDuration={500} isVisible={true}>
-    <Section>
-      <H3 type='cat'>CAT</H3>
-      <ItemList>
-        {catItems.map((v, i)=>{
-          return <ClosetItem v={v} i={i} key={i}/>
-        })}
-      </ItemList>
-    </Section>
-    </Animated>
+      </Animated>
+      <Animated animationIn="fadeIn" animationInDelay={150} animationInDuration={500} isVisible={true}>
+      <Section>
+        <H3 type='clothes'>CLOTHES</H3>
+        <ItemList>
+          {clothesItems.map((v, i)=>{
+            return <ClosetItem v={v} i={i} key={i}/>
+          })}
+        </ItemList>
+      </Section>
+      </Animated>
+      <Animated animationIn="fadeIn" animationInDelay={200} animationInDuration={500} isVisible={true}>
+      <Section>
+        <H3 type='background'>BACKGROUND</H3>
+        <ItemList>
+          {bgItems.map((v, i)=>{
+            return <ClosetItem v={v} i={i} key={i}/>
+          })}
+        </ItemList>
+      </Section>
+      </Animated>
+      <Animated animationIn="fadeIn" animationInDelay={250} animationInDuration={500} isVisible={true}>
+      <Section>
+        <H3 type='wand'>WAND</H3>
+        <ItemList>
+          {wandItems.map((v, i)=>{
+            return <ClosetItem v={v} i={i} key={i}/>
+          })}
+        </ItemList>
+      </Section>
+      </Animated>
+      <Animated animationIn="fadeIn" animationInDelay={300} animationInDuration={500} isVisible={true}>
+      <Section>
+        <H3 type='cat'>CAT</H3>
+        <ItemList>
+          {catItems.map((v, i)=>{
+            return <ClosetItem v={v} i={i} key={i}/>
+          })}
+        </ItemList>
+      </Section>
+      </Animated>
+    </ClosetPage>
   </>);
 };
+
+const ClosetPage = styled.div`
+  background-color: ${props => props.theme.yellowLight};
+  width: 100%;
+  padding: 38px 15px 0 15px;
+  box-sizing: border-box;
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+`;
 
 const Section = styled.div`
   margin: 0 0 40px 0;

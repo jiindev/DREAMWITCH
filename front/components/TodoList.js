@@ -82,6 +82,7 @@ const CheckList = memo(({id}) => {
 
   return (
     <>
+      <TodoList>
       {id ? //다른 사용자의 할일 목록 보기
         <TodoPage>
           <H2>{userInfo && userInfo.nickname}의 오늘의 할 일!</H2>
@@ -138,7 +139,7 @@ const CheckList = memo(({id}) => {
              <LastTodoList>
                   {lastTodos.map((c, i)=>{
                     return (
-                      <Animated animationIn="fadeIn" animationInDelay={i*100} animationInDuration={500} isVisible={true}>
+                      <Animated animationIn="fadeIn" animationInDelay={i*100} animationInDuration={500} isVisible={true} key={i}>
                             <LastTodo checked={c.checked} onClick = {onClickAddLast(c.content)}><Checked checked={c.checked}/>{c.content}<CopyCheck checked={todosToCopy.includes(c.content)}/></LastTodo>
                       </Animated>
                     )
@@ -154,10 +155,20 @@ const CheckList = memo(({id}) => {
           </StartTodo>
         )
       }
-      
+      </TodoList>
     </>
   );
 });
+
+const TodoList = styled.div`
+  background-color: ${props => props.theme.yellowLight};
+  width: 100%;
+  padding: 38px 15px 0 15px;
+  box-sizing: border-box;
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+`;
 
 const TodoPage = styled.div`
   width: 100%;

@@ -52,6 +52,10 @@ const Index = memo(() => {
     })
   }
 
+  const gg = () => {
+    console.log('ggsg');
+  }
+
   if(!me){
     return null;
   }
@@ -74,13 +78,10 @@ const Index = memo(() => {
           </ul>
         </Tab>
         </TopContent>
-        
-        <Page>
           {page === 1 && <TodoList/>}
           {page === 2 && <History/>}
           {page === 3 && <Closet/>}
           {page === 4 && <Visit/>}
-        </Page>
         </Wrap>
         </AppLayout>
     </>
@@ -95,17 +96,6 @@ const Wrap = styled.div`
   @media only screen and (min-width: 769px) {
     height: 100%;
   }
-`;
-
-
-const Page = styled.div`
-  background-color: ${props => props.theme.yellowLight};
-  width: 100%;
-  padding: 38px 15px 0 15px;
-  box-sizing: border-box;
-  flex: 1;
-  overflow-y: auto;
-  position: relative;
 `;
 
 const Tab = styled.nav`

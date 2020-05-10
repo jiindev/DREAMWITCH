@@ -10,7 +10,7 @@ import { LOAD_USER_REQUEST, LOG_OUT_REQUEST } from "../reducers/user";
 import styled from 'styled-components';
 import propTypes from 'prop-types';
 import { LOAD_TODOS_REQUEST } from "../reducers/todo";
-import { LOAD_HISTORIES_REQUEST } from "../reducers/history";
+import { LOAD_HISTORIES_REQUEST, LOAD_USER_HISTORIES_REQUEST } from "../reducers/history";
 import AppLayout from "../components/AppLayout";
 
 const User = memo(({id}) => {
@@ -51,11 +51,8 @@ const User = memo(({id}) => {
           </ul>
         </Tab>
         </TopContent>
-        
-        <Page>
           {page === 1 && <TodoList id={id}/>}
           {page === 2 && <History id={id}/>}
-        </Page>
       </Wrap>
     </AppLayout>
     </>
@@ -70,17 +67,6 @@ const Wrap = styled.div`
   @media only screen and (min-width: 769px) {
     height: 100%;
   }
-`;
-
-
-const Page = styled.div`
-  background-color: ${props => props.theme.yellowLight};
-  width: 100%;
-  padding: 38px 15px 0 15px;
-  box-sizing: border-box;
-  flex: 1;
-  overflow-y: auto;
-  position: relative;
 `;
 
 const Tab = styled.nav`
@@ -190,13 +176,10 @@ User.getInitialProps = async (context) => {
     data: id,
   })
   context.store.dispatch({
-    type: LOAD_HISTORIES_REQUEST,
+    type: LOAD_USER_HISTORIES_REQUEST,
     data: id,
   })
-  // context.store.dispatch({
-  //   type: LOAD_EQUIPMENT_REQUEST,
-  //   data: id,
-  // })
+  
   return {id};
 }
 

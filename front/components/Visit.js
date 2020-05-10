@@ -29,6 +29,7 @@ const Visit = memo(() => {
 
   return (
     <>
+    <VisitPage>
     <H2>놀러가기<EditButton on={editingMode.toString()} onClick={onEditMode}>수정모드</EditButton></H2>
     <AddFriend/>
     <FriendList>
@@ -45,9 +46,10 @@ const Visit = memo(() => {
             </Animated>);
         })}
     </FriendList>
-    <TodayList>
+    {todayUsers && todayUsers[0] &&
+        <TodayList>
         <h3>오늘의 마녀 목록</h3>
-        {todayUsers && todayUsers.map((v, i)=>{
+        {todayUsers.map((v, i)=>{
                 return (
                 <Animated animationIn="fadeInUp" animationInDelay={i*100} animationInDuration={500} isVisible={true} key={i}>
                 <li>
@@ -56,11 +58,21 @@ const Visit = memo(() => {
                 </li>
                 </Animated>);
             })}
-    </TodayList>
+        </TodayList>
+    }
+    </VisitPage>
   </>);
 });
 
-
+const VisitPage = styled.div`
+  background-color: ${props => props.theme.yellowLight};
+  width: 100%;
+  padding: 38px 15px 0 15px;
+  box-sizing: border-box;
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+`;
 
 const EditButton = styled.button`
     float: right;

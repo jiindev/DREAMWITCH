@@ -1,22 +1,20 @@
-import { all, fork, takeLatest, call, put, delay } from "redux-saga/effects";
+import { all, fork, takeLatest, call, put, delay, throttle } from "redux-saga/effects";
 import { TODOS_CLEAR } from "../reducers/todo";
 import axios from 'axios';
-import { LOAD_HISTORIES_REQUEST, LOAD_HISTORIES_SUCCESS, LOAD_HISTORIES_FAILURE, ADD_HISTORIES_SUCCESS, ADD_HISTORIES_FAILURE, ADD_HISTORIES_REQUEST, LOAD_HISTORY_FAILURE, LOAD_HISTORY_REQUEST, LOAD_HISTORY_SUCCESS, ADD_COMMENT_REQUEST, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAILURE, REMOVE_COMMENT_SUCCESS, REMOVE_COMMENT_FAILURE, REMOVE_COMMENT_REQUEST } from "../reducers/history";
-import { SAY_LOAD_HISTORIES, SAY_ADD_HISTORY } from "../reducers/character";
+import { LOAD_HISTORIES_REQUEST, LOAD_HISTORIES_SUCCESS, LOAD_HISTORIES_FAILURE, ADD_HISTORIES_SUCCESS, ADD_HISTORIES_FAILURE, ADD_HISTORIES_REQUEST, LOAD_HISTORY_FAILURE, LOAD_HISTORY_REQUEST, LOAD_HISTORY_SUCCESS, ADD_COMMENT_REQUEST, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAILURE, REMOVE_COMMENT_SUCCESS, REMOVE_COMMENT_FAILURE, REMOVE_COMMENT_REQUEST, LOAD_USER_HISTORIES_SUCCESS, LOAD_USER_HISTORIES_FAILURE, LOAD_USER_HISTORIES_REQUEST } from "../reducers/history";
 import { GET_STARS, GET_EXP } from "../reducers/user";
 
-function loadHistoriesAPI(userId) {
-  return axios.get(userId?`/histories/${userId}`:"/histories", {
+function loadHistoriesAPI(lastId = 0, limit=5) {
+  return axios.get(`/histories?lastId=${lastId}&limit=${limit}`, {
     withCredentials: true
   });
 }
 function* loadHistories(action) {
   try {
-    const result = yield call(loadHistoriesAPI, action.data);
+    const result = yield call(loadHistoriesAPI, action.lastId);
     yield put({
       type: LOAD_HISTORIES_SUCCESS,
       data: result.data,
-      me: !action.data
     });
   } catch (e) {
     console.error(e);
@@ -27,8 +25,33 @@ function* loadHistories(action) {
   }
 }
 function* watchLoadHistories() {
-  yield takeLatest(LOAD_HISTORIES_REQUEST, loadHistories);
+  yield throttle(2000, LOAD_HISTORIES_REQUEST, loadHistories);
 }
+
+function loadUserHistoriesAPI(userId, lastId = 0, limit=5) {
+  return axios.get(`/histories/${userId}?lastId=${lastId}&limit=${limit}`, {
+    withCredentials: true
+  });
+}
+function* loadUserHistories(action) {
+  try {
+    const result = yield call(loadUserHistoriesAPI, action.data, action.lastId);
+    yield put({
+      type: LOAD_USER_HISTORIES_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: LOAD_USER_HISTORIES_FAILURE,
+      error: e,
+    });
+  }
+}
+function* watchLoadUserHistories() {
+  yield takeLatest(LOAD_USER_HISTORIES_REQUEST, loadUserHistories);
+}
+
 function loadHistoryAPI(historyId) {
   return axios.get(`/history/${historyId}`, {
     withCredentials: true
@@ -44,7 +67,6 @@ function* loadHistory(action) {
         comments : result.data.comments,
         historyId : action.data,
       },
-      userHistory: action.userHistory
     });
   } catch (e) {
     console.error(e);
@@ -108,7 +130,6 @@ function addHistoryAPI(historyData) {
           historyId: action.data.historyId,
           comment: result.data,
         },
-        userHistory: action.data.userHistory
       });
     } catch (e) {
       console.error(e);
@@ -137,7 +158,6 @@ function addHistoryAPI(historyData) {
           commentId: result.data,
           historyId: action.data.historyId,
         },
-        userHistory: action.data.userHistory
       });
     } catch (e) {
       console.error(e);
@@ -155,6 +175,7 @@ function addHistoryAPI(historyData) {
 export default function* historySaga() {
   yield all([
     fork(watchLoadHistories),
+    fork(watchLoadUserHistories),
     fork(watchAddHistory),
     fork(watchLoadHistory),
     fork(watchAddComment),
