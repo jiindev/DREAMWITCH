@@ -27,15 +27,18 @@ const Background = styled.div`
 const Logo = styled.span`
   width: 246px;
   height: 200px;
-  margin: 10px auto 0 auto;
+  margin: 0;
   display: none;
   background: url('/static/img/login_logo.png');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   border-radius: 20px;
-  @media only screen and (min-height: 900px) {
-    display: block;
+  @media only screen and (min-width: 769px) {
+    @media only screen and (min-height: 900px) {
+      display: block;
+      margin: 10px auto 0 auto;
+    }
   }
 `;
 

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useRef, useCallback, useEffect, memo } from "react";
 import { useDispatch } from "react-redux";
 import {hatItems, clothesItems, hairItems, bgItems, wandItems, catItems} from '../static/itemData';
 import {H2} from './styledComponents/PageComponent';
@@ -7,7 +7,7 @@ import { SAY_LOAD_ITEMS } from "../reducers/character";
 import {Animated} from 'react-animated-css';
 import ClosetItem from "./ClosetItem";
 
-const Closet = () => {
+const Closet = memo(() => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -82,7 +82,7 @@ const Closet = () => {
       </Animated>
     </ClosetPage>
   </>);
-};
+});
 
 const ClosetPage = styled.div`
   background-color: ${props => props.theme.yellowLight};

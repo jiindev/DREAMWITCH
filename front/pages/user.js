@@ -33,15 +33,19 @@ const User = memo(({id}) => {
       type: LOG_OUT_REQUEST
     })
   }
-
+  if(userInfo && userInfo.id !== id){
+    return null;
+  }
   return (
     <>
     <AppLayout>
       <Wrap>
        <TopContent>
-         <UserStatue>
-            <HomeButton><Link href='/'>돌아가기</Link></HomeButton><Level>{userInfo && `${userInfo.nickname} (${userInfo.userId})`}</Level>
-         </UserStatue>
+        <Link href='/'>
+         <GoHome>
+            <HomeButton>돌아가기</HomeButton><Level>{userInfo && `${userInfo.nickname} (${userInfo.userId})`}</Level>
+         </GoHome>
+         </Link>
          <LogoutButton onClick={onLogout}><i/></LogoutButton>
           <Character id={id}/>
         <Tab>
@@ -104,11 +108,12 @@ const TopContent = styled.div`
   flex-direction: column;
 `;
 
-const UserStatue = styled.div`
+const GoHome = styled.div`
   position: absolute;
   top: 0;
   z-index: 99;
   width: 100%;
+  cursor: pointer;
 `;
 
 const Level = styled.span`
@@ -131,13 +136,14 @@ float: left;
   &:before{
     content: '';
     display: inline-block;
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
     background-color: red;
     vertical-align: middle;
     margin-right: 5px;
     background: url('/static/icons/friend_back.svg');
     background-size: contain;
+    background-repeat: no-repeat;
   }
 `;
 

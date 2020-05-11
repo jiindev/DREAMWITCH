@@ -34,7 +34,7 @@ const Visit = memo(() => {
     <AddFriend/>
     <FriendList>
         <h3>나의 동료 목록</h3>
-        {me && me.Followings.map((v, i)=>{
+        {me && me.Followings[0] ? me.Followings.map((v, i)=>{
             return (
             <Animated animationIn="fadeInUp" animationInDelay={i*100} animationInDuration={500} isVisible={true} key={i}>
               <li>
@@ -44,17 +44,20 @@ const Visit = memo(() => {
                   : <Link href={{pathname: '/user', query:{id:v.id}}} as={`/user/${v.id}`}><VisitButton>방문하기</VisitButton></Link>}
               </li>
             </Animated>);
-        })}
+        })
+        : 
+        <NoFriend>동료 목록에 추가한 마녀가 없습니다.</NoFriend>
+    }
     </FriendList>
-    {todayUsers && todayUsers[0] &&
+    {todayUsers && todayUsers[0] && !editingMode &&
         <TodayList>
-        <h3>오늘의 마녀 목록</h3>
+        <h3>오늘의 마녀</h3>
         {todayUsers.map((v, i)=>{
                 return (
                 <Animated animationIn="fadeInUp" animationInDelay={i*100} animationInDuration={500} isVisible={true} key={i}>
                 <li>
                     {v.nickname}<span>({v.userId})</span>
-                    <Link href={{pathname: '/user', query:{id:v.id}}} as={`/user/${v.id}`}><VisitButton>방문하기</VisitButton></Link>
+                    {me && me.id !== v.id  && <Link href={{pathname: '/user', query:{id:v.id}}} as={`/user/${v.id}`}><VisitButton>방문하기</VisitButton></Link>}
                 </li>
                 </Animated>);
             })}
@@ -101,6 +104,12 @@ const FriendList = styled.ul`
         color: ${props => props.theme.purpleMedium};
         margin : 30px 10px 10px 10px;
     }
+`;
+
+const NoFriend = styled.div`
+  text-align: center;
+  color: ${props => props.theme.yellowDark};
+  font-size: 12px;
 `;
 
 const TodayList = styled(FriendList)``;

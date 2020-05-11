@@ -150,7 +150,9 @@ const CheckList = memo(({id}) => {
         ) : ( // 지난날의 기록 이미 확인했다면
           <StartTodo>
             <H2>오늘도 꿈을 향해! 할 일 목록 적어볼까?</H2>
-            <Animated animationIn="bounceIn" animationInDuration={1000} isVisible={true}><StartIllust/></Animated>
+            <Illust>
+            <Animated animationIn="fadeIn" animationInDuration={1000} isVisible={true} style={{height: '100%'}}><StartIllust/></Animated>
+            </Illust>
             <StartButton onClick={onStartTodo}>시작하기</StartButton>
           </StartTodo>
         )
@@ -210,15 +212,17 @@ const UserTodoList = styled(FinishedList)`
   }
 `;
 
-const StartIllust = styled.span`
+const Illust = styled.div`
+  flex:1;
+`;
+
+const StartIllust = styled.div`
   width: 100%;
-  height: 300px;
-  display: flex;
-  flex: 1;
-  display: inline-block;
+  height: 100%;
+  max-height: 300px;
   border-radius: 20px;
   text-align: center;
-  background: url('./static/img/checklist_start_illust.png');
+  background: url('/static/img/checklist_start_illust.png');
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
@@ -276,7 +280,7 @@ const CopyCheck = styled(Checked)`
 `;
 
 const StartButton = styled(Button)`
-  margin: 0;
+  margin: 10px 0;
 `;
 
 const CannotAdd = styled.p`

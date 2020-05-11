@@ -64,7 +64,7 @@ return (
               })}
               </div>
           :
-          <div>기록된 별이 없습니다.</div>
+          <NoHistory>기록된 별이 없습니다.</NoHistory>
           }
     </HistoryPage>
   </>
@@ -79,6 +79,12 @@ const HistoryPage = styled.div`
   flex: 1;
   overflow-y: auto;
   position: relative;
+`;
+
+const NoHistory = styled.div`
+  text-align: center;
+  color: ${props => props.theme.yellowDark};
+  font-size: 12px;
 `;
 
 History.propTypes = {

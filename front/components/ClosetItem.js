@@ -5,13 +5,14 @@ import styled from 'styled-components';
 import {Animated} from 'react-animated-css';
 import propTypes from 'prop-types';
 
-const ClosetItem = ({v, i}) => {
+const ClosetItem = memo(({v, i}) => {
     const dispatch = useDispatch();
-    const { items, equipment } = useSelector(state=>state.item);
+    const equipment = useSelector(state=>state.item.equipment && state.item.equipment[v.type]);
+    const items = useSelector(state=>state.item.items && state.item.items[v.type]);
     const { me } = useSelector(state=>state.user);
 
     const onClickItem = useCallback((item) => () => {
-        if(!items[item.type].includes(item.id)){ // 현재 아이템 목록에 없음 (구매기능)
+        if(!items.includes(item.id)){ // 현재 아이템 목록에 없음 (구매기능)
           if(me.star<item.price){ // 별이 부족할 경우
             return alert('별이 부족합니다.');
           }else{
@@ -21,7 +22,7 @@ const ClosetItem = ({v, i}) => {
             })
           }
         }else{
-          if(equipment[item.type] === item.id){ //장착중일 시 (장착해제)
+          if(equipment === item.id){ //장착중일 시 (장착해제)
               dispatch({
                 type: UNEQUIP_ITEM_REQUEST,
                 data: {itemId:item.id, itemType:item.type}
@@ -37,15 +38,15 @@ const ClosetItem = ({v, i}) => {
 
     return(
     <Animated animationIn="fadeInUp" animationInDelay={i*50} isVisible={true}>
-        <Item onClick={onClickItem(v)} equip={equipment && equipment[v.type]===v.id}>
-        {items && !items[v.type].includes(v.id) && <LockIcon/>}
+        <Item onClick={onClickItem(v)} equip={equipment===v.id}>
+        {!items.includes(v.id) && <LockIcon/>}
         <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
-        {items && !items[v.type].includes(v.id) && <Price>{v.price}</Price>}
-        {equipment && equipment[v.type] === v.id && <EquipLabel>장착해제</EquipLabel>}
+        {!items.includes(v.id) && <Price>{v.price}</Price>}
+        {equipment === v.id && <EquipLabel>장착해제</EquipLabel>}
         </Item>
     </Animated>
     );
-};
+});
 
 const Item = styled.li`
   width: 90px;
