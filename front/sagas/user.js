@@ -28,9 +28,6 @@ import {
   EDIT_GREETINGS_SUCCESS,
   EDIT_GREETINGS_FAILURE,
   EDIT_GREETINGS_REQUEST,
-  LOAD_RECENT_USERS_SUCCESS,
-  LOAD_RECENT_USERS_FAILURE,
-  LOAD_RECENT_USERS_REQUEST,
   LOAD_TODAY_USERS_SUCCESS,
   LOAD_TODAY_USERS_FAILURE,
   LOAD_TODAY_USERS_REQUEST,
@@ -206,6 +203,7 @@ function* addFollowing(action) {
     });
   } catch (e) {
     console.error(e);
+    e.response && alert(e.response.data);
     yield put({
       type: ADD_FOLLOWING_FAILURE,
       error: e,
@@ -272,7 +270,7 @@ function* watchEditGreetings() {
 }
 
 function loadTodayUsersAPI() {
-  return axios.get('/users/today', {
+  return axios.get('/users/rank', {
     withCredentials: true
   });
 }

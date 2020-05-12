@@ -10,7 +10,7 @@ export const initialState = {
   me: null, // 내 정보
   userInfo: null,
   page: 1,
-  todayUsers: []
+  userRanking: []
 };
 
 export const LOG_IN_REQUEST = "LOG_IN_REQUEST";
@@ -185,7 +185,7 @@ const reducer = (state = initialState, action) => {
         break;
       }
       case LOAD_TODAY_USERS_SUCCESS: {
-        draft.todayUsers = action.data;
+        draft.userRanking = action.data;
         break;
       }
       case LOAD_TODAY_USERS_FAILURE: {

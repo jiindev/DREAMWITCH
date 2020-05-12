@@ -1,18 +1,24 @@
 import { ADD_FOLLOWING_REQUEST } from "../reducers/user";
 import styled from 'styled-components';
 import React, { useState, useCallback, memo } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const AddFriend = memo(() => {
     const [followUserId, setfollowUserId] = useState('');
+    const followings = useSelector(state=>state.user.me.Followings);
     const dispatch = useDispatch();
 
     const onAddFriend = useCallback(()=>{
+      if(followings.find((v)=>v.userId===followUserId)){
+        alert('이미 등록된 사용자입니다.');
+        return setfollowUserId('');
+      }
         dispatch({
             type: ADD_FOLLOWING_REQUEST,
             data: followUserId
-        })
-       }, [followUserId]);
+        });
+        setfollowUserId('');
+    }, [followUserId, followings]);
     
        const onChangeFriendId = useCallback((e)=>{
         setfollowUserId(e.target.value);

@@ -33,4 +33,19 @@ router.get('/today', async(req, res, next) => {
   }
 });
 
+router.get('/rank', async(req, res, next) => {
+  // 사용자 순위 (경험치순으로 5명 나열)
+  try{
+    const userRanking = await db.User.findAll({
+      attributes: ['userId', 'id', 'nickname'],
+      order: [['exp', 'DESC']],
+      limit: 5,
+    })
+    return res.send(userRanking);
+  }catch(e){
+      console.error(e);
+      next(e);
+  }
+});
+
 module.exports = router;

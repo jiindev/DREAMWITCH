@@ -7,11 +7,10 @@ import styled from 'styled-components';
 import { SAY_LOAD_HISTORIES } from "../reducers/character";
 import {Animated} from 'react-animated-css';
 import propTypes from 'prop-types';
-import { SET_PAGE } from "../reducers/user";
 
 const History = memo(({id}) => {
   const dispatch = useDispatch();
-  const { histories, userHistories, hasMoreHistories } = useSelector(state=>state.history);
+  const { histories, hasMoreHistories } = useSelector(state=>state.history);
   const {userInfo} = useSelector(state=>state.user);
   const historyPageRef = useRef();
   const countRef = useRef([]);
