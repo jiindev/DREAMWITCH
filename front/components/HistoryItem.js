@@ -59,7 +59,8 @@ const HistoryItem = memo(({history, lastChild}) => {
                     <HistoryTitle onClick={ history.type === 'clearTodos' ? onClickHistoryDiv : undefined} type={history.type}>
                                 <Content type={history.type}>
                                     {history.type === 'levelUp' &&
-                                        <span>LEVEL UP!</span>
+                                        <><span>LEVEL UP!</span>
+                                        <LevelUpIllust/></>
                                     }
                                     <p>{history.content}</p>
                                     {history.type==='clearTodos' &&
@@ -138,9 +139,21 @@ const HistoryContent = styled.div`
     background-color: ${props => props.type === 'clearTodos' ? props.open ? props.theme.purpleDark : props.theme.purpleMedium : '#FFE644'};
     border-radius: 0 20px 20px 20px;
     overflow: hidden;
+    position: relative;
     flex: 1;
     margin: 10px 0 20px 20px;
     transition: all .5s ease;
+`;
+
+const LevelUpIllust = styled.span`
+    width: 100px;
+    height: 86px;
+    background: url('/img/level_up.png');
+    background-size: contain;
+    display:block;
+    position: absolute;
+    bottom: -10px;
+    right: 0;
 `;
 
 const HistoryTitle = styled.div`

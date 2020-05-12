@@ -83,7 +83,7 @@ const StarImage = styled.span`
   height: 95px;
   display: block;
   margin: 40px auto 20px auto;
-  background: url('static/icons/stat_finished.svg');
+  background: url('/icons/stat_finished.svg');
   background-size: contain;
 `;
 

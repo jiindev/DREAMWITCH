@@ -14,7 +14,7 @@ import {Animated} from 'react-animated-css';
 
 const CheckList = memo(({id}) => {
   const dispatch = useDispatch();
-  const { todos, isCleared, lastTodos, userTodos } = useSelector((state) => state.todo);
+  const { todos, isCleared, lastTodos } = useSelector((state) => state.todo);
   const { me, userInfo } = useSelector(state=>state.user);
   const [started, setStarted] = useState(false);
   const [todosToCopy, setTodosToCopy] = useState([]);
@@ -35,7 +35,7 @@ const CheckList = memo(({id}) => {
         data: me && me.lastStart
       })
     }
-  }, [todos, isCleared, me]); // 시작하지 않았다면 지난 날의 투두 데이터 가져오기
+  }, [todos, started, me]); // 시작하지 않았다면 지난 날의 투두 데이터 가져오기
 
   const onStartTodo = useCallback(() => {
     setStarted(true);
@@ -84,21 +84,29 @@ const CheckList = memo(({id}) => {
     <>
       <TodoList>
       {id ? //다른 사용자의 할일 목록 보기
-        <TodoPage>
-          <H2>{userInfo && userInfo.nickname}의 오늘의 할 일!</H2>
-          <TodoUl>
-          <UserTodoList>
-                  {userTodos.map((c, i)=>{
-                    return (
-                    <Animated animationIn="fadeInUp" animationInDelay={i*100} animationInDuration={500} isVisible={true}>
-                      <LastTodo checked={c.checked} onClick = {onClickAddLast(c.content)}><Checked checked={c.checked}/>{c.content}</LastTodo>
-                    </Animated>
-                    );
-                  })}
-          </UserTodoList>
-          </TodoUl>
-        </TodoPage>
-        : //자신의 할 일 목록
+        todos && todos[0] ?
+            <TodoPage>
+              <H2>{ isCleared && isCleared ? `${userInfo && userInfo.nickname}, 오늘의 할 일을 모두 끝냈어요!` : `${userInfo && userInfo.nickname}의 오늘의 할 일!` }</H2>
+              <TodoUl>
+              <UserTodoList>
+                      {todos.map((c, i)=>{
+                        return (
+                        <Animated animationIn="fadeInUp" animationInDelay={i*100} animationInDuration={500} isVisible={true}>
+                          <LastTodo checked={c.checked} onClick = {onClickAddLast(c.content)}><Checked checked={c.checked}/>{c.content}</LastTodo>
+                        </Animated>
+                        );
+                      })}
+              </UserTodoList>
+              </TodoUl>
+            </TodoPage>
+        :  // 아무것도 없는 상태
+          <StartTodo>
+              <H2>{userInfo && userInfo.nickname}, 오늘의 목록을 작성하지 않았어요!</H2>
+              <Illust>
+                <Animated animationIn="fadeIn" animationInDuration={1000} isVisible={true} style={{height: '100%'}}><NotStartIllust/></Animated>
+              </Illust>
+          </StartTodo>
+      : //자신의 할 일 목록
         todos && todos[0] || started ? ( //이미 오늘의 할 일을 추가했다면
           <> 
           {writingHistory &&
@@ -129,7 +137,7 @@ const CheckList = memo(({id}) => {
                 }
               </TodoUl>
               <TodoBottom/>
-              <TodoStatue onClickWriteHistory={onClickWriteHistory}/>
+              <TodoStatue onClickWriteHistory={onClickWriteHistory} writingHistory={writingHistory}/>
             </TodoPage>
           </>
         ) : lastTodos.length>0 ? ( // 오늘의 투두를 아직 시작하지 않았을 때 지난날의 투두 조회
@@ -223,6 +231,12 @@ const StartIllust = styled.div`
   border-radius: 20px;
   text-align: center;
   background: url('/img/checklist_start_illust.png');
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+`;
+const NotStartIllust = styled(StartIllust)`
+  background: url('/img/checklist_nostart_illust.png');
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;

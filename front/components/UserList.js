@@ -31,7 +31,7 @@ const UserList = memo(({title, users, editingMode}) => {
 
     return(
         <UserListDiv show={showList} rankIcon={editingMode===undefined}>
-            <h3>{title}<ToggleButton onClick={onToggleShow} show={showList}/></h3>
+            <h3>{title}{users[0] && <ToggleButton onClick={onToggleShow} show={showList}/>}</h3>
                 {users[0] ? 
                 <ul>
                 {users.map((v, i)=>{

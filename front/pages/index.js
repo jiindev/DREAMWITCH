@@ -1,7 +1,4 @@
-import React, { useState, useEffect, useCallback, memo } from "react";
-import Link from "next/link";
-// import Head from 'next/head';
-// import AppLaout from '../components/AppLayout';
+import React, { useEffect, useCallback, memo } from "react";
 import Character from "../components/Character";
 import History from "../components/History";
 import TodoList from "../components/TodoList";
@@ -9,8 +6,8 @@ import Closet from "../components/Closet";
 import Visit from '../components/Visit';
 import { useSelector, useDispatch } from "react-redux";
 import Router from "next/router";
-import { LOAD_USER_REQUEST, LOG_OUT_REQUEST, LEVEL_UP_REQUEST, SET_PAGE, LOAD_TODAY_USERS_REQUEST } from "../reducers/user";
-import styled from 'styled-components';
+import { LOG_OUT_REQUEST, LEVEL_UP_REQUEST, SET_PAGE, LOAD_TODAY_USERS_REQUEST } from "../reducers/user";
+import styled, {keyframes} from 'styled-components';
 import { LOAD_HISTORIES_REQUEST } from "../reducers/history";
 import { LOAD_TODOS_REQUEST } from "../reducers/todo";
 import { LOAD_ITEMS_REQUEST, LOAD_EQUIPMENT_REQUEST } from "../reducers/item";
@@ -20,6 +17,7 @@ import AppLayout from "../components/AppLayout";
 const Index = memo(() => {
   const dispatch = useDispatch();
   const { me, logInErrorReason, page } = useSelector((state) => state.user);
+  const {historyLoading} = useSelector((state)=>state.history);
 
   useEffect(()=>{
     if(!me){
@@ -52,10 +50,6 @@ const Index = memo(() => {
     })
   }
 
-  const gg = () => {
-    console.log('ggsg');
-  }
-
   if(!me){
     return null;
   }
@@ -63,6 +57,7 @@ const Index = memo(() => {
     <>
     <AppLayout>
       <Wrap>
+        {historyLoading  && <Loading/>}
        <TopContent>
          <UserStatue>
             <Star>{me && me.star}</Star><Level>{me && me.level}</Level>
@@ -89,7 +84,31 @@ const Index = memo(() => {
   
 });
 
-const Wrap = styled.div`
+export const LoadingImage = keyframes`
+  from {
+    background-position: 0 -3 px;
+  }
+  to {
+    background-position: 0 4px;
+  }
+`;
+
+export const Loading = styled.span`
+  width: 50px;
+  height: 50px;
+  display: block;
+  position: absolute;
+  z-index: 999;
+  border-radius: 100px;
+  right: 10px;
+  bottom: 10px;
+  background: url('/img/loading.gif') ${props=>props.theme.yellowMedium};
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation: ${LoadingImage} .8s infinite ease-in-out alternate;
+`;
+
+export const Wrap = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -98,7 +117,7 @@ const Wrap = styled.div`
   }
 `;
 
-const Tab = styled.nav`
+export const Tab = styled.nav`
   position: relative;
   z-index: 10;
   & ul {
@@ -109,7 +128,7 @@ const Tab = styled.nav`
   }
 `;
 
-const TabItem = styled.li`
+export const TabItem = styled.li`
     background-color: ${props => (props.active ? props.theme.yellowLight : props.theme.purpleLight)};
     color: ${props => props.theme.purpleDark};
     padding: 12px 0;
@@ -120,27 +139,27 @@ const TabItem = styled.li`
     cursor: pointer;
 `;
 
-const TabIcon = styled.i`
+export const TabIcon = styled.i`
   width: 16px;
   height: 16px;
   background: ${props => `url('/icons/tabbutton_${props.iconName}.svg')`};
   display: inline-block;
 `;
 
-const TopContent = styled.div`
+export const TopContent = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
 `;
 
-const UserStatue = styled.div`
+export const UserStatue = styled.div`
   position: absolute;
   top: 0;
   z-index: 99;
   width: 100%;
 `;
 
-const Level = styled.span`
+export const Level = styled.span`
   background-color: ${props => props.theme.purpleDark}; 
   color: ${props => props.theme.purpleLight}; 
   font-size: 12px;
@@ -166,7 +185,7 @@ float: left;
   }
 `;
 
-const LogoutButton = styled.button`
+export const LogoutButton = styled.button`
   position: absolute;
   top: 32px;
   right: 0;

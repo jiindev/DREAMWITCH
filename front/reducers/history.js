@@ -2,6 +2,7 @@ import produce from 'immer';
 
 export const initialState = {
     histories: [],
+    historyLoading: false,
   };
   
   export const LOAD_HISTORIES_REQUEST = "LOAD_HISTORIES_REQUEST";
@@ -35,7 +36,8 @@ export const initialState = {
       switch (action.type) {
         case LOAD_HISTORIES_REQUEST: {
           draft.histories = !action.lastId ? [] : draft.histories;
-          draft.hasMoreHistories = action.lastId ? state.hasMoreHistories : true; 
+          draft.hasMoreHistories = action.lastId ? state.hasMoreHistories : true;
+          draft.historyLoading = true; 
           break;
         }
         case LOAD_HISTORIES_SUCCESS: {
@@ -43,13 +45,16 @@ export const initialState = {
               draft.histories.push(v);
             });
             draft.hasMoreHistories = action.data.length === 5;
+            draft.historyLoading = false; 
         }
         case LOAD_HISTORIES_FAILURE: {
+          draft.historyLoading = false; 
           break;
         }
         case LOAD_USER_HISTORIES_REQUEST: {
           draft.histories = !action.lastId ? [] : draft.histories;
-          draft.hasMoreHistories = action.lastId ? state.hasMoreHistories : true; 
+          draft.hasMoreHistories = action.lastId ? state.hasMoreHistories : true;
+          draft.historyLoading = true; 
           break;
         }
         case LOAD_USER_HISTORIES_SUCCESS: {
@@ -57,50 +62,63 @@ export const initialState = {
             draft.histories.push(v);
           });
           draft.hasMoreHistories = action.data.length === 5;
+          draft.historyLoading = false;
         }
         case LOAD_USER_HISTORIES_FAILURE: {
+          draft.historyLoading = false;
           break;
         }
         case LOAD_HISTORY_REQUEST: {
+          draft.historyLoading = true;
           break;
         }
         case LOAD_HISTORY_SUCCESS: {
           let historyIndex = draft.histories.findIndex(v=>v.id === action.data.historyId);
           draft.histories[historyIndex].todos = action.data.todos;
           draft.histories[historyIndex].comments = action.data.comments;
+          draft.historyLoading = false;
           break;
         }
         case LOAD_HISTORY_FAILURE: {
+          draft.historyLoading = false;
           break;
         }
         case ADD_HISTORIES_REQUEST: {
+          draft.historyLoading = true;
           break;
         }
         case ADD_HISTORIES_SUCCESS: {
           draft.histories.unshift(action.data);
+          draft.historyLoading = false;
           break;
         }
         case ADD_HISTORIES_FAILURE: {
+          draft.historyLoading = false;
           break;
         }
         case ADD_COMMENT_REQUEST: {
+          draft.historyLoading = true;
           break;
         }
         case ADD_COMMENT_SUCCESS: {
           let historyIndex = draft.histories.findIndex(v=>v.id === action.data.historyId);
           draft.histories[historyIndex].comments.push(action.data.comment);
+          draft.historyLoading = false;
           break;
         }
-        case REMOVE_COMMENT_FAILURE: {
+        case REMOVE_COMMENT_REQUEST: {
+          draft.historyLoading = true;
           break;
         }
         case REMOVE_COMMENT_SUCCESS: {
           let historyIndex = draft.histories.findIndex(v=>v.id === action.data.historyId);
           let commentIndex = draft.histories[historyIndex].comments.findIndex(v=>v.id===action.data.commentId);
           draft.histories[historyIndex].comments.splice(commentIndex, 1);
+          draft.historyLoading = false;
           break;
         }
         case REMOVE_COMMENT_FAILURE: {
+          draft.historyLoading = false;
           break;
         }
         default: {

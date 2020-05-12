@@ -1,11 +1,10 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {SAY_COMPLETE_TODOS} from '../reducers/character';
-import styled from 'styled-components';
-import { Button } from './styledComponents/PageComponent';
+import styled, {keyframes} from 'styled-components';
 import propTypes from 'prop-types';
 
-const TodoStatue = ({onClickWriteHistory}) => {
+const TodoStatue = ({onClickWriteHistory, writingHistory}) => {
   const dispatch = useDispatch();
   const { clearPercentage, isCleared } = useSelector((state) => state.todo);
   
@@ -26,7 +25,7 @@ const TodoStatue = ({onClickWriteHistory}) => {
           <p className="percent">{clearPercentage ? clearPercentage : '0'}%</p>
         </Percentage>
         {(clearPercentage === 100 && !isCleared ) ? 
-            <StarButtonActive onClick={onClickWriteHistory}>완료버튼</StarButtonActive> :
+            <StarButtonActive onClick={onClickWriteHistory} writingHistory={writingHistory}>완료버튼</StarButtonActive> :
             <><StarBase><StarPercentage opacity={clearPercentage+'%'} cleared={isCleared}/></StarBase></>
         }
       </TodoStatueBar>
@@ -69,6 +68,15 @@ const StarBase = styled.div`
   position: relative;
 `;
 
+export const StarAnimation = keyframes`
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1);
+  }
+`;
+
 const StarPercentage = styled(StarBase)`
   background: ${props => props.cleared ? "url('/icons/stat_finished.svg')": "url('/icons/stat_star.svg')"};
   position: absolute;
@@ -82,10 +90,14 @@ const StarButtonActive = styled(StarBase)`
   background: url('/icons/stat_click_to_finish.svg');
   text-indent: -9999px;
   cursor: pointer;
+  animation: ${StarAnimation} .5s infinite ease-in-out alternate;
+  opacity: ${props=>props.writingHistory ? 0 : 1};
+  transition: all .5s ease;
 `;
 
 TodoStatue.propTypes = {
-  onClickWriteHistory: propTypes.func.isRequired
+  onClickWriteHistory: propTypes.func.isRequired,
+  writingHistory: propTypes.bool.isRequired
 }
 
 export default TodoStatue;

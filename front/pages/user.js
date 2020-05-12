@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useCallback, memo } from "react";
 import Link from "next/link";
-// import Head from 'next/head';
-// import AppLaout from '../components/AppLayout';
 import Character from "../components/Character";
 import History from "../components/History";
 import TodoList from "../components/TodoList";
@@ -12,10 +10,12 @@ import propTypes from 'prop-types';
 import { LOAD_TODOS_REQUEST } from "../reducers/todo";
 import { LOAD_USER_HISTORIES_REQUEST } from "../reducers/history";
 import AppLayout from "../components/AppLayout";
+import { Wrap, TopContent, Loading, Level, LogoutButton, TabItem, UserStatue, Tab, TabIcon } from './index';
 
 const User = memo(({id}) => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
+  const {historyLoading} = useSelector((state)=>state.history);
   const [page, setPage] = useState(1);
 
   useEffect(()=>{
@@ -40,6 +40,7 @@ const User = memo(({id}) => {
     <>
     <AppLayout>
       <Wrap>
+      {historyLoading  && <Loading/>}
        <TopContent>
         <Link href='/'>
          <GoHome>
@@ -50,8 +51,8 @@ const User = memo(({id}) => {
           <Character id={id}/>
         <Tab>
           <ul>
-            <TabItem onClick={onChangePage(1)} active={page===1}><TabIcon iconName={'star'}/></TabItem>
-            <TabItem onClick={onChangePage(2)} active={page===2}><TabIcon iconName={'list'}/></TabItem>
+            <UserTabItem onClick={onChangePage(1)} active={page===1}><TabIcon iconName={'star'}/></UserTabItem>
+            <UserTabItem onClick={onChangePage(2)} active={page===2}><TabIcon iconName={'list'}/></UserTabItem>
           </ul>
         </Tab>
         </TopContent>
@@ -64,66 +65,13 @@ const User = memo(({id}) => {
   
 });
 
-const Wrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  @media only screen and (min-width: 769px) {
-    height: 100%;
-  }
-`;
 
-const Tab = styled.nav`
-  position: relative;
-  z-index: 10;
-  & ul {
-    display: flex;
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-  }
-`;
-
-const TabItem = styled.li`
-    background-color: ${props => (props.active ? props.theme.yellowLight : props.theme.purpleLight)};
-    color: ${props => props.theme.purpleDark};
-    padding: 12px 0;
+const UserTabItem = styled(TabItem)`
     flex: 0.5;
-    border-radius: 20px 20px 0 0;
-    text-align: center;
-    transition: all .2s ease;
-    cursor: pointer;
 `;
 
-const TabIcon = styled.i`
-  width: 16px;
-  height: 16px;
-  background: ${props => `url('/icons/tabbutton_${props.iconName}.svg')`};
-  display: inline-block;
-`;
-
-const TopContent = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-`;
-
-const GoHome = styled.div`
-  position: absolute;
-  top: 0;
-  z-index: 99;
-  width: 100%;
+const GoHome = styled(UserStatue)`
   cursor: pointer;
-`;
-
-const Level = styled.span`
-  background-color: ${props => props.theme.purpleDark}; 
-  color: ${props => props.theme.purpleLight}; 
-  font-size: 12px;
-  padding: 10px 15px;
-  display: inline-block;
-  border-radius: 0 0 0 20px;
-  float: right;
 `;
 
 const HomeButton = styled(Level)`
@@ -147,25 +95,6 @@ float: left;
   }
 `;
 
-const LogoutButton = styled.button`
-  position: absolute;
-  top: 32px;
-  right: 0;
-  z-index: 98;
-  width: 40px;
-  height: 34px;
-  background-color: ${props => props.theme.purpleLight}; 
-  outline: none;
-  border: 0;
-  border-radius: 0 0 0 20px;
-  cursor: pointer;
-  & i{
-    width: 16px;
-    height: 16px;
-    background-image: url('/icons/back_to_home.svg');
-    display: inline-block;
-  }
-`;
 
 User.propTypes = {
   id: propTypes.number.isRequired,

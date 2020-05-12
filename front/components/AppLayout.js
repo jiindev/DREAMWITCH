@@ -34,11 +34,9 @@ const Logo = styled.span`
   background-position: center center;
   background-repeat: no-repeat;
   border-radius: 20px;
-  @media only screen and (min-width: 769px) {
-    @media only screen and (min-height: 900px) {
+  @media only screen and (min-width: 769px) and (min-height: 900px){
       display: block;
       margin: 10px auto 0 auto;
-    }
   }
 `;
 
