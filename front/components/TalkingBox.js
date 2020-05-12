@@ -78,7 +78,7 @@ const Talking = styled.div`
 const EditButton = styled.button`
     width: 12px;
     height: 12px;
-    background: url('/static/icons/chatter_box_edit.svg');
+    background: url('/icons/chatter_box_edit.svg');
     background-size: contain;
     border: 0;
     outline: none;

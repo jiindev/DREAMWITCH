@@ -4,6 +4,7 @@ import {Animated} from 'react-animated-css';
 import Link from 'next/link';
 import { useSelector, useDispatch } from "react-redux";
 import { REMOVE_FOLLOWING_REQUEST, ADD_FOLLOWING_REQUEST } from "../reducers/user";
+import propTypes from 'prop-types';
 
 const UserList = memo(({title, users, editingMode}) => {
     const dispatch = useDispatch();
@@ -84,7 +85,7 @@ const UserListDiv = styled.div`
             width: 14px;
             height: 14px;
             display: inline-block;
-            background: ${props=>props.rankIcon ? "url('/static/icons/ranking_list.svg')" : "url('/static/icons/friend_list.svg')"};
+            background: ${props=>props.rankIcon ? "url('/icons/ranking_list.svg')" : "url('/icons/friend_list.svg')"};
             background-size: contain;
             vertical-align: middle;
             margin-right: 10px;
@@ -94,7 +95,7 @@ const UserListDiv = styled.div`
 
 const ToggleButton = styled.button`
     float:right;
-    background: url('/static/icons/list_show_toggle.svg');
+    background: url('/icons/list_show_toggle.svg');
     background-size: contain;
     width: 18px;
     height: 18px;
@@ -117,26 +118,35 @@ const VisitButton = styled.span`
     width: 16px;
     height: 16px;
     margin-top: -2px;
-    background: url('/static/icons/friend_list_house.svg');
+    background: url('/icons/friend_list_house.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
     vertical-align: middle;
     text-indent: -9999999px;
+    cursor: pointer;
 `;
 
 const DeleteButton = styled(VisitButton)`
-    background: url('/static/icons/friend_delete.svg');
+    background: url('/icons/friend_delete.svg');
+    cursor: pointer;
 `;
 
 const AddButton = styled(VisitButton)`
-    background: url('/static/icons/check_add.svg');
+    background: url('/icons/check_add.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
     width: 14px;
     height: 14px;
     margin: 0 5px 0 0;
+    cursor: pointer;
 `; 
+
+UserList.propTypes = {
+    title: propTypes.string.isRequired, 
+    users: propTypes.array.isRequired, 
+    editingMode: propTypes.bool
+}
 
 export default UserList;

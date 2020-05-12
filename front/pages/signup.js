@@ -92,7 +92,7 @@ const Signup = memo(() => {
 });
 
 const Background = styled.div`
-  background: url('/static/img/login_pattern.png');
+  background: url('/img/login_pattern.png');
   background-size: 300px 300px;
   background-position: center center;
 `;

@@ -14,7 +14,7 @@ import styled from 'styled-components';
 import { LOAD_HISTORIES_REQUEST } from "../reducers/history";
 import { LOAD_TODOS_REQUEST } from "../reducers/todo";
 import { LOAD_ITEMS_REQUEST, LOAD_EQUIPMENT_REQUEST } from "../reducers/item";
-import { levelCheck } from '../static/levelData';
+import { levelCheck } from '../components/data/levelData';
 import AppLayout from "../components/AppLayout";
 
 const Index = memo(() => {
@@ -123,7 +123,7 @@ const TabItem = styled.li`
 const TabIcon = styled.i`
   width: 16px;
   height: 16px;
-  background: ${props => `url('/static/icons/tabbutton_${props.iconName}.svg')`};
+  background: ${props => `url('/icons/tabbutton_${props.iconName}.svg')`};
   display: inline-block;
 `;
 
@@ -161,7 +161,7 @@ float: left;
     background-color: red;
     vertical-align: middle;
     margin-right: 5px;
-    background: url('/static/icons/top_left_star.svg');
+    background: url('/icons/top_left_star.svg');
     background-size: contain;
   }
 `;
@@ -180,7 +180,7 @@ const LogoutButton = styled.button`
   & i{
     width: 16px;
     height: 16px;
-    background-image: url('/static/icons/back_to_home.svg');
+    background-image: url('/icons/back_to_home.svg');
     display: inline-block;
   }
 `;

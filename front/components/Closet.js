@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect, memo } from "react";
 import { useDispatch } from "react-redux";
-import {hatItems, clothesItems, hairItems, bgItems, wandItems, catItems} from '../static/itemData';
+import {hatItems, clothesItems, hairItems, bgItems, wandItems, catItems} from './data/itemData';
 import {H2} from './styledComponents/PageComponent';
 import styled from 'styled-components';
 import { SAY_LOAD_ITEMS } from "../reducers/character";
@@ -113,7 +113,7 @@ const H3 = styled.h3`
     width: 14px;
     height: 14px;
     display: inline-block;
-    background: ${props=>`url('/static/icons/shop_${props.type}.svg')`};
+    background: ${props=>`url('/icons/shop_${props.type}.svg')`};
     background-size: contain;
     vertical-align: middle;
     margin-right: 10px;

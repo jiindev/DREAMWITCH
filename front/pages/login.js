@@ -76,7 +76,7 @@ const Login = memo(() => {
 });
 
 const Background = styled.div`
-  background: url('/static/img/login_pattern.png');
+  background: url('/img/login_pattern.png');
   background-size: 300px 300px;
   background-position: center center;
 `;
@@ -96,7 +96,7 @@ const LoginIllust = styled.span`
   width: 100%;
   height: 300px;
   display: inline-block;
-  background: url('/static/img/login_logo.png');
+  background: url('/img/login_logo.png');
   background-size: contain;
   background-position: center center;
   margin-bottom: 20px;

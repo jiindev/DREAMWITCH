@@ -63,14 +63,14 @@ const StarBase = styled.div`
   width: 70px;
   height: 70px;
   margin: 15px;
-  background: url('/static/icons/stat_basic_no_move.svg');
+  background: url('/icons/stat_basic_no_move.svg');
   outline: none;
   border: 0;
   position: relative;
 `;
 
 const StarPercentage = styled(StarBase)`
-  background: ${props => props.cleared ? "url('/static/icons/stat_finished.svg')": "url('/static/icons/stat_star.svg')"};
+  background: ${props => props.cleared ? "url('/icons/stat_finished.svg')": "url('/icons/stat_star.svg')"};
   position: absolute;
   margin: 0;
   top: 0;
@@ -79,7 +79,7 @@ const StarPercentage = styled(StarBase)`
 `;
 
 const StarButtonActive = styled(StarBase)`
-  background: url('/static/icons/stat_click_to_finish.svg');
+  background: url('/icons/stat_click_to_finish.svg');
   text-indent: -9999px;
   cursor: pointer;
 `;

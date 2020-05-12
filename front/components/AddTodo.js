@@ -58,7 +58,7 @@ const AddButton = styled(Button)`
     width: 16px;
     height: 16px;
     display: inline-block;
-    background: url('/static/icons/check_add.svg');
+    background: url('/icons/check_add.svg');
   }
 `;
 
@@ -75,7 +75,7 @@ const PlusIcon = styled.span`
   border-radius: 20px;
   border:none;
   outline: none;
-  background: url('/static/icons/check_add.svg');
+  background: url('/icons/check_add.svg');
   background-size: contain;
   vertical-align: middle;
 `;

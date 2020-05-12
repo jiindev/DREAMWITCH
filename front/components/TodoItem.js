@@ -120,7 +120,7 @@ const CheckButton = styled.button`
   border-radius: 20px;
   border:none;
   outline: none;
-  background: ${props => props.checked ? "url('/static/icons/check_checked.svg')": "url('/static/icons/check_empty.svg')" };
+  background: ${props => props.checked ? "url('/icons/check_checked.svg')": "url('/icons/check_empty.svg')" };
   text-indent: -9999px;
   cursor: pointer;
 `;
@@ -159,7 +159,7 @@ const DeleteButton = styled.button`
   display: inline-block;
   padding: 0;
   margin: 7px 0;
-  background: url('/static/icons/check_delete.svg');
+  background: url('/icons/check_delete.svg');
   background-size: contain;
   border: 0;
   cursor: pointer;

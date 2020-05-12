@@ -18,7 +18,7 @@ const DreamWitch = ({ Component, store, pageProps }) => (
     <>
       <Provider store={store}>
         <Head>
-          <title>DreamWitch</title>
+          <title>DREAMWITCH</title>
           <meta name="viewport" content="width=device-width, user-scalable=no"/>
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>
         </Head>

@@ -197,7 +197,7 @@ const FinishedList = styled.ul`
       height: 30px;
       content: '';
       background-size: contain;
-      background: url('/static/icons/check_done.svg');
+      background: url('/icons/check_done.svg');
       display: inline-block;
       vertical-align: middle;
     }
@@ -222,7 +222,7 @@ const StartIllust = styled.div`
   max-height: 300px;
   border-radius: 20px;
   text-align: center;
-  background: url('/static/img/checklist_start_illust.png');
+  background: url('/img/checklist_start_illust.png');
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
@@ -253,7 +253,7 @@ const Checked = styled.span`
   width: 30px;
   height: 30px;
   background-size: contain;
-  background: ${props => props.checked ? "url('/static/icons/check_done.svg')": "url('/static/icons/check_failed.svg')" };
+  background: ${props => props.checked ? "url('/icons/check_done.svg')": "url('/icons/check_failed.svg')" };
   text-indent: -9999px;
   display: inline-block;
   vertical-align: middle;
@@ -274,7 +274,7 @@ const LastTodo = styled.li`
 `;
 
 const CopyCheck = styled(Checked)`
-  background:${props=>props.checked? "url('/static/icons/import_todo_active.svg')" : "url('/static/icons/import_todo.svg')" };
+  background:${props=>props.checked? "url('/icons/import_todo_active.svg')" : "url('/icons/import_todo.svg')" };
   background-size: contain;
   float:right;
 `;

@@ -15,7 +15,7 @@ const AppLayout = memo(({children}) => {
   
 });
 const Background = styled.div`
-  background: url('/static/img/login_pattern.png');
+  background: url('/img/login_pattern.png');
   background-size: 300px 300px;
   background-position: center center;
   height: 100vh;
@@ -29,7 +29,7 @@ const Logo = styled.span`
   height: 200px;
   margin: 0;
   display: none;
-  background: url('/static/img/login_logo.png');
+  background: url('/img/login_logo.png');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;

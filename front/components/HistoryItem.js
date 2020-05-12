@@ -114,7 +114,7 @@ const HistoryItem = memo(({history, lastChild}) => {
 const Star = styled.span`
     width: 20px;
     height: 20px;
-    background: ${props => props.type==='clearTodos' ? props.open ? "url('/static/icons/listline_star_more.svg')" : "url('/static/icons/listline_star_basic.svg')" : "url('/static/icons/listline_star_event.svg')"};
+    background: ${props => props.type==='clearTodos' ? props.open ? "url('/icons/listline_star_more.svg')" : "url('/icons/listline_star_basic.svg')" : "url('/icons/listline_star_event.svg')"};
     position: relative;
     z-index: 3;
 `;
@@ -184,7 +184,7 @@ const Todos = styled.div`
         width: 16px;
         height: 16px;
         display: inline-block;
-        background: url('/static/icons/list_history_star.svg');
+        background: url('/icons/list_history_star.svg');
         background-size: contain;
         margin: -3px 10px;
     }
@@ -219,7 +219,7 @@ const Comment = styled.li`
         height: 16px;
         margin-left: 5px;
         vertical-align: middle;
-        background: url('/static/icons/comment_delete.svg');
+        background: url('/icons/comment_delete.svg');
         background-size: contain;
         text-indent: -9999px;
         border: none;
@@ -254,7 +254,7 @@ const CommentInput = styled.div`
             height: 15px;
             display: block;
             content: '';
-            background: url('/static/icons/history_comment.svg');
+            background: url('/icons/history_comment.svg');
             background-size: contain;
             margin: 0px 12px 12px 12px;
         }

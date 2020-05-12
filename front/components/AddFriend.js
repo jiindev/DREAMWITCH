@@ -45,11 +45,13 @@ const AddFriendForm = styled.div`
     display: inline-block;
     border-radius: 0 20px 20px 0;
     border: 0;
+    outline: none;
+    cursor: pointer;
     & span {
         width: 16px;
         height: 16px;
         display: inline-block;
-        background-image: url('/static/icons/friend_add_click.svg');
+        background-image: url('/icons/friend_add_click.svg');
         text-indent: -9999px;
         background-repeat: no-repeat;
     }
@@ -71,4 +73,5 @@ const AddFriendForm = styled.div`
     }
   }
 `;
+
 export default AddFriend;

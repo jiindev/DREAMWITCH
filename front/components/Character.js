@@ -64,7 +64,7 @@ const Character = memo(({id}) => {
 });
 
 const CharacterDiv = styled.div`
-  background: ${props=>`url(/static/img/item_bg${props.index}.png)`};
+  background: ${props=>`url(/img/item_bg${props.index}.png)`};
   background-size: 50px 50px;
   height: 200px;
   text-align: center;
@@ -88,7 +88,7 @@ const Wand = styled.div`
   width: 150px;
   height:160px;
   z-index: 7;
-  background: ${props=>`url(/static/img/item_wand${props.index}.png)`};
+  background: ${props=>`url(/img/item_wand${props.index}.png)`};
 `;
 
 const Cat = styled.div`
@@ -97,7 +97,7 @@ const Cat = styled.div`
   width: 110px;
   height:120px;
   z-index: 7;
-  background: ${props=>props.index===0?'none' : `url(/static/img/item_cat${props.index}.png)`};
+  background: ${props=>props.index===0?'none' : `url(/img/item_cat${props.index}.png)`};
 `;
 
 const Cloths = styled.div`
@@ -106,7 +106,7 @@ const Cloths = styled.div`
   width: 220px;
   height:100px;
   z-index: 6;
-  background: ${props=>props.index===0?'none' : `url(/static/img/item_clothes${props.index}.png)`};
+  background: ${props=>props.index===0?'none' : `url(/img/item_clothes${props.index}.png)`};
 `;
 const FrontHat = styled.div`
   top: 0;
@@ -114,7 +114,7 @@ const FrontHat = styled.div`
   width: 244px;
   height: 90px;
   z-index: 5;
-  background: ${props=>props.index===0?'none' : `url(/static/img/item_hat_front${props.index}.png)`};
+  background: ${props=>props.index===0?'none' : `url(/img/item_hat_front${props.index}.png)`};
 `;
 const Emotion = styled.div`
   top: 30px;
@@ -122,7 +122,7 @@ const Emotion = styled.div`
   width: 100px;
   height: 70px;
   z-index: 4;
-  background: ${props=>`url(/static/img/character_emotion_${props.emotion}.png)`};
+  background: ${props=>`url(/img/character_emotion_${props.emotion}.png)`};
 `;
 const Hair = styled.div`
   top: 0;
@@ -130,7 +130,7 @@ const Hair = styled.div`
   width: 220px;
   height: 200px;
   z-index: 3;
-  background: ${props=>`url(/static/img/item_hair${props.index}.png)`};
+  background: ${props=>`url(/img/item_hair${props.index}.png)`};
 `;
 const BackHat = styled.div`
   top: 0;
@@ -138,7 +138,7 @@ const BackHat = styled.div`
   width: 236px;
   height: 200px;
   z-index: 2;
-  background: ${props=>props.index===0?'none' : `url(/static/img/item_hat_back${props.index}.png)`};
+  background: ${props=>props.index===0?'none' : `url(/img/item_hat_back${props.index}.png)`};
 `;
 const Effect = styled.div`
   width: 240px;
@@ -146,7 +146,7 @@ const Effect = styled.div`
   top: 40px;
   left: 43px;
   z-index:10;
-  background: ${props=>props.effect === 'none' ? 'none' : `url(/static/img/character_effect_${props.effect}.png)`};
+  background: ${props=>props.effect === 'none' ? 'none' : `url(/img/character_effect_${props.effect}.png)`};
   background-size: contain;
 `;
 

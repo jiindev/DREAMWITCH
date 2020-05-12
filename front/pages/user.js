@@ -10,7 +10,7 @@ import { LOAD_USER_REQUEST, LOG_OUT_REQUEST } from "../reducers/user";
 import styled from 'styled-components';
 import propTypes from 'prop-types';
 import { LOAD_TODOS_REQUEST } from "../reducers/todo";
-import { LOAD_HISTORIES_REQUEST, LOAD_USER_HISTORIES_REQUEST } from "../reducers/history";
+import { LOAD_USER_HISTORIES_REQUEST } from "../reducers/history";
 import AppLayout from "../components/AppLayout";
 
 const User = memo(({id}) => {
@@ -98,7 +98,7 @@ const TabItem = styled.li`
 const TabIcon = styled.i`
   width: 16px;
   height: 16px;
-  background: ${props => `url('/static/icons/tabbutton_${props.iconName}.svg')`};
+  background: ${props => `url('/icons/tabbutton_${props.iconName}.svg')`};
   display: inline-block;
 `;
 
@@ -141,7 +141,7 @@ float: left;
     background-color: red;
     vertical-align: middle;
     margin-right: 5px;
-    background: url('/static/icons/friend_back.svg');
+    background: url('/icons/friend_back.svg');
     background-size: contain;
     background-repeat: no-repeat;
   }
@@ -158,10 +158,11 @@ const LogoutButton = styled.button`
   outline: none;
   border: 0;
   border-radius: 0 0 0 20px;
+  cursor: pointer;
   & i{
     width: 16px;
     height: 16px;
-    background-image: url('/static/icons/back_to_home.svg');
+    background-image: url('/icons/back_to_home.svg');
     display: inline-block;
   }
 `;

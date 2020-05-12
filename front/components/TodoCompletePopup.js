@@ -99,7 +99,7 @@ const GetStarText = styled.div`
       height: 16px;
       display: inline-block;
       content: '';
-      background: url('/static/icons/check_reward.svg');
+      background: url('/icons/check_reward.svg');
       background-size: contain;
       vertical-align: middle;
       margin: -2px 5px 0 5px;

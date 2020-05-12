@@ -64,7 +64,7 @@ const LockIcon = styled.span`
   width: 14px;
   height: 16px;
   display: inline-block;
-  background: url('/static/icons/item_lock.svg');
+  background: url('/icons/item_lock.svg');
   position: absolute;
   top: 10px;
   left: 10px;
@@ -86,7 +86,7 @@ const Image = styled.span`
   height: 50px;
   margin: 10px 0 0 0;
   display: inline-block;
-  background: ${props => `url('/static/img/${props.thumb}')`};
+  background: ${props => `url('/img/${props.thumb}')`};
   background-size: contain;
 `;
 
@@ -97,7 +97,7 @@ margin-top: 5px;
     width: 10px;
     height: 10px;
     display: inline-block;
-    background: url('/static/icons/top_left_star.svg');
+    background: url('/icons/top_left_star.svg');
     background-size: contain;
     vertical-align: middle;
     margin-right: 3px;
