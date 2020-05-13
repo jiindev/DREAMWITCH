@@ -128,6 +128,7 @@ const CheckButton = styled.button`
   &:hover{
     background: ${props => props.checked ? "url('/icons/check_checked.svg')": props.theme.purpleDark };
     background-position: center center;
+    transition: none;
   }
 `;
 

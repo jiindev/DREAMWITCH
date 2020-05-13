@@ -137,6 +137,7 @@ export const Tab = styled.nav`
     position: absolute;
     width: 100%;
     bottom: 0;
+    overflow: hidden;
   }
 `;
 
@@ -148,6 +149,8 @@ export const TabItem = styled.li`
     border-radius: 20px 20px 0 0;
     text-align: center;
     transition: all .2s ease;
+    position: relative;
+    bottom: 0;
     cursor: pointer;
     & i{
       width: 16px;
@@ -156,10 +159,7 @@ export const TabItem = styled.li`
       display: inline-block;
     }
     &:hover{
-      background-color: ${props => (props.active ? props.theme.yellowLight : props.theme.purpleLightHover)};
-      & i{
-        background: ${props => props.active ? `url('/icons/tabbutton_${props.iconName}.svg')` : `url('/icons/tabbutton_${props.iconName}_on.svg')`};
-      }
+      bottom:${props => props.active ? '0px' : '-5px'};
     }
 `;
 

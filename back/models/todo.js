@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     "Todo",
     {
       content: {
-        type: DataTypes.STRING(40),
+        type: DataTypes.TEXT,
         allowNull: false,
       },
       checked: {
