@@ -118,11 +118,17 @@ const CheckButton = styled.button`
   height: 30px;
   background-size: contain;
   border-radius: 20px;
-  border:none;
   outline: none;
-  background: ${props => props.checked ? "url('/icons/check_checked.svg')": "url('/icons/check_empty.svg')" };
+  background: ${props => props.checked ? "url('/icons/check_checked.svg')": 'none' };
+  background-position: center center;
   text-indent: -9999px;
+  border:2px solid ${props=>props.theme.purpleDark};
+  transition: all .2s ease;
   cursor: pointer;
+  &:hover{
+    background: ${props => props.checked ? "url('/icons/check_checked.svg')": props.theme.purpleDark };
+    background-position: center center;
+  }
 `;
 
 const TodoContent = styled.span`

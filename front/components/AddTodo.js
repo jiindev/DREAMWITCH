@@ -60,6 +60,9 @@ const AddButton = styled(Button)`
     display: inline-block;
     background: url('/icons/check_add.svg');
   }
+  &:hover{
+    background-color: ${props => props.theme.yellowMediumHover};
+  }
 `;
 
 const AddTodoDiv = styled.div`

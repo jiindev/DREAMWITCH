@@ -58,6 +58,16 @@ const Item = styled.li`
   box-sizing: border-box;
   position: relative;
   border: ${props=> props.equip ? `3px solid ${props.theme.purpleLight}`: `3px solid ${props.theme.yellowMedium}`};
+  transition: all .2s ease;
+  cursor: pointer;
+  top: 0;
+  &:hover{
+    border: ${props=> props.equip ? `3px solid ${props.theme.purpleLightHover}`: `3px solid ${props.theme.yellowMediumHover}`};
+    top: -5px;
+    & div{
+      background-color: ${props=> props.equip ? props.theme.purpleLightHover : 'none'};
+    }
+  }
 `;
 
 const LockIcon = styled.span`
@@ -79,6 +89,7 @@ const EquipLabel = styled.div`
   color: white;
   border-radius: 0 0 10px 10px;
   vertical-align: bottom;
+  transition: all .2s ease;
 `;
 
 const Image = styled.span`

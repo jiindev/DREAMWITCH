@@ -25,5 +25,9 @@ export const Button = styled.button`
     margin: 12px 0 20px 0;
     border: 0;
     outline: none;
+    transition: all .2s ease;
     cursor: pointer;
+    &:hover{
+        background-color: ${props => props.theme.purpleMediumHover};
+    }
 `;

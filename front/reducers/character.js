@@ -15,6 +15,7 @@ export const initialState = {
   export const SAY_EDIT_TODO = 'SAY_EDIT_TODO';
   export const SAY_DELETE_TODO = 'SAY_DELETE_TODO';
   export const SAY_COMPLETE_TODOS = 'SAY_COMPLETE_TODOS';
+  export const SAY_LEVEL_UP = 'SAY_LEVEL_UP';
   export const SAY_LOAD_HISTORIES = 'SAY_LOAD_HISTORIES';
   export const SAY_ADD_HISTORY = 'SAY_ADD_HISTORY';
   export const SAY_LOAD_TODOS = 'SAY_LOAD_TODOS';
@@ -39,21 +40,25 @@ export const initialState = {
         case SAY_ADD_TODO: {
             draft.character.talking = `할 일 추가 완료!`;
             draft.character.emotion= 'happy';
+            draft.character.effect= '';
           break;
         }
         case SAY_CHECK_TODO: {
             draft.character.talking = `하나 완료! 멋져멋져~`;
             draft.character.emotion= 'happy2';
+            draft.character.effect= '';
           break;
         }
         case SAY_EDIT_TODO: {
             draft.character.talking = `이렇게 고치면 될까?`;
             draft.character.emotion= 'wink';
+            draft.character.effect= '';
           break;
         }
         case SAY_DELETE_TODO: {
             draft.character.talking = `짠! 사라졌습니다~`;
             draft.character.emotion= 'hmm';
+            draft.character.effect= '';
           break;
         }
         case SAY_COMPLETE_TODOS: {
@@ -64,7 +69,8 @@ export const initialState = {
         }
         case SAY_LOAD_ITEMS: {
           draft.character.talking = `뭐가 잘 어울릴까?`;
-          draft.character.emotion= 'happy';
+          draft.character.emotion= 'wink';
+          draft.character.effect= '';
           break;
         }
         case SAY_ADD_HISTORY:{
@@ -73,21 +79,29 @@ export const initialState = {
           draft.character.effect= 'happy2';
           break;
         }
+        case SAY_LEVEL_UP:{
+          draft.character.talking = `레벨 업! 더 멋진 마법을 보여줄게!`;
+          draft.character.emotion= 'happy';
+          draft.character.effect= 'happy2';
+          break;
+        }
         case SAY_LOAD_HISTORIES: {
             if(action.data === 0){
                 draft.character.talking = `시작이 반이야! 오늘부터 시작해볼까?`;
-            }else if(action.data === 1){
-                draft.character.talking = `잘 하고 있어! 이렇게 가자.`;
+            }else if(action.data < 5){
+                draft.character.talking = `잘 하고 있어! 열심히 하자~`;
             }else {
-                draft.character.talking = `꿈을 위해 달린 멋진 하루들!`;
+                draft.character.talking = `꿈의 구슬을 이렇게나 모았어!`;
             }
-            draft.character.emotion= 'happy';
+            draft.character.emotion= 'happy2';
+            draft.character.effect= '';
           break;
         }
         case SAY_LOAD_TODOS: {
             if(draft.character.talking!==`전부 완료! 구슬을 눌러봐!`&&draft.character.talking!==`어서와, ${draft.nickname}!`){
               draft.character.talking = `나와라, 오늘의 할 일!`;
               draft.character.emotion= 'happy';
+              draft.character.effect= '';
             }
           break;
         }
@@ -99,10 +113,12 @@ export const initialState = {
         }
         case SAY_EQUIP_ITEM: {
           draft.character.emotion= 'wink';
+          draft.character.effect= '';
           break;
         }
         case SAY_UNEQUIP_ITEM: {
           draft.character.emotion= 'oh';
+          draft.character.effect= '';
           break;
         }
         case SAY_RESET: {

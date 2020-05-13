@@ -26,7 +26,7 @@ const AddFriend = memo(() => {
 
     return(
         <AddFriendForm>
-            <input type="text" placeholder="친구 목록에 추가할 아이디를 입력하세요" value={followUserId} onChange={onChangeFriendId}/>
+            <input type="text" placeholder="동료 목록에 추가할 아이디를 입력하세요" value={followUserId} onChange={onChangeFriendId}/>
             <button onClick={onAddFriend}><span>추가하기</span></button>
         </AddFriendForm>
     );
@@ -47,6 +47,7 @@ const AddFriendForm = styled.div`
     border: 0;
     outline: none;
     cursor: pointer;
+    transition: all .2s ease;
     & span {
         width: 16px;
         height: 16px;
@@ -54,6 +55,9 @@ const AddFriendForm = styled.div`
         background-image: url('/icons/friend_add_click.svg');
         text-indent: -9999px;
         background-repeat: no-repeat;
+    }
+    &:hover{
+      background-color: ${props=>props.theme.purpleMediumHover};
     }
   }
   & input {

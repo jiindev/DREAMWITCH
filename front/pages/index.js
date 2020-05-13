@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, memo } from "react";
+import React, { useEffect, useCallback, memo, useState } from "react";
 import Character from "../components/Character";
 import History from "../components/History";
 import TodoList from "../components/TodoList";
@@ -13,11 +13,14 @@ import { LOAD_TODOS_REQUEST } from "../reducers/todo";
 import { LOAD_ITEMS_REQUEST, LOAD_EQUIPMENT_REQUEST } from "../reducers/item";
 import { levelCheck } from '../components/data/levelData';
 import AppLayout from "../components/AppLayout";
+import { SAY_LEVEL_UP } from "../reducers/character";
+import LevelUpPopup from "../components/LevelUpPopup";
 
 const Index = memo(() => {
   const dispatch = useDispatch();
-  const { me, logInErrorReason, page } = useSelector((state) => state.user);
+  const { me, page } = useSelector((state) => state.user);
   const {historyLoading} = useSelector((state)=>state.history);
+  const [levelUp, setLevelUp] = useState(false);
 
   useEffect(()=>{
     if(!me){
@@ -32,9 +35,17 @@ const Index = memo(() => {
         data: {
           level: levelCheck(me.exp),
         }
+      });
+      dispatch({
+        type: SAY_LEVEL_UP
       })
+      setLevelUp(true);
+      setTimeout(()=>{
+        setLevelUp(false);
+      }, 2300);
     }
   }, [me && me.exp]);
+
   const onChangePage = useCallback(pageNum => () => {
     if(page!==pageNum){
       dispatch({
@@ -57,6 +68,7 @@ const Index = memo(() => {
     <>
     <AppLayout>
       <Wrap>
+        {levelUp && <LevelUpPopup/>}
         {historyLoading  && <Loading/>}
        <TopContent>
          <UserStatue>
@@ -66,10 +78,10 @@ const Index = memo(() => {
           <Character></Character>
         <Tab>
           <ul>
-            <TabItem onClick={onChangePage(1)} active={page===1}><TabIcon iconName={'star'}/></TabItem>
-            <TabItem onClick={onChangePage(2)} active={page===2}><TabIcon iconName={'list'}/></TabItem>
-            <TabItem onClick={onChangePage(3)} active={page===3}><TabIcon iconName={'shop'}/></TabItem>
-            <TabItem onClick={onChangePage(4)} active={page===4}><TabIcon iconName={'friend'}/></TabItem>
+            <TabItem onClick={onChangePage(1)} active={page===1} iconName={'star'}><i/></TabItem>
+            <TabItem onClick={onChangePage(2)} active={page===2} iconName={'list'}><i/></TabItem>
+            <TabItem onClick={onChangePage(3)} active={page===3} iconName={'shop'}><i/></TabItem>
+            <TabItem onClick={onChangePage(4)} active={page===4} iconName={'friend'}><i/></TabItem>
           </ul>
         </Tab>
         </TopContent>
@@ -137,13 +149,18 @@ export const TabItem = styled.li`
     text-align: center;
     transition: all .2s ease;
     cursor: pointer;
-`;
-
-export const TabIcon = styled.i`
-  width: 16px;
-  height: 16px;
-  background: ${props => `url('/icons/tabbutton_${props.iconName}.svg')`};
-  display: inline-block;
+    & i{
+      width: 16px;
+      height: 16px;
+      background: ${props => `url('/icons/tabbutton_${props.iconName}.svg')`};
+      display: inline-block;
+    }
+    &:hover{
+      background-color: ${props => (props.active ? props.theme.yellowLight : props.theme.purpleLightHover)};
+      & i{
+        background: ${props => props.active ? `url('/icons/tabbutton_${props.iconName}.svg')` : `url('/icons/tabbutton_${props.iconName}_on.svg')`};
+      }
+    }
 `;
 
 export const TopContent = styled.div`
@@ -196,11 +213,16 @@ export const LogoutButton = styled.button`
   outline: none;
   border: 0;
   border-radius: 0 0 0 20px;
+  cursor: pointer;
+  transition: all .2s ease;
   & i{
     width: 16px;
     height: 16px;
     background-image: url('/icons/back_to_home.svg');
     display: inline-block;
+  }
+  &:hover{
+    background-color: ${props => props.theme.purpleLightHover}; 
   }
 `;
 

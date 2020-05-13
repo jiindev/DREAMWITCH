@@ -14,7 +14,7 @@ import { Wrap, TopContent, Loading, Level, LogoutButton, TabItem, UserStatue, Ta
 
 const User = memo(({id}) => {
   const dispatch = useDispatch();
-  const { userInfo } = useSelector((state) => state.user);
+  const { me, userInfo } = useSelector((state) => state.user);
   const {historyLoading} = useSelector((state)=>state.history);
   const [page, setPage] = useState(1);
 
@@ -44,15 +44,15 @@ const User = memo(({id}) => {
        <TopContent>
         <Link href='/'>
          <GoHome>
-            <HomeButton>돌아가기</HomeButton><Level>{userInfo && `${userInfo.nickname} (${userInfo.userId})`}</Level>
+            {me && <HomeButton>돌아가기</HomeButton>} <Level>{userInfo && `${userInfo.nickname} (${userInfo.userId})`}</Level>
          </GoHome>
          </Link>
-         <LogoutButton onClick={onLogout}><i/></LogoutButton>
+         {me && <LogoutButton onClick={onLogout}><i/></LogoutButton>}
           <Character id={id}/>
         <Tab>
           <ul>
-            <UserTabItem onClick={onChangePage(1)} active={page===1}><TabIcon iconName={'star'}/></UserTabItem>
-            <UserTabItem onClick={onChangePage(2)} active={page===2}><TabIcon iconName={'list'}/></UserTabItem>
+            <UserTabItem onClick={onChangePage(1)} active={page===1} iconName={'star'}><i/></UserTabItem>
+            <UserTabItem onClick={onChangePage(2)} active={page===2} iconName={'list'}><i/></UserTabItem>
           </ul>
         </Tab>
         </TopContent>

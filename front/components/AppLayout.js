@@ -48,7 +48,7 @@ const Frame = styled.div`
     height: 100%;
     max-height: 900px;
     position: relative;
-    border: 10px solid ${props=>props.theme.purpleDark};
+    border: 8px solid ${props=>props.theme.purpleDark};
     box-sizing: border-box;
     border-radius: 25px;
     overflow: hidden;

@@ -133,6 +133,9 @@ const Input = styled.div`
 const SignupButton = styled(Button)`
   background-color: ${props=>props.theme.purpleLight};
   margin-top: -10px;
+  &:hover{
+    background-color: ${props => props.theme.purpleLightHover};
+  }
 `;
 
 

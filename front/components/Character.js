@@ -10,7 +10,7 @@ const Character = memo(({id}) => {
   const { character } = useSelector(state=>state.character);
   const { equipment } = useSelector(state=>state.item);
   const { userInfo } = useSelector(state=>state.user);
-  const { userIsCleared, userTodos } = useSelector(state=>state.todo);
+  const { isCleared, todos } = useSelector(state=>state.todo);
   const dispatch = useDispatch();
   const timeoutRef = useRef();
  
@@ -47,7 +47,7 @@ const Character = memo(({id}) => {
                           : userInfo && userInfo.Equipment.hat}/>
           <Emotion emotion={!id ? 
                             character.emotion ? character.emotion : 'basic' 
-                            : userIsCleared && userIsCleared ? 'happy' : userTodos && userTodos[0] ? 'basic' : 'soso'}/>
+                            : isCleared && isCleared ? 'happy' : todos && todos[0] ? 'basic' : 'soso'}/>
           <Hair index={!id ? 
                       equipment && equipment.hair
                       : userInfo && userInfo.Equipment.hair}/>

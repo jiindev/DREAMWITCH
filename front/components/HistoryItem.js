@@ -2,7 +2,6 @@ import React, { useState, useRef, useCallback, useEffect, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LOAD_HISTORY_REQUEST, ADD_COMMENT_REQUEST, REMOVE_COMMENT_REQUEST } from "../reducers/history";
 import styled from 'styled-components';
-import {} from './styledComponents/PageComponent';
 import Link from 'next/link';
 import propTypes from 'prop-types';
 
@@ -136,13 +135,16 @@ const History = styled.div`
 `;
 
 const HistoryContent = styled.div`
-    background-color: ${props => props.type === 'clearTodos' ? props.open ? props.theme.purpleDark : props.theme.purpleMedium : '#FFE644'};
+    background-color: ${props => props.type === 'clearTodos' ? props.open ? props.theme.purpleDark : props.theme.purpleMedium : props.theme.yellowMedium};
     border-radius: 0 20px 20px 20px;
     overflow: hidden;
     position: relative;
     flex: 1;
     margin: 10px 0 20px 20px;
     transition: all .5s ease;
+    &:hover{
+        background-color: ${props => props.type === 'clearTodos' ? props.open ? props.theme.purpleDark : props.theme.purpleMediumHover : props.theme.yellowMedium};
+    }
 `;
 
 const LevelUpIllust = styled.span`
@@ -256,12 +258,13 @@ const CommentInput = styled.div`
         }
     }
     & button{
-        
         background-color: ${props=>props.theme.purpleMedium};
         border:0;
         float: right;
         text-indent: -9999px;
         outline: none;
+        transition: all .2s ease;
+        cursor:pointer;
         &:after{
             width: 15px;
             height: 15px;
@@ -270,6 +273,9 @@ const CommentInput = styled.div`
             background: url('/icons/history_comment.svg');
             background-size: contain;
             margin: 0px 12px 12px 12px;
+        }
+        &:hover{
+            background-color: ${props=>props.theme.purpleMediumHover};
         }
     }
 `;

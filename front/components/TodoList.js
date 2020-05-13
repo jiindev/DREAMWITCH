@@ -91,7 +91,7 @@ const CheckList = memo(({id}) => {
               <UserTodoList>
                       {todos.map((c, i)=>{
                         return (
-                        <Animated animationIn="fadeInUp" animationInDelay={i*100} animationInDuration={500} isVisible={true}>
+                        <Animated animationIn="fadeInUp" animationInDelay={i*100} animationInDuration={500} isVisible={true} key={i}>
                           <LastTodo checked={c.checked} onClick = {onClickAddLast(c.content)}><Checked checked={c.checked}/>{c.content}</LastTodo>
                         </Animated>
                         );
