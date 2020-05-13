@@ -1,5 +1,4 @@
 import React from "react";
-import Head from "next/head";
 import propTypes from "prop-types";
 import withRedux from "next-redux-wrapper";
 import withReduxSaga from 'next-redux-saga';
@@ -13,20 +12,41 @@ import themes from '../components/styledComponents/theme';
 import GlobalStyle from '../components/styledComponents/GlobalStyle';
 import Axios from "axios";
 import { LOAD_USER_REQUEST } from "../reducers/user";
+import {Container} from 'next/app';
+import {Helmet} from 'react-helmet';
 
 const DreamWitch = ({ Component, store, pageProps }) => (
     <>
-      <Provider store={store}>
-        <Head>
-          <title>DREAMWITCH</title>
-          <meta name="viewport" content="width=device-width, user-scalable=no"/>
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>
-        </Head>
-        <ThemeProvider theme={themes}>
-          <GlobalStyle></GlobalStyle>
-            <Component {...pageProps}/>
-          </ThemeProvider>
-      </Provider>
+      <Container>
+        <Provider store={store}>
+          <Helmet
+          title="DREAMWITCH :: 꿈의 마녀"
+          htmlAttributes={{lang:'ko'}}
+          meta={[{
+            charset: 'UTF-8'
+          }, {
+            name: 'viewport', content: "width=device-width, initial-scale=1",
+          }, {
+            'http-equiv': 'X-UA-Compatible', content: 'IE=edge',
+          }, {
+            name: 'og:title', content: 'DREAMWITCH :: 꿈의 마녀',
+          }, {
+            name: 'og:description', content: '꿈을 이루기 위한 할일 관리 프로젝트',
+          }, {
+            property: 'og:type', content: 'website',
+          }, {
+            property: 'og:image', content: '/thumb.jpg'
+          },]}
+          link={[{
+            rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'
+          }]}
+          />
+          <ThemeProvider theme={themes}>
+            <GlobalStyle></GlobalStyle>
+              <Component {...pageProps}/>
+            </ThemeProvider>
+        </Provider>
+      </Container>
     </>
 );
 
@@ -55,7 +75,7 @@ DreamWitch.getInitialProps = async (context) => {
     })
   }
   if(Component.getInitialProps){
-    pageProps = await Component.getInitialProps(ctx);
+    pageProps = await Component.getInitialProps(ctx) || {};
   }
   return {pageProps};
 }

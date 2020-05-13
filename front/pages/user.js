@@ -11,6 +11,7 @@ import { LOAD_TODOS_REQUEST } from "../reducers/todo";
 import { LOAD_USER_HISTORIES_REQUEST } from "../reducers/history";
 import AppLayout from "../components/AppLayout";
 import { Wrap, TopContent, Loading, Level, LogoutButton, TabItem, UserStatue, Tab, TabIcon } from './index';
+import {Helmet} from 'react-helmet';
 
 const User = memo(({id}) => {
   const dispatch = useDispatch();
@@ -38,6 +39,21 @@ const User = memo(({id}) => {
   }
   return (
     <>
+    <Helmet
+    title={`DREAMWITCH :: ${userInfo && userInfo.nickname}님의 마녀일지`}
+    description={userInfo && userInfo.greetings}
+    meta={[{
+      name: 'description', content: userInfo && userInfo.greetings,
+    }, {
+      property: 'og:title', content: `DREAMWITCH :: ${userInfo && userInfo.nickname}님의 마녀일지`,
+    }, {
+      property: 'og:description', content: userInfo && userInfo.greetings,
+    }, {
+      property: 'og:image', content: '/thumb.jpg'
+    }, {
+      property: 'og:url', content: `/user/${id}`
+    }]}
+    />
     <AppLayout>
       <Wrap>
       {historyLoading  && <Loading/>}
