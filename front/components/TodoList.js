@@ -120,7 +120,7 @@ const CheckList = memo(({id}) => {
                 {isCleared ? // 오늘의 투두 클리어 했다면
                   <>
                   <FinishedList>
-                  <Animated animationIn="fadeInUp" animationInDuration={500} isVisible={true}>
+                  <Animated animationIn="fadeIn" animationInDuration={500} isVisible={true}>
                     {todos.map((c, i)=> {
                       return <li key={i}>{c.content}</li>;
                     })}

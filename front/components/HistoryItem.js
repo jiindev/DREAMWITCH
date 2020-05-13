@@ -99,7 +99,7 @@ const HistoryItem = memo(({history, lastChild}) => {
                         }
                         {me &&
                             <CommentInput>
-                                <input type="text" placeholder='댓글을 입력하세요.' value={commentText} onChange={onChangeCommentText}/>
+                                <input type="text" placeholder='댓글을 입력하세요.' value={commentText} onChange={onChangeCommentText} maxLength='80'/>
                                 <button onClick = {onSubmitComment}>덧글 작성</button>
                             </CommentInput>
                         }

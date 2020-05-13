@@ -95,6 +95,7 @@ const reducer = (state = initialState, action) => {
       case REMOVE_TODO_SUCCESS: {
         const todoIndex = draft.todos.findIndex(v=>v.id===action.data);
         draft.todos.splice(todoIndex, 1);
+        draft.clearPercentage = Math.floor(draft.todos.filter(v=>v.checked===true).length / draft.todos.length * 100);
         break;
       }
       case REMOVE_TODO_FAILURE: {

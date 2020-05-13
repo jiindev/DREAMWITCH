@@ -54,6 +54,8 @@ const Login = memo(() => {
                 name="userPassword"
                 value={password}
                 onChange={onChangePassword}
+                maxLength='16'
+                style={{imeMode:'disable'}}
               />
             </Input>
             <div>

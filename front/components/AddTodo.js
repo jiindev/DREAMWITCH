@@ -46,7 +46,7 @@ const AddTodo = memo(() => {
 
   return (
   <>
-    {adding && <AddTodoDiv><PlusIcon/><TodoContentInput type="text" ref={addTodoInput} onBlur={AddTodoOff} value={content} onChange={onChangeContent} onKeyPress={handleKeyPress}/></AddTodoDiv>}
+    {adding && <AddTodoDiv><PlusIcon/><TodoContentInput type="text" ref={addTodoInput} onBlur={AddTodoOff} value={content} onChange={onChangeContent} onKeyPress={handleKeyPress} maxLength='50'/></AddTodoDiv>}
     {!adding && <AddButton onClick={AddTodoOn}><i/></AddButton>}
   </>);
 });

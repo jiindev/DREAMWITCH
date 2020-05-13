@@ -90,6 +90,7 @@ const TodoItem = memo(({ todo }) => {
               onBlur={editModeEnd}
               onKeyPress={handleKeyPress}
               ref={todoInput}
+              maxLength='50'
             />
           </>
         ) : (

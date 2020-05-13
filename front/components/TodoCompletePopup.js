@@ -44,10 +44,10 @@ const TodoCompletePopup = memo(({clear}) => {
                   ref={historyContentInput}
                   value={historyContent}
                   placeholder='오늘도 힘냈다! 아자아자!'
-                  maxLength='40'
+                  maxLength='50'
                   onChange={onChangeHistoryContent}
                 />
-                <span>{historyContent.length}/40</span>
+                <span>{historyContent.length}/50</span>
               </HistoryContentInput>
               <CompleteButton onClick={popUpDisappear}>완료</CompleteButton>
             </div>

@@ -14,6 +14,7 @@ import Axios from "axios";
 import { LOAD_USER_REQUEST } from "../reducers/user";
 import {Container} from 'next/app';
 import {Helmet} from 'react-helmet';
+import axios from 'axios';
 
 const DreamWitch = ({ Component, store, pageProps }) => (
     <>
@@ -42,7 +43,7 @@ const DreamWitch = ({ Component, store, pageProps }) => (
           }]}
           />
           <ThemeProvider theme={themes}>
-            <GlobalStyle></GlobalStyle>
+            <GlobalStyle/>
               <Component {...pageProps}/>
             </ThemeProvider>
         </Provider>
@@ -66,6 +67,7 @@ DreamWitch.getInitialProps = async (context) => {
   let pageProps = {};
   const state= ctx.store.getState();
   const cookie = ctx.isServer ? ctx.req.headers.cookie : '';
+  axios.defaults.headers.Cookie = '';
   if(ctx.isServer && cookie){
     Axios.defaults.headers.cookie = cookie;
   }

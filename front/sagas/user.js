@@ -54,6 +54,7 @@ function* logIn(action) {
     })
   } catch (e) {
     console.error(e);
+    e.response && alert(e.response.data);
     yield put({
       type: LOG_IN_FAILURE,
       error: e,
@@ -105,6 +106,7 @@ function* signUp(action) {
     Router.push('/login');
   } catch (e) {
     console.error(e);
+    e.response && alert(e.response.data);
     yield put({
       type: SIGN_UP_FAILURE,
       error: e,

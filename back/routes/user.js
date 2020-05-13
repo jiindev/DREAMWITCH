@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const passport = require("passport");
 const router = express.Router();
 const db = require("../models");
-const {isLoggedIn} = require('./middleware');
+const {isLoggedIn, isNotLoggedIn} = require('./middleware');
 
 router.get("/", isLoggedIn, async(req, res, next) => {
   // 나의 정보 프론트로 전달
@@ -33,7 +33,7 @@ router.get("/:id", async(req, res, next) => {
   }
 });
 
-router.post("/", async(req, res, next) => {
+router.post("/", isNotLoggedIn, async(req, res, next) => {
   // 회원가입
   try {
     const exUser = await db.User.findOne({
