@@ -1,72 +1,81 @@
 import React, { useState, useEffect, useCallback, memo, useRef } from "react";
-import { useDispatch, useSelector, useStore } from "react-redux";
-import { SIGN_UP_REQUEST } from "../reducers/user";
+import { useDispatch, useSelector } from "react-redux";
+import { SIGN_UP_REQUEST, SIGNUP_ERROR_RESET } from "../reducers/user";
 import Router from "next/router";
 import styled from 'styled-components';
 import {Button} from '../components/styledComponents/PageComponent';
-import {Animated} from 'react-animated-css';
 import Link from "next/link";
+import {Background} from './login';
 
 const Signup = memo(() => {
   const dispatch = useDispatch();
+  const {me, signUpErrorReason } = useSelector(state=>state.user);
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
   const [nickname, setNickname] = useState("");
   const [greetings, setGreetings] = useState("");
   const [term, setTerm] = useState(false);
-  const {me} = useSelector(state=>state.user);
-  const [idError, setIdError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [passwordCheckError, setPasswordCheckError] = useState(false);
-  const [termError, setTermError] = useState(false);
   const passwordRef = useRef();
   const nicknameRef = useRef();
   const idRef = useRef();
   const passwordCheckRef = useRef();
-
+  const [passwordCheckError, setPasswordCheckError] = useState(false);
+  const [passwordError, setPasswordError] = useState('');
+  const [nicknameError, setNicknameError] = useState('');
+  const [idError, setIdError] = useState('');
+  const [termError, setTermError] = useState(false);
 
   useEffect(()=>{
     if(me){
       Router.push('/');
     }
-  }, [me]);
+  }, [me && me.id]);
+
+  useEffect(()=>{
+    dispatch({
+      type: SIGNUP_ERROR_RESET
+    })
+  }, []);
+
+  useEffect(() => {
+    if(signUpErrorReason){
+      setIdError(signUpErrorReason);
+      idRef.current.focus();
+    }
+  }, [signUpErrorReason]);
 
   const onSubmit = useCallback((e) => {
     e.preventDefault();
     if(!id){
       idRef.current.focus();
-      return alert('아이디를 입력하세요.');
+      return setIdError('필수 정보입니다.');
     }
     if(!nickname){
       nicknameRef.current.focus();
-      return alert('닉네임을 입력하세요.')
+      return setNicknameError('필수 정보입니다.');
     }
     if(!password){
       passwordRef.current.focus();
-      return alert('비밀번호를 입력하세요.');
+      return setPasswordError('필수 정보입니다.');
     }
     if(!passwordCheck){
       passwordCheckRef.current.focus();
-      return alert('비밀번호 확인을 입력하세요.')
-    }
-    if (!(/^[A-Za-z0-9+]{4,10}$/.test(id))) { 
-      idRef.current.focus();
-      return alert('아이디는 영문/숫자만 가능합니다.');
-      return setIdError(true);
-    }
-    if (!(/^(?!((?:[0-9]+)|(?:[a-zA-Z]+)|(?:[\[\]\^\$\.\|\?\*\+\(\)\\~`\!@#%&\-_+={}'""<>:;,\n]+))$)(.){6,16}$/.test(password))) { 
-      passwordRef.current.focus();
-      return alert('비밀번호는 영문/숫자 조합으로 작성해주세요.');
-      return idError(true);
-    }
-    if(password !== passwordCheck){
-      passwordCheckRef.current.focus();
-      return alert('비밀번호가 일치하지 않습니다.');
       return setPasswordCheckError(true);
     }
+    if(idError) { 
+      return idRef.current.focus();
+    }
+    if(nicknameError){
+      return nicknameRef.current.focus();
+    }
+    if(passwordError){
+      return passwordRef.current.focus();
+    }
+    if(passwordCheckError){
+      return passwordCheckRef.current.focus();
+    }
     if(!term){
-      return alert('이용약관에 동의해주세요.');
       return setTermError(true);
     }
     dispatch({
@@ -78,44 +87,64 @@ const Signup = memo(() => {
         greetings
       },
     });
-  }, [id, nickname, password, passwordCheck, greetings, term]);
+  }, [id, nickname, password, passwordCheck, greetings, term, idError, nicknameError, passwordError, passwordCheckError]);
   const onChangeId = useCallback((e) => {
+    if(!e.target.value){
+      setIdError('필수 정보입니다.');
+    }else if(/^[a-z0-9+]{4,10}$/.test(e.target.value)){
+      setIdError('');
+    }else{
+      setIdError('4~10자의 영문 소문자, 숫자만 사용 가능합니다.');
+    }
     setId(e.target.value);
-  }, [id]);
+  }, []);
   const onChangeNickname = useCallback((e) => {
+    if(!e.target.value){
+      setNicknameError('필수 정보입니다.');
+    }else{
+      setNicknameError('');
+    }
     setNickname(e.target.value);
-  }, [nickname]);
+  }, []);
   const onChangePassword = useCallback((e) => {
+    if(!e.target.value){
+      setPasswordError('필수 정보입니다.');
+    }else if(/^[a-z0-9+]{6,16}$/.test(e.target.value)){
+      setPasswordError('');
+      setPasswordCheckError(e.target.value !== passwordCheck);
+    }else {
+      setPasswordError('6~16자의 영문 소문자, 숫자만 사용 가능합니다.');
+    }
     setPassword(e.target.value);
-  }, [password]);
+  }, [passwordCheck]);
   const onChangePasswordCheck = useCallback((e) => {
-    setPasswordError(e.target.value !== password);
-    setPasswordCheck(e.target.value);
-  }, [password, passwordCheck]);
+    setPasswordCheckError(e.target.value !== password);
+      setPasswordCheck(e.target.value);
+  }, [password]);
   const onChangeGreetings = useCallback((e) => {
     setGreetings(e.target.value);
   }, [greetings]);
   const onChangeTerm = useCallback((e)=>{
     setTerm(e.target.checked);
+    setTermError(false);
   }, [term]);
+
 
   if(me){
     return null;
   }
-
   return (
       <Background>
         <Wrap>
           <H2>JOIN US</H2>
           <form onSubmit={onSubmit}>
             <Input>
-              <label htmlFor="userId">아이디</label>
-              <span>* 영문/숫자 4~10자 가능합니다.</span>
+              <label htmlFor="userId">아이디 *</label>
               <input type="text" name="userId" value={id} onChange={onChangeId} maxLength='10' ref={idRef}/>
+              <p>{idError}</p>
             </Input>
             <Input>
-              <label htmlFor="nickname">닉네임</label>
-              <span>* 최대 6글자까지 가능합니다.</span>
+              <label htmlFor="nickname">닉네임 *</label>
               <input
                 type="text"
                 name="nickname"
@@ -124,10 +153,10 @@ const Signup = memo(() => {
                 maxLength='6'
                 ref={nicknameRef}
               />
+              <p>{nicknameError}</p>
             </Input>
             <Input>
-              <label htmlFor="userPassword">비밀번호</label>
-              <span>* 영문/숫자 조합으로 6~16자 가능합니다.</span>
+              <label htmlFor="userPassword">비밀번호 *</label>
               <input
                 type="password"
                 name="userPassword"
@@ -135,12 +164,11 @@ const Signup = memo(() => {
                 onChange={onChangePassword}
                 maxLength='16'
                 ref={passwordRef}
-                style={{imeMode:'disable'}}
               />
+              <p>{passwordError}</p>
             </Input>
             <Input>
-              <label htmlFor="userPassword">비밀번호 확인</label>
-              <span></span>
+              <label htmlFor="userPassword">비밀번호 확인 *</label>
               <input
                 type="password"
                 name="userPasswordCheck"
@@ -148,19 +176,19 @@ const Signup = memo(() => {
                 onChange={onChangePasswordCheck}
                 maxLength='16'
                 ref={passwordCheckRef}
-                style={{imeMode:'disable'}}
               />
+              <p>{passwordCheckError && '비밀번호가 일치하지 않습니다.'}</p>
             </Input>
             <Input>
               <label htmlFor="userGreetings">인삿말</label>
-              <span> 최대 30자까지 작성 가능합니다.</span>
+              <span> 최대 20자까지 작성 가능합니다.</span>
               <input
                 type="text"
                 name="userGreetings"
                 value={greetings}
                 onChange={onChangeGreetings}
                 placeholder="안녕~ 반가워!"
-                maxLength='30'
+                maxLength='20'
               />
             </Input>
             <Term>
@@ -168,14 +196,14 @@ const Signup = memo(() => {
               <div>
                 <label htmlFor="term">이에 동의합니다.</label>
                 <input type="checkbox" name="term" id="term" value={term} onChange={onChangeTerm}/>
+                <p>{termError && '이용약관에 동의해주세요.'}</p>
               </div>
             </Term>
-            
             <div>
               <Button htmlFor="submit" onClick={onSubmit}>
                 가입하기
               </Button>
-              <Link href="/login"><BackButton>돌아가기</BackButton></Link>
+              <Link href="/login"><a><BackButton>돌아가기</BackButton></a></Link>
             </div>
           </form>
         </Wrap>
@@ -183,32 +211,30 @@ const Signup = memo(() => {
   );
 });
 
-const Background = styled.div`
-  background: url('/img/login_pattern.png');
-  background-size: 300px 300px;
-  background-position: center center;
-  height: 100vh;
-`;
 
 const Wrap = styled.div`
   max-width: 400px;
-  padding: 20px 15px 0 15px;
+  padding: 30px 15px;
   box-sizing: border-box;
   margin: 0 auto;
+  @media only screen and (min-width: 769px) and (min-height: 900px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+  }
 `;
 
 const H2 = styled.h2`
   color: ${props=>props.theme.purpleDark};
   text-align: center;
   font-size: 32px;
-  margin-bottom: 20px;
-  padding-top: 30px;
+  margin: 20px 0;
   font-weight: 900;
 `;
 
 
 const Input = styled.div`
-
   & label {
     color: ${props=>props.theme.purpleDark};
     display: inline-block;
@@ -233,10 +259,15 @@ const Input = styled.div`
       opacity: .3;
     }
   }
-  & span{
-    color: ${props=>props.theme.purpleLight};
+  & p{
+    color: #e45c4a;
     font-size: 12px;
+    text-align: right;
   }
+  & span{
+    color:${props=>props.theme.purpleLight};
+    font-size: 12px;
+    }
 `;
 
 const Term = styled.div`
@@ -260,12 +291,19 @@ const Term = styled.div`
     & input {
       width: auto;
     }
+    & p{
+      color: #e45c4a;
+      font-size: 12px;
+    }
   }
 `;
 
 const BackButton = styled(Button)`
   margin-top: -10px;
   background-color: ${props=>props.theme.purpleLight};
+  &:hover{
+    background-color: ${props=>props.theme.purpleLightHover};
+  }
 `;
 
 

@@ -54,10 +54,9 @@ function* logIn(action) {
     })
   } catch (e) {
     console.error(e);
-    e.response && alert(e.response.data);
     yield put({
       type: LOG_IN_FAILURE,
-      error: e,
+      error: e.response.data,
     });
   }
 }
@@ -106,10 +105,9 @@ function* signUp(action) {
     Router.push('/login');
   } catch (e) {
     console.error(e);
-    e.response && alert(e.response.data);
     yield put({
       type: SIGN_UP_FAILURE,
-      error: e,
+      error: e.response.data,
     });
   }
 }
@@ -205,10 +203,9 @@ function* addFollowing(action) {
     });
   } catch (e) {
     console.error(e);
-    e.response && alert(e.response.data);
     yield put({
       type: ADD_FOLLOWING_FAILURE,
-      error: e,
+      error: e.response.data,
     });
   }
 }

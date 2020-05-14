@@ -1,6 +1,6 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, useEffect, memo, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LOG_IN_REQUEST } from "../reducers/user";
+import { LOG_IN_REQUEST, LOGIN_ERROR_RESET } from "../reducers/user";
 import Router from "next/router";
 import Link from "next/link";
 import styled from 'styled-components';
@@ -11,7 +11,7 @@ const Login = memo(() => {
   const dispatch = useDispatch();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-  const { isLoggingIn, me } = useSelector((state) => state.user);
+  const { me, logInErrorReason } = useSelector((state) => state.user);
 
   useEffect(() => {
     if (me) {
@@ -19,7 +19,13 @@ const Login = memo(() => {
     }
   }, [me && me.id]);
 
-  const onSubmit = (e) => {
+  useEffect(() => {
+    dispatch({
+      type: LOGIN_ERROR_RESET
+    })
+  }, []);
+
+  const onSubmit = useCallback((e) => {
     e.preventDefault();
     dispatch({
       type: LOG_IN_REQUEST,
@@ -28,19 +34,20 @@ const Login = memo(() => {
         password,
       },
     });
-  };
-  const onChangeId = (e) => {
-    setId(e.target.value);
-  };
-  const onChangePassword = (e) => {
-    setPassword(e.target.value);
-  };
+  }, [id, password]);
+  const onChangeId = useCallback((e) => {
+      setId(e.target.value);
+  }, []);
+  const onChangePassword = useCallback((e) => {
+      setPassword(e.target.value);
+  }, []);
+
   return (
     <>
       <Background>
         <Wrap>
           <Animated animationIn="bounceInDown" animationInDuration={1200} isVisible={true}>
-          <LoginIllust></LoginIllust>
+            <Logo/>
           </Animated>
           <form onSubmit={onSubmit}>
             <Input>
@@ -55,9 +62,9 @@ const Login = memo(() => {
                 value={password}
                 onChange={onChangePassword}
                 maxLength='16'
-                style={{imeMode:'disable'}}
               />
             </Input>
+            <ErrorReason>{logInErrorReason}</ErrorReason>
             <div>
               <Button htmlFor="submit" onClick={onSubmit}>
                 로그인
@@ -65,9 +72,7 @@ const Login = memo(() => {
             </div>
             <div>
               <Link href="/signup">
-                <a>
-                  <SignupButton>회원가입</SignupButton>
-                </a>
+                <a><SignupButton>회원가입</SignupButton></a>
               </Link>
             </div>
           </form>
@@ -77,10 +82,11 @@ const Login = memo(() => {
   );
 });
 
-const Background = styled.div`
+export const Background = styled.div`
   background: url('/img/login_pattern.png');
   background-size: 300px 300px;
   background-position: center center;
+  height: 100vh;
 `;
 
 const Wrap = styled.div`
@@ -94,12 +100,12 @@ const Wrap = styled.div`
   justify-content: center;
 `;
 
-const LoginIllust = styled.span`
+const Logo = styled.span`
   width: 100%;
-  height: 300px;
+  height: 200px;
   display: inline-block;
   background: url('/img/login_logo.png');
-  background-size: contain;
+  background-size: 296px 300px;
   background-position: center center;
   margin-bottom: 20px;
   border-radius: 20px;
@@ -131,7 +137,10 @@ const Input = styled.div`
     font-family: 'GmarketSansMedium';
   }
 `;
-
+const ErrorReason = styled.p`
+    color: #e45c4a;
+    font-size: 12px;
+`;
 const SignupButton = styled(Button)`
   background-color: ${props=>props.theme.purpleLight};
   margin-top: -10px;

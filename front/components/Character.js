@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 import React, { useRef, useEffect, memo} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SAY_RESET } from '../reducers/character';
@@ -70,6 +70,16 @@ const CharacterDiv = styled.div`
   height: 200px;
   text-align: center;
   position: relative;
+  overflow: hidden;
+`;
+
+export const witchAnimation = keyframes`
+  from {
+    bottom: 3px;
+  }
+  to {
+    bottom: 0px;
+  }
 `;
 
 const Witch = styled.div`
@@ -77,9 +87,20 @@ const Witch = styled.div`
   height: 200px;
   margin: 0 auto;
   position: relative;
+  bottom: 0;
+  animation: ${witchAnimation} 1s infinite ease-in-out alternate;
   & div{
     position: absolute;
     background-size: contain;
+  }
+`;
+
+export const wandAnimation = keyframes`
+  from {
+    bottom: -10px;
+  }
+  to {
+    bottom: 0px;
   }
 `;
 
@@ -89,7 +110,17 @@ const Wand = styled.div`
   width: 150px;
   height:160px;
   z-index: 7;
-  background: ${props=>!props.index?'none' : `url(/img/item_wand${props.index}.png)`};
+  background: ${props=>!props.index?'url(/img/item_wand0.png)' : `url(/img/item_wand${props.index}.png)`};
+  animation: ${wandAnimation} 1.2s infinite ease-in-out alternate;
+`;
+
+export const catAnimation = keyframes`
+  from {
+    bottom: 0px;
+  }
+  to {
+    bottom: 3px;
+  }
 `;
 
 const Cat = styled.div`
@@ -99,6 +130,8 @@ const Cat = styled.div`
   height:120px;
   z-index: 7;
   background: ${props=>!props.index?'none' : `url(/img/item_cat${props.index}.png)`};
+  animation: ${catAnimation} 1.4s infinite ease-in-out alternate;
+  display: ${props=>!props.index?'none':'block'};
 `;
 
 const Cloths = styled.div`

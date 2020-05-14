@@ -51,6 +51,8 @@ router.get("/:id", async(req, res, next) => {
 router.get("/last/:lastStart", async(req, res, next) => {
   // 사용자의 지난 투두리스트 불러오기
   try {
+    let day = new Date();
+    let today = day.getFullYear() + "-" + ("0"+(day.getMonth()+1)).slice(-2) + "-" + ("0"+(day.getDate())).slice(-2);
     const lastDate = await db.Todo.findOne({
       where: {
         userId: req.user.id,

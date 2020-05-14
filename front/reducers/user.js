@@ -7,6 +7,7 @@ export const initialState = {
   isSignedUp: false, // 회원가입 성공
   isSigningUp: false, // 회원가입 시도중
   signUpErrorReason: "", // 회원가입 실패 사유
+  followingErrorReason: '', //팔로우 실패 사유
   me: null, // 내 정보
   userInfo: null,
   page: 1,
@@ -58,6 +59,9 @@ export const GET_STARS = 'GET_STARS';
 export const USE_STARS = 'USE_STARS';
 
 export const SET_PAGE = 'SET_PAGE';
+export const LOGIN_ERROR_RESET = 'LOGIN_ERROR_RESET';
+export const FOLLOWING_ERROR_RESET = 'FOLLOWING_ERROR_RESET';
+export const SIGNUP_ERROR_RESET = 'SIGNUP_ERROR_RESET';
 
 const reducer = (state = initialState, action) => {
   return produce(state, (draft)=>{
@@ -152,6 +156,7 @@ const reducer = (state = initialState, action) => {
         break;
       }
       case ADD_FOLLOWING_REQUEST: {
+        draft.followingErrorReason = '';
         break;
       }
       case ADD_FOLLOWING_SUCCESS: {
@@ -159,6 +164,7 @@ const reducer = (state = initialState, action) => {
         break;
       }
       case ADD_FOLLOWING_FAILURE: {
+        draft.followingErrorReason = action.error;
         break;
       }
       case LEVEL_UP_REQUEST: {
@@ -194,6 +200,15 @@ const reducer = (state = initialState, action) => {
       case SET_PAGE:{
         draft.page = action.data;
         break;
+      }
+      case LOGIN_ERROR_RESET:{
+        draft.logInErrorReason = ''
+      }
+      case SIGNUP_ERROR_RESET:{
+        draft.signUpErrorReason = ''
+      }
+      case FOLLOWING_ERROR_RESET:{
+        draft.followingErrorReason = ''
       }
       default: {
         break;

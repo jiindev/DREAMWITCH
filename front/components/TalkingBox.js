@@ -47,7 +47,7 @@ const TalkingBox = memo(({id}) => {
         {!id ? 
             page === 4 ? //놀러가기 페이지에서 인삿말 수정 기능
               editingMode ? 
-              <p><input type="text" value={userGreetings} onChange={onChangeGreetings} onBlur={editModeEnd} ref={greetingsInput} /></p>
+              <p><input type="text" value={userGreetings} onChange={onChangeGreetings} onBlur={editModeEnd} ref={greetingsInput} maxLength='20'/></p>
               :
               <p>{me && me.greetings} <EditButton onClick={editModeStart}/></p>
             :
@@ -67,12 +67,12 @@ const Talking = styled.div`
   & p {
     color: ${props => props.theme.purpleDark};
     margin: 0 15px;
-    background-color: white;
+    background-color: rgba(255,255,255,.85);
     border-radius: 20px;
     height: 40px;
     font-family: 'CookieRun-Regular';
     font-size: 12px;
-    line-height: 40px;  
+    line-height: 40px;
     & input {
         width: 100%;
         max-width: 300px;
@@ -82,6 +82,7 @@ const Talking = styled.div`
         text-align: center;
         border: 0;
         outline: none;
+        background: transparent;
     }
   }
 `;

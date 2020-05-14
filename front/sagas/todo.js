@@ -23,7 +23,7 @@ import {
   CLEAN_LAST_TODOS_REQUEST,
 } from "../reducers/todo";
 import axios from 'axios';
-import { SAY_ADD_TODO, SAY_CHECK_TODO, SAY_EDIT_TODO, SAY_DELETE_TODO, SAY_LOAD_TODOS, SAY_HELLO} from "../reducers/character";
+import { SAY_ADD_TODO, SAY_CHECK_TODO, SAY_EDIT_TODO, SAY_DELETE_TODO, SAY_LOAD_TODOS, SAY_HELLO, SAY_LAST_SUCCESS, SAY_LAST} from "../reducers/character";
 import { UPDATE_LASTSTART_REQUEST } from "../reducers/user";
 
 function loadTodosAPI(userId) {
@@ -174,6 +174,13 @@ function* loadLastTodos(action) {
       type: LOAD_LAST_TODOS_SUCCESS,
       data: result.data
     });
+    console.log(result.data);
+    if(result.data[0]){
+      yield put({
+        type: SAY_LAST,
+        data: result.data
+      })
+    }
   } catch (e) {
     console.error(e);
     yield put({

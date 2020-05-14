@@ -2,22 +2,22 @@ export const hatItems = [
     {
         id: 1,
         type: 'hat',
-        price: 10
+        price: 5
     },
     {
         id: 2,
         type: 'hat',
-        price: 20
+        price: 10
     },
     {
         id: 3,
         type: 'hat',
-        price: 30
+        price: 20
     },
     {
         id: 4,
         type: 'hat',
-        price: 40
+        price: 20
     },
     {
         id: 5,
@@ -27,14 +27,14 @@ export const hatItems = [
     {
         id: 6,
         type: 'hat',
-        price: 50
+        price: 100
     },
 ]
 export const clothesItems = [
     {
         id: 1,
         type: 'clothes',
-        price: 10
+        price: 5
     },
     {
         id: 2,
@@ -44,12 +44,12 @@ export const clothesItems = [
     {
         id: 3,
         type: 'clothes',
-        price: 30
+        price: 20
     },
     {
         id: 4,
         type: 'clothes',
-        price: 40
+        price: 50
     },
     {
         id: 5,
@@ -59,19 +59,19 @@ export const clothesItems = [
     {
         id: 6,
         type: 'clothes',
-        price: 50
+        price: 100
     },
 ]
 export const hairItems = [
     {
         id: 1,
         type: 'hair',
-        price: 10
+        price: 20
     },
     {
         id: 2,
         type: 'hair',
-        price: 20
+        price: 30
     },
     {
         id: 3,
@@ -81,17 +81,17 @@ export const hairItems = [
     {
         id: 4,
         type: 'hair',
-        price: 40
+        price: 30
     },
     {
         id: 5,
         type: 'hair',
-        price: 50
+        price: 100
     },
     {
         id: 6,
         type: 'hair',
-        price: 50
+        price: 100
     },
 ]
 export const bgItems = [
@@ -146,7 +146,7 @@ export const wandItems = [
     {
         id: 4,
         type: 'wand',
-        price: 45
+        price: 40
     },
     {
         id: 5,
@@ -156,7 +156,7 @@ export const wandItems = [
     {
         id: 6,
         type: 'wand',
-        price: 50
+        price: 100
     },
 ]
 
@@ -164,16 +164,16 @@ export const catItems = [
     {
         id: 1,
         type: 'cat',
-        price: 10
+        price: 100
     },
     {
         id: 2,
         type: 'cat',
-        price: 20
+        price: 100
     },
     {
         id: 3,
         type: 'cat',
-        price: 30
+        price: 100
     },
 ]

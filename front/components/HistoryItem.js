@@ -4,6 +4,7 @@ import { LOAD_HISTORY_REQUEST, ADD_COMMENT_REQUEST, REMOVE_COMMENT_REQUEST } fro
 import styled from 'styled-components';
 import Link from 'next/link';
 import propTypes from 'prop-types';
+import { SAY_LOAD_HISTORY } from "../reducers/character";
 
 const HistoryItem = memo(({history, lastChild}) => {
     const {me} = useSelector(state=>state.user);
@@ -16,6 +17,9 @@ const HistoryItem = memo(({history, lastChild}) => {
                 type: LOAD_HISTORY_REQUEST,
                 data: history.id,
             });
+            dispatch({
+                type: SAY_LOAD_HISTORY
+            })
             setOpenDiv(true);
         }
         else setOpenDiv(false);

@@ -1,23 +1,41 @@
-import { ADD_FOLLOWING_REQUEST } from "../reducers/user";
+import { ADD_FOLLOWING_REQUEST, FOLLOWING_ERROR_RESET } from "../reducers/user";
 import styled from 'styled-components';
-import React, { useState, useCallback, memo } from "react";
+import React, { useState, useCallback, memo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const AddFriend = memo(() => {
     const [followUserId, setfollowUserId] = useState('');
-    const followings = useSelector(state=>state.user.me.Followings);
+    const [followUserError, setFollowUserError] = useState('');
+    const followings = useSelector(state=>state.user.me && state.user.me.Followings);
+    const userId = useSelector(state=>state.user.me && state.user.me.userId);
+    const followingErrorReason = useSelector(state=>state.user.followingErrorReason);
     const dispatch = useDispatch();
 
+    useEffect(() => {
+      dispatch({
+        type: FOLLOWING_ERROR_RESET
+      })
+    }, []);
+
+    useEffect(() => {
+      if(followingErrorReason){
+        setFollowUserError(followingErrorReason);
+      }
+    }, [followingErrorReason]);
+
     const onAddFriend = useCallback(()=>{
+      if(!followUserId) return;
       if(followings.find((v)=>v.userId===followUserId)){
-        alert('이미 등록된 사용자입니다.');
-        return setfollowUserId('');
+        return setFollowUserError('이미 등록된 사용자입니다.');
+      }else if(userId===followUserId){
+        return setFollowUserError('자기 자신은 등록할 수 없습니다.');
       }
         dispatch({
             type: ADD_FOLLOWING_REQUEST,
             data: followUserId
         });
         setfollowUserId('');
+        setFollowUserError('');
     }, [followUserId, followings]);
     
        const onChangeFriendId = useCallback((e)=>{
@@ -25,10 +43,13 @@ const AddFriend = memo(() => {
        }, [followUserId]);
 
     return(
+      <>
         <AddFriendForm>
             <input type="text" placeholder="동료 목록에 추가할 아이디를 입력하세요" value={followUserId} onChange={onChangeFriendId}/>
             <button onClick={onAddFriend}><span>추가하기</span></button>
         </AddFriendForm>
+        <ErrorReason>{followUserError}</ErrorReason>
+      </>
     );
 });
 
@@ -76,6 +97,10 @@ const AddFriendForm = styled.div`
       opacity: .3;
     }
   }
+`;
+const ErrorReason = styled.p`
+    color: #e45c4a;
+    font-size: 12px;
 `;
 
 export default AddFriend;

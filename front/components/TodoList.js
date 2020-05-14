@@ -4,7 +4,7 @@ import propTypes from 'prop-types';
 import TodoItem from "./TodoItem";
 import AddTodo from './AddTodo';
 import TodoStatue from './TodoStatue';
-import { SAY_LOAD_TODOS } from '../reducers/character';
+import { SAY_LOAD_TODOS, SAY_START } from '../reducers/character';
 import { H2, Date, Button } from './styledComponents/PageComponent';
 import styled from 'styled-components';
 import { LOAD_LAST_TODOS_REQUEST, CLEAN_LAST_TODOS_REQUEST } from "../reducers/todo";
@@ -14,7 +14,7 @@ import {Animated} from 'react-animated-css';
 
 const CheckList = memo(({id}) => {
   const dispatch = useDispatch();
-  const { todos, isCleared, lastTodos } = useSelector((state) => state.todo);
+  const { todos, isCleared, lastTodos, todosLoaded } = useSelector((state) => state.todo);
   const { me, userInfo } = useSelector(state=>state.user);
   const [started, setStarted] = useState(false);
   const [todosToCopy, setTodosToCopy] = useState([]);
@@ -22,23 +22,27 @@ const CheckList = memo(({id}) => {
 
   useEffect(()=>{
     if(todos.length>0 && !isCleared){
+      setStarted(true);
       return dispatch({
         type: SAY_LOAD_TODOS
       })
     }
   }, []);
-
+  
   useEffect(() => {
-    if(!started && todos.length===0 && !id){
+    if(!started && todosLoaded && todos && todos.length===0 && !id){
       return dispatch({
         type: LOAD_LAST_TODOS_REQUEST,
         data: me && me.lastStart
       })
     }
-  }, [todos, started, me]); // 시작하지 않았다면 지난 날의 투두 데이터 가져오기
+  }, [todos && todos.length, todosLoaded, started, me && me.lastStart]); // 시작하지 않았다면 지난 날의 투두 데이터 가져오기
 
   const onStartTodo = useCallback(() => {
     setStarted(true);
+    dispatch({
+      type: SAY_START
+    });
   }, []); //시작하기 버튼 눌렀을 때
 
   const onStartWithLastTodos = useCallback(()=>{
@@ -51,6 +55,9 @@ const CheckList = memo(({id}) => {
       }
     });
     setStarted(true);
+    dispatch({
+      type: SAY_START
+    });
   }, [lastTodos, todosToCopy]); // 지난 투두 확인 후 시작 (복사 기능 제공)
 
   const onClickAddLast = useCallback((lastTodo) => ()=>{

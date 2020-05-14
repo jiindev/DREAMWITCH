@@ -144,9 +144,6 @@ router.post('/:id/follow', isLoggedIn, async(req, res, next) => {
     const me = await db.User.findOne({
       where: {id:req.user.id}
     });
-    if(following.id===me.id){
-      return res.status(403).send("자기 자신은 친구등록 할 수 없습니다.");
-    }
     await me.addFollowing(following.id);
     res.send(following);
   }catch(e){

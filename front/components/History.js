@@ -22,7 +22,7 @@ const History = memo(({id}) => {
         data: histories.length
       })
     }
-  }, [histories.length]);
+  }, []);
 
 
   const onScroll = useCallback(() => {

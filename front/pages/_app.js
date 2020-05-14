@@ -12,12 +12,10 @@ import themes from '../components/styledComponents/theme';
 import GlobalStyle from '../components/styledComponents/GlobalStyle';
 import Axios from "axios";
 import { LOAD_USER_REQUEST } from "../reducers/user";
-import {Container} from 'next/app';
 import {Helmet} from 'react-helmet';
 
 const DreamWitch = ({ Component, store, pageProps }) => (
     <>
-      <Container>
         <Provider store={store}>
           <Helmet
           title="DREAMWITCH :: 꿈의 마녀"
@@ -46,7 +44,6 @@ const DreamWitch = ({ Component, store, pageProps }) => (
               <Component {...pageProps}/>
             </ThemeProvider>
         </Provider>
-      </Container>
     </>
 );
 
@@ -67,7 +64,7 @@ DreamWitch.getInitialProps = async (context) => {
   const state= ctx.store.getState();
   const cookie = ctx.isServer ? ctx.req.headers.cookie : '';
   if(ctx.isServer){
-    Axios.defaults.headers.Cookie = '';
+    Axios.defaults.headers.cookie = '';
   }
   if(ctx.isServer && cookie){
     Axios.defaults.headers.cookie = cookie;

@@ -4,6 +4,7 @@ import { BUY_ITEM_REQUEST, EQUIP_ITEM_REQUEST, UNEQUIP_ITEM_REQUEST } from "../r
 import styled from 'styled-components';
 import {Animated} from 'react-animated-css';
 import propTypes from 'prop-types';
+import { SAY_NO_STAR } from "../reducers/character";
 
 const ClosetItem = memo(({v, i}) => {
     const dispatch = useDispatch();
@@ -14,7 +15,9 @@ const ClosetItem = memo(({v, i}) => {
     const onClickItem = useCallback((item) => () => {
         if(!items.includes(item.id)){ // 현재 아이템 목록에 없음 (구매기능)
           if(me.star<item.price){ // 별이 부족할 경우
-            return alert('별이 부족합니다.');
+            return dispatch({
+              type: SAY_NO_STAR
+            })
           }else{
             dispatch({
               type: BUY_ITEM_REQUEST,

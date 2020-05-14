@@ -5,6 +5,7 @@ export const initialState = {
   todos: [],
   clearPercentage: 0,
   lastTodos: [],
+  todosLoaded: false,
 };
 
 export const ADD_TODO_REQUEST = "ADD_TODO_REQUEST";
@@ -67,15 +68,18 @@ const reducer = (state = initialState, action) => {
       case LOAD_TODOS_REQUEST: {
         draft.todos = [];
         draft.isCleared = false;
+        draft.todosLoaded = false;
         break;
       }
       case LOAD_TODOS_SUCCESS: {
           draft.isCleared = action.data.todos[0] ? action.data.todos[0].HistoryId ? true : false : false;
           draft.todos = action.data.todos;
           draft.clearPercentage = draft.todos[0] ? Math.floor(action.data.todos.filter(v=>v.checked===true).length/action.data.todos.length * 100) : 0;
+          draft.todosLoaded = true;
         break;
       }
       case LOAD_TODOS_FAILURE: {
+        draft.todosLoaded = true;
         break;
       }
       case EDIT_TODO_REQUEST: {

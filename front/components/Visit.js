@@ -20,7 +20,7 @@ const Visit = memo(() => {
   return (
     <>
     <VisitPage>
-        <H2>놀러가기<EditButton on={editingMode} onClick={onEditMode}>수정모드</EditButton></H2>
+        <H2>놀러가기<EditButton editingMode={editingMode} onClick={onEditMode}>수정모드</EditButton></H2>
         <AddFriend/>
         <UserList title='나의 동료 목록' users={me && me.Followings} editingMode={editingMode}/>
         {userRanking && userRanking[0] && !editingMode &&
@@ -44,7 +44,7 @@ const EditButton = styled.button`
     float: right;
     width: 15px;
     height: 15px;
-    background: ${props=>props.on ? "url('/icons/friend_setting_on.svg')" : "url('/icons/friend_setting_off.svg')"};
+    background: ${props=>props.editingMode ? "url('/icons/friend_setting_on.svg')" : "url('/icons/friend_setting_off.svg')"};
     background-size: contain;
     text-indent: -9999px;
     border: 0;
