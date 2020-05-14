@@ -62,16 +62,27 @@ const TalkingBox = memo(({id}) => {
 const Talking = styled.div`
   width: 100%;
   position: absolute;
-  bottom: 55px;
+  bottom: 50px;
   z-index: 10;
   & p {
     color: ${props => props.theme.purpleDark};
     margin: 0 15px;
     background-color: white;
     border-radius: 20px;
-    padding: 13px 0;
+    height: 40px;
     font-family: 'CookieRun-Regular';
     font-size: 12px;
+    line-height: 40px;  
+    & input {
+        width: 100%;
+        max-width: 300px;
+        font-family: 'CookieRun-Regular';
+        font-size: 12px;
+        color: ${props => props.theme.purpleDark};
+        text-align: center;
+        border: 0;
+        outline: none;
+    }
   }
 `;
 

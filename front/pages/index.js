@@ -186,7 +186,7 @@ export const Level = styled.span`
   float: right;
 `;
 
-const Star = styled(Level)`
+export const Star = styled(Level)`
 border-radius: 0 0 20px 0;
 float: left;
   &:before{
@@ -194,7 +194,6 @@ float: left;
     display: inline-block;
     width: 12px;
     height: 12px;
-    background-color: red;
     vertical-align: middle;
     margin-right: 5px;
     background: url('/icons/top_left_star.svg');

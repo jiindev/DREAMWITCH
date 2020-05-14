@@ -10,7 +10,7 @@ import propTypes from 'prop-types';
 import { LOAD_TODOS_REQUEST } from "../reducers/todo";
 import { LOAD_USER_HISTORIES_REQUEST } from "../reducers/history";
 import AppLayout from "../components/AppLayout";
-import { Wrap, TopContent, Loading, Level, LogoutButton, TabItem, UserStatue, Tab, TabIcon } from './index';
+import { Wrap, TopContent, Loading, Level, LogoutButton, TabItem, UserStatue, Tab, Star } from './index';
 import {Helmet} from 'react-helmet';
 
 const User = memo(({id}) => {
@@ -58,11 +58,14 @@ const User = memo(({id}) => {
       <Wrap>
       {historyLoading  && <Loading/>}
        <TopContent>
-        <Link href='/'>
-         <GoHome>
-            {me && <HomeButton>돌아가기</HomeButton>} <Level>{userInfo && `${userInfo.nickname} (${userInfo.userId})`}</Level>
-         </GoHome>
-         </Link>
+            <UserStatue>
+              {me && 
+              <Link href='/'>
+                <a><HomeButton>돌아가기</HomeButton></a>
+              </Link>
+              }
+              <UserInfo>{userInfo && `${userInfo.nickname} (${userInfo.userId})`}</UserInfo>
+            </UserStatue>
          {me && <LogoutButton onClick={onLogout}><i/></LogoutButton>}
           <Character id={id}/>
         <Tab>
@@ -86,25 +89,11 @@ const UserTabItem = styled(TabItem)`
     flex: 0.5;
 `;
 
-const GoHome = styled(UserStatue)`
-  cursor: pointer;
-`;
-
-const HomeButton = styled(Level)`
-border-radius: 0 0 20px 0;
-float: left;
-& a{
-  text-decoration: none;
-  color: ${props => props.theme.purpleLight}; 
-}
+const UserInfo = styled(Level)``;
+const HomeButton = styled(Star)`
   &:before{
-    content: '';
-    display: inline-block;
     width: 14px;
     height: 14px;
-    background-color: red;
-    vertical-align: middle;
-    margin-right: 5px;
     background: url('/icons/friend_back.svg');
     background-size: contain;
     background-repeat: no-repeat;
