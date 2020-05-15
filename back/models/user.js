@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       star: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: 0,
+        defaultValue: 5,
       },
       lastStart : {
         type: DataTypes.STRING(20),
@@ -39,7 +39,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(50),
         allowNull: true,
         defaultValue: '안녕~ 반가워!'
-      }
+      },
+      // private: {
+      //   type: DataTypes.BOOLEAN,
+      //   allowNull: false,
+      //   defaultValue: false,
+      // }
     },
     {
       charset: "utf8",

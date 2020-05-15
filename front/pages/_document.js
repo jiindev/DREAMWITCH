@@ -3,11 +3,19 @@ import {Helmet} from 'react-helmet';
 import Document, { Main, NextScript } from 'next/document';
 import propTypes from 'prop-types';
 import {ServerStyleSheet} from 'styled-components';
+import GlobalStyle from '../components/styledComponents/GlobalStyle';
 
 class MyDocument extends Document {
     static getInitialProps(context) {
         const sheet = new ServerStyleSheet();
-        const page = context.renderPage((App)=>(props)=>sheet.collectStyles(<App {...props}/>));
+        const page = context.renderPage((App)=>(props)=>
+            sheet.collectStyles(
+                <>
+                    <GlobalStyle/>
+                    <App {...props}/>
+                </>
+            )
+        );
         const styleTags = sheet.getStyleElement();
         return {...page, helmet: Helmet.renderStatic(), styleTags};
     }

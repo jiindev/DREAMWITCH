@@ -27,6 +27,7 @@ const Login = memo(() => {
 
   const onSubmit = useCallback((e) => {
     e.preventDefault();
+    if(!id || !password) return;
     dispatch({
       type: LOG_IN_REQUEST,
       data: {

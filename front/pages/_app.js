@@ -69,9 +69,8 @@ class DreamWitch extends App{
           }]}
           />
           <ThemeProvider theme={themes}>
-            <GlobalStyle/>
               <Component {...pageProps}/>
-            </ThemeProvider>
+          </ThemeProvider>
         </Provider>
     )
   }
