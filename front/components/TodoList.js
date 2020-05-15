@@ -11,6 +11,8 @@ import { LOAD_LAST_TODOS_REQUEST, CLEAN_LAST_TODOS_REQUEST } from "../reducers/t
 import TodoCompletePopup from './TodoCompletePopup';
 import { ADD_HISTORIES_REQUEST } from "../reducers/history";
 import {Animated} from 'react-animated-css';
+import moment from 'moment';
+moment.locale('ko');
 
 const CheckList = memo(({id}) => {
   const dispatch = useDispatch();
@@ -50,7 +52,7 @@ const CheckList = memo(({id}) => {
       type: CLEAN_LAST_TODOS_REQUEST,
       data: {
         isCleared : lastTodos[0].HistoryId,
-        lastDate : lastTodos[0].createdAt.substring(0, 10),
+        lastDate : moment(lastTodos[0].createdAt).format('YYYY-MM-DD'),
         todosToCopy,
       }
     });
@@ -121,7 +123,7 @@ const CheckList = memo(({id}) => {
           }
             <TodoPage>
               <div>
-              <H2>할 일 목록 <Date>{todos[0] && todos[0].createdAt.substring(0,10)}</Date></H2>
+              <H2>할 일 목록 <Date>{todos[0] && moment(todos[0].createdAt).format('YYYY년 MM월 DD일')}</Date></H2>
               </div>
               <TodoUl>
                 {isCleared ? // 오늘의 투두 클리어 했다면
@@ -149,7 +151,7 @@ const CheckList = memo(({id}) => {
           </>
         ) : lastTodos.length>0 ? ( // 오늘의 투두를 아직 시작하지 않았을 때 지난날의 투두 조회
            <LastTodoPage>
-             <H2>지난 날의 기록 <Date>{lastTodos[0].createdAt.substring(0,10)}</Date></H2>
+             <H2>지난 날의 기록 <Date>{moment(lastTodos[0].createdAt).format('YYYY년 MM월 DD일')}</Date></H2>
              <H3>{lastTodos[0].HistoryId ? '성공': '실패'}의 전당</H3>
              <LastTodoList>
                   {lastTodos.map((c, i)=>{

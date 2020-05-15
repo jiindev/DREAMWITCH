@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import Link from 'next/link';
 import propTypes from 'prop-types';
 import { SAY_LOAD_HISTORY } from "../reducers/character";
+import moment from 'moment';
+moment.locale('ko');
 
 const HistoryItem = memo(({history, lastChild}) => {
     const {me} = useSelector(state=>state.user);
@@ -67,7 +69,7 @@ const HistoryItem = memo(({history, lastChild}) => {
                                     }
                                     <p>{history.content}</p>
                                     {history.type==='clearTodos' &&
-                                        <Date>{history.createdAt.substring(0,10)}</Date>
+                                        <Date>{moment(history.createdAt).format('YYYY년 MM월 DD일')}</Date>
                                     }
                                 </Content>
                     </HistoryTitle>
@@ -90,7 +92,7 @@ const HistoryItem = memo(({history, lastChild}) => {
                                                 : 
                                                 <Link href={{pathname: '/user', query:{id:v.User.id}}} as={`/user/${v.User.id}`}><a><span>{v.User.nickname}</span></a></Link>
                                             }
-                                            <span>{v.createdAt.substring(0,10)}</span>
+                                            <span>{moment(v.createdAt).format('YYYY.MM.DD a h:mm')}</span>
                                             {me && (history.UserId===me.id || v.UserId===me.id) && 
                                                 <button onClick={onClickRemoveComment(v.id)}>삭제</button>
                                             }

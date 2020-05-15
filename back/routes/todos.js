@@ -2,13 +2,13 @@ const express = require("express");
 const router = express.Router();
 const db = require('../models');
 const sequelize = require('sequelize');
-
+const moment = require('moment');
+moment.locale('ko');
       
 router.get("/", async(req, res, next) => {
   // 나의 그날의 투두리스트 불러오기
   try {
-    let day = new Date();
-    let today = day.getFullYear() + "-" + ("0"+(day.getMonth()+1)).slice(-2) + "-" + ("0"+(day.getDate())).slice(-2);
+    let today = moment().format('YYYY-MM-DD');
     const todos = await db.Todo.findAll({
       where: {
         userId: req.user.id,
@@ -29,8 +29,7 @@ router.get("/", async(req, res, next) => {
 router.get("/:id", async(req, res, next) => {
   // 특정 사용자의 그날의 투두리스트 불러오기
   try {
-    let day = new Date();
-    let today = day.getFullYear() + "-" + ("0"+(day.getMonth()+1)).slice(-2) + "-" + ("0"+(day.getDate())).slice(-2);
+    let today = moment().format('YYYY-MM-DD');
     const todos = await db.Todo.findAll({
       where: {
         userId: req.params.id,
@@ -51,12 +50,10 @@ router.get("/:id", async(req, res, next) => {
 router.get("/last/:lastStart", async(req, res, next) => {
   // 사용자의 지난 투두리스트 불러오기
   try {
-    let day = new Date();
-    let today = day.getFullYear() + "-" + ("0"+(day.getMonth()+1)).slice(-2) + "-" + ("0"+(day.getDate())).slice(-2);
     const lastDate = await db.Todo.findOne({
       where: {
         userId: req.user.id,
-        createdAt: {[sequelize.Op.gte]:req.params.lastStart+' 00:00:00'}
+        createdAt: {[sequelize.Op.gte]:req.params.lastStart}
       },
       order: [['createdAt', 'DESC']],
       attributes: ['createdAt']
@@ -67,8 +64,8 @@ router.get("/last/:lastStart", async(req, res, next) => {
         where: {
           userId: req.user.id,
           createdAt: {
-            [sequelize.Op.gte]:lastDate.createdAt.substring(0,10)+' 00:00:00',
-            [sequelize.Op.lte]:lastDate.createdAt.substring(0,10)+' 23:59:59'
+            [sequelize.Op.gte]:moment(lastDate.createdAt).format('YYYY-MM-DD')+' 00:00:00',
+            [sequelize.Op.lte]:moment(lastDate.createdAt).format('YYYY-MM-DD')+' 23:59:59'
           },
         },
         order: [['createdAt', 'ASC']]
@@ -103,8 +100,7 @@ router.post("/", async(req, res, next) => {
   //지난 할일 목록에서 투두 복사
   try{
     let fullTodos = [];
-    let day = new Date();
-    let today = day.getFullYear() + "-" + ("0"+(day.getMonth()+1)).slice(-2) + "-" + ("0"+(day.getDate())).slice(-2);
+    let today = moment().format('YYYY-MM-DD');
     if(req.body.todosToCopy){
       const copiedTodos = req.body.todosToCopy.map((v, i)=>{
         return {content: v, UserId: req.user.id};

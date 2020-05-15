@@ -3,12 +3,13 @@ const router = express.Router();
 const db = require('../models');
 const sequelize = require('sequelize');
 const {historyExists} = require('./middleware');
+const moment = require('moment');
+moment.locale('ko');
 
 router.post("/", async(req, res, next) => {
   // 히스토리 생성
   try{
-    let day = new Date();
-    let today = day.getFullYear() + "-" + ("0"+(day.getMonth()+1)).slice(-2) + "-" + ("0"+(day.getDate())).slice(-2);
+    let today = moment().format('YYYY-MM-DD');
     let newHistory = await db.History.create({
       UserId: req.user.id,
       content: req.body.content,

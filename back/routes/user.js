@@ -4,6 +4,8 @@ const passport = require("passport");
 const router = express.Router();
 const db = require("../models");
 const {isLoggedIn, isNotLoggedIn} = require('./middleware');
+const moment = require('moment');
+moment.locale('ko');
 
 router.get("/", isLoggedIn, async(req, res, next) => {
   // 나의 정보 프론트로 전달
@@ -103,8 +105,7 @@ router.post("/logout", (req, res) => {
 router.patch('/laststart', async(req, res, next) => {
   //마지막으로 미션을 시작한 시간 기록
   try{
-    let day = new Date();
-    let today = day.getFullYear() + "-" + ("0"+(day.getMonth()+1)).slice(-2) + "-" + ("0"+(day.getDate())).slice(-2);
+    let today = moment().format('YYYY-MM-DD');
     const changeLastStart = await db.User.update({
       lastStart: today
     }, {
