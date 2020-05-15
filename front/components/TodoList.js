@@ -166,7 +166,7 @@ const CheckList = memo(({id}) => {
           <StartTodo>
             <H2>오늘도 꿈을 향해! 할 일 목록 적어볼까?</H2>
             <Illust>
-            <Animated animationIn="fadeIn" animationInDuration={1000} isVisible={true} style={{height: '100%'}}><StartIllust/></Animated>
+              <Animated animationIn="fadeIn" animationInDuration={1000} isVisible={true} style={{height: '100%'}}><StartIllust/></Animated>
             </Illust>
             <StartButton onClick={onStartTodo}>시작하기</StartButton>
           </StartTodo>

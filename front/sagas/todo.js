@@ -174,7 +174,6 @@ function* loadLastTodos(action) {
       type: LOAD_LAST_TODOS_SUCCESS,
       data: result.data
     });
-    console.log(result.data);
     if(result.data[0]){
       yield put({
         type: SAY_LAST,

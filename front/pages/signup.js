@@ -192,7 +192,11 @@ const Signup = memo(() => {
               />
             </Input>
             <Term>
-              <p>DREAMWITCH는 개발자 지인, 디자이너 지수로 이루어진 크리에이션 크루 지지스튜디오에서 제작한 토이 프로젝트 사이트입니다. 현재 시범 운영중으로 정식 오픈 시 데이터가 초기화될 수 있으니 유의해주세요.</p>
+              <p>
+                DREAMWITCH는 개발자 지인, 디자이너 지수로 이루어진 크리에이션 크루 지지스튜디오에서 제작한 토이 프로젝트 사이트입니다. 
+                현재 시범 운영중으로 정식 오픈 시 데이터가 초기화될 수 있으니 유의해주세요.
+                설정한 투두리스트는 밤 12시마다 초기화되며 결과가 기록됩니다.
+                </p>
               <div>
                 <label htmlFor="term">이에 동의합니다.</label>
                 <input type="checkbox" name="term" id="term" value={term} onChange={onChangeTerm}/>

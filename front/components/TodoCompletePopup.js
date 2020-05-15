@@ -32,7 +32,7 @@ const TodoCompletePopup = memo(({clear}) => {
 
   return (
     <>
-        <CompletePopUp on={popUpOn}>
+        <CompletePopUp popUpOn={popUpOn}>
           <Animated animationIn="bounceInUp" animationOut="fadeOutDown" animationInDelay={500} animationInDuration={1000} animationOutDuration={1000} isVisible={popUpOn}>
             <div>
               <StarImage/>
@@ -65,7 +65,7 @@ const CompletePopUp = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  opacity: ${props=>props.on===true ? '1' : '0'};
+  opacity: ${props=>props.popUpOn===true ? '1' : '0'};
   background-color: rgba(255, 255, 148, .8);
   transition: all .5s ease;
   z-index:99;
