@@ -1,8 +1,8 @@
 import React, { useState, useRef, useCallback, useEffect, memo } from "react";
 import { useDispatch } from "react-redux";
-import { SAY_ADD_HISTORY} from '../reducers/character';
+import { SAY_ADD_HISTORY} from '../../reducers/character';
 import styled from 'styled-components';
-import { Button } from './styledComponents/PageComponent';
+import { Button } from '../styledComponents/PageComponent';
 import {Animated} from 'react-animated-css';
 import propTypes from 'prop-types';
 

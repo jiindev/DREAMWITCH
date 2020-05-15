@@ -1,10 +1,10 @@
 import React, { useState, useCallback, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LOAD_HISTORY_REQUEST, ADD_COMMENT_REQUEST, REMOVE_COMMENT_REQUEST } from "../reducers/history";
+import { LOAD_HISTORY_REQUEST, ADD_COMMENT_REQUEST, REMOVE_COMMENT_REQUEST } from "../../reducers/history";
 import styled from 'styled-components';
 import Link from 'next/link';
 import propTypes from 'prop-types';
-import { SAY_LOAD_HISTORY } from "../reducers/character";
+import { SAY_LOAD_HISTORY } from "../../reducers/character";
 import moment from 'moment';
 moment.locale('ko');
 

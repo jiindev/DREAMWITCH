@@ -1,7 +1,7 @@
 import styled, {keyframes} from 'styled-components';
 import React, { useRef, useEffect, memo} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SAY_RESET } from '../reducers/character';
+import { SAY_RESET } from '../../reducers/character';
 import propTypes from 'prop-types';
 import TalkingBox from './TalkingBox';
 

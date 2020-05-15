@@ -1,6 +1,6 @@
 import React, {useState, useCallback, useEffect, createRef, memo } from "react";
 import { useDispatch } from "react-redux";
-import { CHECK_TODO_REQUEST, EDIT_TODO_REQUEST, REMOVE_TODO_REQUEST } from "../reducers/todo";
+import { CHECK_TODO_REQUEST, EDIT_TODO_REQUEST, REMOVE_TODO_REQUEST } from "../../reducers/todo";
 import styled from 'styled-components';
 import propTypes from 'prop-types';
 

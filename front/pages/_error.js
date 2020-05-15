@@ -17,7 +17,7 @@ const MyError = ({statusCode}) => {
 }
 
 const Background = styled.div`
-  background: url('/img/error_illust.png');
+  background: url('/img/login_pattern.png');
   background-size: 300px 300px;
   background-position: center center;
   height: 100vh;
@@ -39,7 +39,7 @@ const ErrorIllust = styled.div`
   max-height: 300px;
   border-radius: 20px;
   text-align: center;
-  background: url('/img/checklist_nostart_illust.png');
+  background: url('/img/error_illust.png');
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;

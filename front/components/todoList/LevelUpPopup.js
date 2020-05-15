@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {Animated} from 'react-animated-css';
 import styled from 'styled-components';
-import { levelCheck } from '../components/data/levelData';
+import { levelCheck } from '../data/levelData';
 
 
 const LevelUpPopup = () => {

@@ -1,5 +1,4 @@
-import React, { useCallback, memo, useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { useCallback, memo, useState } from "react";
 import styled from 'styled-components';
 import {Animated} from 'react-animated-css';
 import EditNickname from "./EditNickname";

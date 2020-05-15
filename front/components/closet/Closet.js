@@ -1,9 +1,9 @@
 import React, { useEffect, memo } from "react";
 import { useDispatch } from "react-redux";
-import {hatItems, clothesItems, hairItems, bgItems, wandItems, catItems} from './data/itemData';
-import {H2} from './styledComponents/PageComponent';
+import {hatItems, clothesItems, hairItems, bgItems, wandItems, catItems} from '../data/itemData';
+import {H2} from '../styledComponents/PageComponent';
 import styled from 'styled-components';
-import { SAY_LOAD_ITEMS } from "../reducers/character";
+import { SAY_LOAD_ITEMS } from "../../reducers/character";
 import ClosetSection from "./ClosetSection";
 
 const Closet = memo(() => {

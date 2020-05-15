@@ -1,9 +1,9 @@
-import React, { useState, useRef, useCallback, memo } from "react";
+import React, { useState, useCallback, memo } from "react";
 import styled from 'styled-components';
 import {Animated} from 'react-animated-css';
 import Link from 'next/link';
 import { useSelector, useDispatch } from "react-redux";
-import { REMOVE_FOLLOWING_REQUEST, ADD_FOLLOWING_REQUEST } from "../reducers/user";
+import { REMOVE_FOLLOWING_REQUEST, ADD_FOLLOWING_REQUEST } from "../../reducers/user";
 import propTypes from 'prop-types';
 
 const UserList = memo(({title, users, editingMode}) => {

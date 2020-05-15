@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, { useState, useCallback, useEffect, createRef, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { EDIT_GREETINGS_REQUEST } from '../reducers/user';
+import { EDIT_GREETINGS_REQUEST } from '../../reducers/user';
 import propTypes from 'prop-types';
 
 const TalkingBox = memo(({id}) => {

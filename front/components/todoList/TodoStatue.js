@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {SAY_COMPLETE_TODOS} from '../reducers/character';
+import {SAY_COMPLETE_TODOS} from '../../reducers/character';
 import styled, {keyframes} from 'styled-components';
 import propTypes from 'prop-types';
 

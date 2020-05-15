@@ -1,4 +1,4 @@
-import { ADD_FOLLOWING_REQUEST, FOLLOWING_ERROR_RESET } from "../reducers/user";
+import { ADD_FOLLOWING_REQUEST, FOLLOWING_ERROR_RESET } from "../../reducers/user";
 import styled from 'styled-components';
 import React, { useState, useCallback, memo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";

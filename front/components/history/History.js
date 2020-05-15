@@ -1,10 +1,10 @@
 import React, { useRef, useCallback, useEffect, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LOAD_HISTORIES_REQUEST, LOAD_USER_HISTORIES_REQUEST } from "../reducers/history";
+import { LOAD_HISTORIES_REQUEST, LOAD_USER_HISTORIES_REQUEST } from "../../reducers/history";
 import HistoryItem from './HistoryItem';
-import { H2 } from './styledComponents/PageComponent';
+import { H2 } from '../styledComponents/PageComponent';
 import styled from 'styled-components';
-import { SAY_LOAD_HISTORIES } from "../reducers/character";
+import { SAY_LOAD_HISTORIES } from "../../reducers/character";
 import {Animated} from 'react-animated-css';
 import propTypes from 'prop-types';
 

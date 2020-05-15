@@ -1,9 +1,9 @@
 import React, { useEffect, useCallback, memo, useState } from "react";
-import Character from "../components/Character";
-import History from "../components/History";
-import TodoList from "../components/TodoList";
-import Closet from "../components/Closet";
-import Visit from '../components/Visit';
+import Character from "../components/character/Character";
+import History from "../components/history/History";
+import TodoList from "../components/todoList/TodoList";
+import Closet from "../components/closet/Closet";
+import Visit from '../components/visit/Visit';
 import { useSelector, useDispatch } from "react-redux";
 import Router from "next/router";
 import { LOG_OUT_REQUEST, LEVEL_UP_REQUEST, SET_PAGE, LOAD_RANKING_USERS_REQUEST } from "../reducers/user";
@@ -14,8 +14,8 @@ import { LOAD_ITEMS_REQUEST, LOAD_EQUIPMENT_REQUEST } from "../reducers/item";
 import { levelCheck } from '../components/data/levelData';
 import AppLayout from "../components/AppLayout";
 import { SAY_LEVEL_UP } from "../reducers/character";
-import LevelUpPopup from "../components/LevelUpPopup";
-import UserSetting from "../components/UserSetting";
+import LevelUpPopup from "../components/todoList/LevelUpPopup";
+import UserSetting from "../components/setting/UserSetting";
 
 const Index = memo(() => {
   const dispatch = useDispatch();

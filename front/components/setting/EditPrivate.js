@@ -1,7 +1,7 @@
-import React, { useEffect, useCallback, memo, useState } from "react";
+import React, { useCallback, memo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from 'styled-components';
-import { EDIT_NICKNAME_REQUEST, EDIT_PRIVATE_REQUEST } from "../reducers/user";
+import { EDIT_PRIVATE_REQUEST } from "../../reducers/user";
 
 const EditPrivate = memo(({}) => {
     const currentPrivate  = useSelector((state) => state.user.me && state.user.me.private);

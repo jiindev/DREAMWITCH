@@ -121,7 +121,7 @@ export const initialState = {
         }
         case SAY_LEVEL_UP:{
           draft.character.talking = `레벨 업! 더 멋진 마법을 보여줄게!`;
-          draft.character.emotion= 'happy';
+          draft.character.emotion= 'happy2';
           draft.character.effect= 'happy2';
           break;
         }

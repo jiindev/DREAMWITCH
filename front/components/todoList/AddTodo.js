@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useEffect, createRef, memo } from "react";
 import { useDispatch } from "react-redux";
-import { ADD_TODO_REQUEST } from "../reducers/todo";
+import { ADD_TODO_REQUEST } from "../../reducers/todo";
 import styled from 'styled-components';
-import {Button} from './styledComponents/PageComponent'
+import {Button} from '../styledComponents/PageComponent'
 
 const AddTodo = memo(() => {
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import React, { useState, useCallback, memo } from "react";
 import { useSelector } from "react-redux";
-import {H2} from './styledComponents/PageComponent';
+import {H2} from '../styledComponents/PageComponent';
 import styled from 'styled-components';
 import AddFriend from "./AddFriend";
 import UserList from './UserList';

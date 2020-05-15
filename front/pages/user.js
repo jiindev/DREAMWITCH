@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback, memo } from "react";
 import Link from "next/link";
 import Router from 'next/router';
-import Character from "../components/Character";
-import History from "../components/History";
-import TodoList from "../components/TodoList";
+import Character from "../components/character/Character";
+import History from "../components/history/History";
+import TodoList from "../components/todoList/TodoList";
 import { useSelector, useDispatch } from "react-redux";
 import { LOAD_USER_REQUEST, LOG_OUT_REQUEST } from "../reducers/user";
 import styled from 'styled-components';
