@@ -1,5 +1,5 @@
-import React, { useState, useRef, useCallback, useEffect, createRef, memo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useCallback, useEffect, createRef, memo } from "react";
+import { useDispatch } from "react-redux";
 import { ADD_TODO_REQUEST } from "../reducers/todo";
 import styled from 'styled-components';
 import {Button} from './styledComponents/PageComponent'
@@ -34,20 +34,33 @@ const AddTodo = memo(() => {
     setContent('');
   }, [content]);
 
-  const onChangeContent = (e) => {
+  const onChangeContent = useCallback((e) => {
     setContent(e.target.value);
-  }
+  }, []);
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       AddTodoOff();
     }
-  }
+  };
 
   return (
   <>
-    {adding && <AddTodoDiv><PlusIcon/><TodoContentInput type="text" ref={addTodoInput} onBlur={AddTodoOff} value={content} onChange={onChangeContent} onKeyPress={handleKeyPress} maxLength='50'/></AddTodoDiv>}
-    {!adding && <AddButton onClick={AddTodoOn}><i/></AddButton>}
+    {adding ? 
+      <AddTodoDiv>
+        <PlusIcon/>
+        <TodoContentInput 
+        type="text" 
+        ref={addTodoInput} 
+        onBlur={AddTodoOff} 
+        value={content} 
+        onChange={onChangeContent} 
+        onKeyPress={handleKeyPress} 
+        maxLength='50'/>
+      </AddTodoDiv>
+      :
+      <AddButton onClick={AddTodoOn}><i/></AddButton>
+    }
   </>);
 });
 

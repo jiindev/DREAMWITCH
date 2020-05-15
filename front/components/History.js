@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect, memo } from "react";
+import React, { useRef, useCallback, useEffect, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LOAD_HISTORIES_REQUEST, LOAD_USER_HISTORIES_REQUEST } from "../reducers/history";
 import HistoryItem from './HistoryItem';
@@ -61,7 +61,7 @@ return (
                   </Animated>
                 )
               })}
-              </div>
+            </div>
           :
           <NoHistory>기록된 별이 없습니다.</NoHistory>
           }

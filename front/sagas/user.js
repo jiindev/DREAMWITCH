@@ -28,9 +28,9 @@ import {
   EDIT_GREETINGS_SUCCESS,
   EDIT_GREETINGS_FAILURE,
   EDIT_GREETINGS_REQUEST,
-  LOAD_TODAY_USERS_SUCCESS,
-  LOAD_TODAY_USERS_FAILURE,
-  LOAD_TODAY_USERS_REQUEST,
+  LOAD_RANKING_USERS_SUCCESS,
+  LOAD_RANKING_USERS_FAILURE,
+  LOAD_RANKING_USERS_REQUEST,
 } from "../reducers/user";
 import Router from 'next/router';
 import { SAY_HELLO } from "../reducers/character";
@@ -268,29 +268,29 @@ function* watchEditGreetings() {
   yield takeLatest(EDIT_GREETINGS_REQUEST, editGreetings);
 }
 
-function loadTodayUsersAPI() {
+function loadRankingUsersAPI() {
   return axios.get('/users/rank', {
     withCredentials: true
   });
 }
 
-function* loadTodayUsers() {
+function* loadRankingUsers() {
   try {
-    const result = yield call(loadTodayUsersAPI);
+    const result = yield call(loadRankingUsersAPI);
     yield put({
-      type: LOAD_TODAY_USERS_SUCCESS,
+      type: LOAD_RANKING_USERS_SUCCESS,
       data: result.data,
     });
   } catch (e) {
     yield put({
-      type: LOAD_TODAY_USERS_FAILURE,
+      type: LOAD_RANKING_USERS_FAILURE,
       error: e,
     });
   }
 }
 
-function* watchLoadTodayUsers() {
-  yield takeLatest(LOAD_TODAY_USERS_REQUEST, loadTodayUsers);
+function* watchLoadRankingUsers() {
+  yield takeLatest(LOAD_RANKING_USERS_REQUEST, loadRankingUsers);
 }
 
 
@@ -305,6 +305,6 @@ export default function* userSaga() {
     fork(watchAddFollowing),
     fork(watchLevelUp),
     fork(watchEditGreetings),
-    fork(watchLoadTodayUsers)
+    fork(watchLoadRankingUsers)
   ]);
 }

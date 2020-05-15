@@ -14,7 +14,7 @@ router.get('/rank', async(req, res, next) => {
       order: [['exp', 'DESC']],
       limit: 5,
     })
-    return res.send(userRanking);
+    return res.json(userRanking);
   }catch(e){
       console.error(e);
       next(e);

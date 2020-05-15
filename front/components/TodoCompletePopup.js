@@ -1,7 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect, memo } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { ADD_HISTORIES_REQUEST } from "../reducers/history";
-import {SAY_COMPLETE_TODOS, SAY_ADD_HISTORY} from '../reducers/character';
+import { useDispatch } from "react-redux";
+import { SAY_ADD_HISTORY} from '../reducers/character';
 import styled from 'styled-components';
 import { Button } from './styledComponents/PageComponent';
 import {Animated} from 'react-animated-css';
@@ -14,14 +13,14 @@ const TodoCompletePopup = memo(({clear}) => {
   const historyContentInput = useRef();
   const [popUpOn, setPopUpOn] = useState(false);
   
-  const onChangeHistoryContent = (e) => {
-    setHistoryContent(e.target.value);
-  }
-
   useEffect(() => {
     setPopUpOn(true);
   }, []);
-  
+
+  const onChangeHistoryContent = useCallback((e) => {
+    setHistoryContent(e.target.value);
+  }, []);
+
   const popUpDisappear = useCallback(() => {
     setPopUpOn(false);
     setTimeout(clear(historyContent),1000);
@@ -56,8 +55,6 @@ const TodoCompletePopup = memo(({clear}) => {
     </>
   );
 });
-
-
 
 const CompletePopUp = styled.div`
   width: 100%;

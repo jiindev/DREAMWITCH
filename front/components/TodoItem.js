@@ -1,17 +1,6 @@
-import React, {
-  useState,
-  useCallback,
-  useRef,
-  useEffect,
-  createRef,
-  memo
-} from "react";
+import React, {useState, useCallback, useEffect, createRef, memo } from "react";
 import { useDispatch } from "react-redux";
-import {
-  CHECK_TODO_REQUEST,
-  EDIT_TODO_REQUEST,
-  REMOVE_TODO_REQUEST,
-} from "../reducers/todo";
+import { CHECK_TODO_REQUEST, EDIT_TODO_REQUEST, REMOVE_TODO_REQUEST } from "../reducers/todo";
 import styled from 'styled-components';
 import propTypes from 'prop-types';
 
@@ -20,6 +9,7 @@ const TodoItem = memo(({ todo }) => {
   const [todoContent, setTodoContent] = useState(todo.content);
   const [editingMode, setEditingMode] = useState(false);
   const todoInput = createRef();
+
   useEffect(() => {
     if (editingMode) {
       todoInput.current.focus();
@@ -44,9 +34,7 @@ const TodoItem = memo(({ todo }) => {
   const onChangeContent = useCallback(
     (e) => {
       setTodoContent(e.target.value);
-    },
-    [todoContent]
-  );
+    },[todoContent]);
 
   const editModeEnd = useCallback(() => {
     setEditingMode(false);
@@ -65,7 +53,7 @@ const TodoItem = memo(({ todo }) => {
     if (e.key === 'Enter') {
       editModeEnd();
     }
-  }
+  };
 
   const onRemoveTodo = useCallback(() => {
     dispatch({

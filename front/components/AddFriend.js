@@ -15,13 +15,13 @@ const AddFriend = memo(() => {
       dispatch({
         type: FOLLOWING_ERROR_RESET
       })
-    }, []);
+    }, []); //렌더링 될때마다 error메시지 리셋되도록
 
     useEffect(() => {
       if(followingErrorReason){
         setFollowUserError(followingErrorReason);
       }
-    }, [followingErrorReason]);
+    }, [followingErrorReason]); //db에서 에러메시지 발생 시 보여주도록
 
     const onAddFriend = useCallback(()=>{
       if(!followUserId) return;
@@ -29,7 +29,7 @@ const AddFriend = memo(() => {
         return setFollowUserError('이미 등록된 사용자입니다.');
       }else if(userId===followUserId){
         return setFollowUserError('자기 자신은 등록할 수 없습니다.');
-      }
+      } //에러처리
         dispatch({
             type: ADD_FOLLOWING_REQUEST,
             data: followUserId

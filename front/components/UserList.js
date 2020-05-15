@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect, memo } from "react";
+import React, { useState, useRef, useCallback, memo } from "react";
 import styled from 'styled-components';
 import {Animated} from 'react-animated-css';
 import Link from 'next/link';

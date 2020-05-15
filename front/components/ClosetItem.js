@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect, memo } from "react";
+import React, { useCallback, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BUY_ITEM_REQUEST, EQUIP_ITEM_REQUEST, UNEQUIP_ITEM_REQUEST } from "../reducers/item";
 import styled from 'styled-components';

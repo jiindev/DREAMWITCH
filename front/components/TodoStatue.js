@@ -8,7 +8,6 @@ const TodoStatue = ({onClickWriteHistory, writingHistory}) => {
   const dispatch = useDispatch();
   const { clearPercentage, isCleared } = useSelector((state) => state.todo);
   
-
   useEffect(()=>{
     if(clearPercentage === 100 && isCleared === false){
       dispatch({

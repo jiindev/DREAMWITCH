@@ -41,15 +41,30 @@ const TalkingBox = memo(({id}) => {
             });
         }
     }, [me && me.greetings, userGreetings]);
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+          editModeEnd();
+        }
+    };
     
     return (
         <Talking>
         {!id ? 
             page === 4 ? //놀러가기 페이지에서 인삿말 수정 기능
-              editingMode ? 
-              <p><input type="text" value={userGreetings} onChange={onChangeGreetings} onBlur={editModeEnd} ref={greetingsInput} maxLength='20'/></p>
+              editingMode ? //수정모드
+              <p>
+                  <input 
+                  type="text" 
+                  value={userGreetings} 
+                  onChange={onChangeGreetings} 
+                  onBlur={editModeEnd} 
+                  onKeyPress={handleKeyPress}
+                  ref={greetingsInput} 
+                  maxLength='20'/>
+                </p>
               :
-              <p>{me && me.greetings} <EditButton onClick={editModeStart}/></p>
+              <p>{me && me.greetings} <EditButton onClick={editModeStart}/></p> //인삿말 보여주기(수정모드 off)
             :
             character && character.talking && <p>{character.talking}</p> //기본은 각 동작에 따른 말풍선 보여줌
         :

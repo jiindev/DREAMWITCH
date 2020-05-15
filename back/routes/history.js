@@ -96,7 +96,7 @@ router.post('/:id/comment', historyExists, async(req, res, next)=>{
   }catch(e){
     console.error(e);
     return next(e);
-  }
+  } 
 });
 
 router.delete('/comment/:id', async(req, res, next)=>{
@@ -111,13 +111,6 @@ router.delete('/comment/:id', async(req, res, next)=>{
     console.error(e);
     return next(e);
   }
-});
-
-router.patch("/:id/content", (req, res) => {
-  // 특정 히스토리 텍스트 변경
-});
-router.delete("/:id", (req, res) => {
-  // 특정 히스토리 삭제
 });
 
 module.exports = router;

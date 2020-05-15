@@ -19,7 +19,7 @@ router.get("/", async(req, res, next) => {
       },
       order: [['createdAt', 'ASC']]
     });
-    return res.send(todos);
+    return res.json(todos);
   } catch (e) {
     console.error(e);
     return next(e);
@@ -40,7 +40,7 @@ router.get("/:id", async(req, res, next) => {
       },
       order: [['createdAt', 'ASC']]
     });
-    return res.send(todos);
+    return res.json(todos);
   } catch (e) {
     console.error(e);
     return next(e);

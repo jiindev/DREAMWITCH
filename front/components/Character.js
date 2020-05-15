@@ -2,7 +2,6 @@ import styled, {keyframes} from 'styled-components';
 import React, { useRef, useEffect, memo} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SAY_RESET } from '../reducers/character';
-import { Animated } from 'react-animated-css';
 import propTypes from 'prop-types';
 import TalkingBox from './TalkingBox';
 
@@ -156,7 +155,7 @@ const Emotion = styled.div`
   width: 100px;
   height: 70px;
   z-index: 4;
-  background: ${props=>`url(/img/character_emotion_${props.emotion}.png)`};
+  background: ${props=>!props.emotion? `url(/img/character_emotion_basic.png)` : `url(/img/character_emotion_${props.emotion}.png)`};
 `;
 const Hair = styled.div`
   top: 0;

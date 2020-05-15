@@ -146,7 +146,7 @@ router.post('/:id/follow', isLoggedIn, async(req, res, next) => {
       where: {id:req.user.id}
     });
     await me.addFollowing(following.id);
-    res.send(following);
+    res.json(following);
   }catch(e){
     console.error(e);
     next(e);

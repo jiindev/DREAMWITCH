@@ -31,7 +31,7 @@ router.patch("/:id", async(req, res, next) => {
     }, {
       where: {id: req.params.id}
     });
-    res.send({id: parseInt(req.params.id, 10), content: req.body.content});
+    res.json({id: parseInt(req.params.id, 10), content: req.body.content});
   }catch(e){
     console.error(e);
     next(e);
@@ -45,7 +45,7 @@ router.patch("/:id/check", async (req, res, next) => {
     }, {
       where: {id: req.params.id}
     });
-    res.send({id: parseInt(req.params.id, 10), checked: !req.body.checked});
+    res.json({id: parseInt(req.params.id, 10), checked: !req.body.checked});
   }catch(e){
     console.error(e);
     next(e);

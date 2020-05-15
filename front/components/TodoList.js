@@ -7,7 +7,7 @@ import TodoStatue from './TodoStatue';
 import { SAY_LOAD_TODOS, SAY_START } from '../reducers/character';
 import { H2, Date, Button } from './styledComponents/PageComponent';
 import styled from 'styled-components';
-import { LOAD_LAST_TODOS_REQUEST, CLEAN_LAST_TODOS_REQUEST } from "../reducers/todo";
+import { LOAD_LAST_TODOS_REQUEST, CLEAN_LAST_TODOS_REQUEST, LOAD_TODOS_REQUEST } from "../reducers/todo";
 import TodoCompletePopup from './TodoCompletePopup';
 import { ADD_HISTORIES_REQUEST } from "../reducers/history";
 import {Animated} from 'react-animated-css';
@@ -23,22 +23,30 @@ const CheckList = memo(({id}) => {
   const [writingHistory, setWritingHistory] = useState(false);
 
   useEffect(()=>{
-    if(todos.length>0 && !isCleared){
+    if(todos.length>0 && !isCleared && !id){
       setStarted(true);
       return dispatch({
         type: SAY_LOAD_TODOS
       })
     }
-  }, []);
+    //투두 페이지 들어올때마다 started 셋팅 / 말풍선 보여주기
+    if(!id && todos && todos[0] && moment(todos[0].createdAt).format('YYYY-MM-DD')!==moment().format('YYYY-MM-DD')){
+      dispatch({
+        type: LOAD_TODOS_REQUEST
+      });
+      return setStarted(false);
+    }
+    //날짜가 일치하지 않는다면 다시 로드하기
+  }, []); 
   
   useEffect(() => {
-    if(!started && todosLoaded && todos && todos.length===0 && !id){
+    if(!started && todosLoaded && !todos[0] && !id){
       return dispatch({
         type: LOAD_LAST_TODOS_REQUEST,
         data: me && me.lastStart
       })
     }
-  }, [todos && todos.length, todosLoaded, started, me && me.lastStart]); // 시작하지 않았다면 지난 날의 투두 데이터 가져오기
+  }, [todos && todos[0], todosLoaded, started, me && me.lastStart]); // 시작하지 않았다면 지난 날의 투두 데이터 가져오기
 
   const onStartTodo = useCallback(() => {
     setStarted(true);
@@ -75,7 +83,7 @@ const CheckList = memo(({id}) => {
 
   const onClickWriteHistory = () => {
     setWritingHistory(true);
-  } // 히스토리에 저장모드
+  } // 히스토리 작성모드
 
   const clear = useCallback((historyContent) => () => {
     dispatch({
@@ -86,7 +94,7 @@ const CheckList = memo(({id}) => {
       }
     });
     setWritingHistory(false);
-  }, []); // 히스토리 내용 설정 안할 시 기본 텍스트로 히스토리 추가
+  }, []); // 투두 클리어. (히스토리 내용 설정 안할 시 기본 텍스트로 히스토리 추가)
 
 
   return (
@@ -101,7 +109,7 @@ const CheckList = memo(({id}) => {
                       {todos.map((c, i)=>{
                         return (
                         <Animated animationIn="fadeInUp" animationInDelay={i*100} animationInDuration={500} isVisible={true} key={i}>
-                          <LastTodo checked={c.checked} onClick = {onClickAddLast(c.content)}><Checked checked={c.checked}/>{c.content}</LastTodo>
+                          <UserTodo checked={c.checked} onClick = {onClickAddLast(c.content)}><Checked checked={c.checked}/>{c.content}</UserTodo>
                         </Animated>
                         );
                       })}
@@ -116,7 +124,7 @@ const CheckList = memo(({id}) => {
               </Illust>
           </StartTodo>
       : //자신의 할 일 목록
-        todos && todos[0] || started ? ( //이미 오늘의 할 일을 추가했다면
+        todos && todos[0] || started ? ( //오늘의 할 일 시작하기를 눌렀거나 이미 할일이 있다면
           <> 
           {writingHistory &&
             <TodoCompletePopup clear={clear}/>
@@ -294,6 +302,10 @@ const LastTodo = styled.li`
     padding: 8px 15px;
     color: ${props=>props.checked? props.theme.purpleDark:props.theme.yellowDark};
     cursor: pointer;
+`;
+
+const UserTodo = styled(LastTodo)`
+  cursor: default;
 `;
 
 const CopyCheck = styled(Checked)`

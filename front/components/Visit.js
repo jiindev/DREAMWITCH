@@ -1,8 +1,7 @@
-import React, { useState, useRef, useCallback, useEffect, memo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useCallback, memo } from "react";
+import { useSelector } from "react-redux";
 import {H2} from './styledComponents/PageComponent';
 import styled from 'styled-components';
-import { REMOVE_FOLLOWING_REQUEST, ADD_FOLLOWING_REQUEST } from "../reducers/user";
 import AddFriend from "./AddFriend";
 import UserList from './UserList';
 

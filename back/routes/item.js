@@ -36,7 +36,7 @@ router.patch("/equip/:id", async(req, res, next) => {
         UserId: req.user.id,
       }
     });
-    res.send({itemType: req.body.itemType, itemId: req.body.itemId});
+    res.json({itemType: req.body.itemType, itemId: req.body.itemId});
   }catch(e){
     console.error(e);
     next(e);

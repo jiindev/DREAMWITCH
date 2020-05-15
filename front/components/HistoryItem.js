@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect, memo } from "react";
+import React, { useState, useCallback, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LOAD_HISTORY_REQUEST, ADD_COMMENT_REQUEST, REMOVE_COMMENT_REQUEST } from "../reducers/history";
 import styled from 'styled-components';

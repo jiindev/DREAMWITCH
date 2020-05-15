@@ -50,9 +50,9 @@ export const EDIT_GREETINGS_REQUEST = 'EDIT_GREETINGS_REQUEST';
 export const EDIT_GREETINGS_SUCCESS = 'EDIT_GREETINGS_SUCCESS';
 export const EDIT_GREETINGS_FAILURE = 'EDIT_GREETINGS_FAILURE';
 
-export const LOAD_TODAY_USERS_REQUEST = 'LOAD_TODAY_USERS_REQUEST';
-export const LOAD_TODAY_USERS_SUCCESS = 'LOAD_TODAY_USERS_SUCCESS';
-export const LOAD_TODAY_USERS_FAILURE = 'LOAD_TODAY_USERS_FAILURE';
+export const LOAD_RANKING_USERS_REQUEST = 'LOAD_RANKING_USERS_REQUEST';
+export const LOAD_RANKING_USERS_SUCCESS = 'LOAD_RANKING_USERS_SUCCESS';
+export const LOAD_RANKING_USERS_FAILURE = 'LOAD_RANKING_USERS_FAILURE';
 
 export const GET_EXP = 'GET_EXP';
 export const GET_STARS = 'GET_STARS';
@@ -188,14 +188,14 @@ const reducer = (state = initialState, action) => {
       case EDIT_GREETINGS_FAILURE: {
         break;
       }
-      case LOAD_TODAY_USERS_REQUEST: {
+      case LOAD_RANKING_USERS_REQUEST: {
         break;
       }
-      case LOAD_TODAY_USERS_SUCCESS: {
+      case LOAD_RANKING_USERS_SUCCESS: {
         draft.userRanking = action.data;
         break;
       }
-      case LOAD_TODAY_USERS_FAILURE: {
+      case LOAD_RANKING_USERS_FAILURE: {
         break;
       }
       case SET_PAGE:{

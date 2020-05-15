@@ -10,7 +10,7 @@ import propTypes from 'prop-types';
 import { LOAD_TODOS_REQUEST } from "../reducers/todo";
 import { LOAD_USER_HISTORIES_REQUEST } from "../reducers/history";
 import AppLayout from "../components/AppLayout";
-import { Wrap, TopContent, Loading, Level, LogoutButton, TabItem, UserStatue, Tab, Star } from './index';
+import { Wrap, TopContent, Loading, Level, LogoutButton, TabItem, UserStatue, Tab, Star, UserName } from './index';
 import {Helmet} from 'react-helmet';
 
 const User = memo(({id}) => {
@@ -34,7 +34,7 @@ const User = memo(({id}) => {
       type: LOG_OUT_REQUEST
     })
   }
-  if(userInfo && userInfo.id !== id){
+  if(userInfo && userInfo.id !== id || !userInfo){
     return null;
   }
   return (
@@ -64,7 +64,8 @@ const User = memo(({id}) => {
                 <a><HomeButton>돌아가기</HomeButton></a>
               </Link>
               }
-              <UserInfo>{userInfo && `${userInfo.nickname} (${userInfo.userId})`}</UserInfo>
+              <UserName>{userInfo && `${userInfo.nickname} (${userInfo.userId})`}</UserName>
+              <Level>{userInfo && userInfo.level}</Level>
             </UserStatue>
          {me && <LogoutButton onClick={onLogout}><i/></LogoutButton>}
           <Character id={id}/>
@@ -88,14 +89,14 @@ const User = memo(({id}) => {
 const UserTabItem = styled(TabItem)`
     flex: 0.5;
 `;
-
-const UserInfo = styled(Level)``;
 const HomeButton = styled(Star)`
+  font-size: 12px;
   &:before{
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     background: url('/icons/friend_back.svg');
-    background-size: contain;
+    background-size: 14px 14px;
+    background-position: center center;
     background-repeat: no-repeat;
   }
 `;

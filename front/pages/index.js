@@ -6,7 +6,7 @@ import Closet from "../components/Closet";
 import Visit from '../components/Visit';
 import { useSelector, useDispatch } from "react-redux";
 import Router from "next/router";
-import { LOG_OUT_REQUEST, LEVEL_UP_REQUEST, SET_PAGE, LOAD_TODAY_USERS_REQUEST } from "../reducers/user";
+import { LOG_OUT_REQUEST, LEVEL_UP_REQUEST, SET_PAGE, LOAD_RANKING_USERS_REQUEST } from "../reducers/user";
 import styled, {keyframes} from 'styled-components';
 import { LOAD_HISTORIES_REQUEST } from "../reducers/history";
 import { LOAD_TODOS_REQUEST } from "../reducers/todo";
@@ -15,6 +15,7 @@ import { levelCheck } from '../components/data/levelData';
 import AppLayout from "../components/AppLayout";
 import { SAY_LEVEL_UP } from "../reducers/character";
 import LevelUpPopup from "../components/LevelUpPopup";
+import UserSetting from "../components/UserSetting";
 
 const Index = memo(() => {
   const dispatch = useDispatch();
@@ -70,9 +71,12 @@ const Index = memo(() => {
       <Wrap>
         {levelUp && <LevelUpPopup/>}
         {historyLoading  && <Loading/>}
+        <UserSetting/>
        <TopContent>
          <UserStatue>
-            <Star>{me && me.star}</Star><Level>{me && me.level}</Level>
+            <Star>{me && me.star}</Star>
+            <UserName>{me && `${me.nickname} (${me.userId})`}<SettingButton/></UserName>
+            <Level>{me && me.level}</Level>
          </UserStatue>
          <LogoutButton onClick={onLogout}><i/></LogoutButton>
           <Character></Character>
@@ -176,19 +180,48 @@ export const UserStatue = styled.div`
   width: 100%;
 `;
 
-export const Level = styled.span`
+export const UserName = styled.span`
   background-color: ${props => props.theme.purpleDark}; 
   color: ${props => props.theme.purpleLight}; 
   font-size: 12px;
   padding: 10px 15px;
   display: inline-block;
   border-radius: 0 0 0 20px;
-  float: right;
+  position: absolute;
+  top: 0;
+  right: 0;
+`;
+const SettingButton = styled.span`
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    vertical-align: middle;
+    margin-left: 5px;
+    background: url('/icons/friend_setting_off.svg');
+    background-size: contain;
+    cursor: pointer;
+`;
+
+export const Level = styled.span`
+  background-color: ${props => props.theme.purpleMedium}; 
+  color: #e995fc; 
+  font-size: 12px;
+  padding: 10px 12px;
+  display: inline;
+  border-radius: 0 0 0 20px;
+  position: absolute;
+  top: 32px;
+  right: 0;
 `;
 
 export const Star = styled(Level)`
+background-color: ${props => props.theme.purpleDark}; 
+color: ${props => props.theme.purpleLight}; 
 border-radius: 0 0 20px 0;
-float: left;
+position: absolute;
+top: 0;
+left: 0;
+right: auto;
   &:before{
     content: '';
     display: inline-block;
@@ -204,14 +237,14 @@ float: left;
 export const LogoutButton = styled.button`
   position: absolute;
   top: 32px;
-  right: 0;
+  left: 0;
   z-index: 98;
   width: 40px;
   height: 34px;
   background-color: ${props => props.theme.purpleLight}; 
   outline: none;
   border: 0;
-  border-radius: 0 0 0 20px;
+  border-radius: 0 0 20px 0;
   cursor: pointer;
   transition: all .2s ease;
   & i{
@@ -239,7 +272,7 @@ Index.getInitialProps = async (context) => {
     type: LOAD_EQUIPMENT_REQUEST
   })
   context.store.dispatch({
-    type: LOAD_TODAY_USERS_REQUEST
+    type: LOAD_RANKING_USERS_REQUEST
   })
 }
 
