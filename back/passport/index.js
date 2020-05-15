@@ -13,7 +13,7 @@ module.exports = () => {
         include: [{
           model: db.User,
           as: 'Followings',
-          attributes: ['id', 'nickname', 'userId']
+          attributes: ['id', 'nickname', 'userId', 'private']
         }],
         attributes: ['id', 'nickname', 'userId', 'level', 'exp', 'star', 'lastStart', 'greetings', 'private'],
       });

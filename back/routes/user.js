@@ -82,7 +82,7 @@ router.post("/login", async(req, res, next) => {
           include: [{
             model: db.User,
             as: 'Followings',
-            attributes: ['id', 'nickname', 'userId']
+            attributes: ['id', 'nickname', 'userId', 'private']
           }],
           attributes: ['id', 'nickname', 'userId', 'level', 'exp', 'star','lastStart', 'greetings', 'private'],
         });
