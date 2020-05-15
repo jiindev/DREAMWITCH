@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       level: {
         type: DataTypes.STRING(10),
         allowNull: false,
-        defaultValue: '풋내기마녀',
+        defaultValue: '풋내기',
       },
       exp: {
         type: DataTypes.INTEGER,
@@ -40,11 +40,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         defaultValue: '안녕~ 반가워!'
       },
-      // private: {
-      //   type: DataTypes.BOOLEAN,
-      //   allowNull: false,
-      //   defaultValue: false,
-      // }
+      private: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      }
     },
     {
       charset: "utf8",

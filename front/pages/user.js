@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, memo } from "react";
 import Link from "next/link";
+import Router from 'next/router';
 import Character from "../components/Character";
 import History from "../components/History";
 import TodoList from "../components/TodoList";
@@ -20,6 +21,13 @@ const User = memo(({id}) => {
   const [page, setPage] = useState(1);
 
   useEffect(()=>{
+    if(userInfo && userInfo.private===true){
+      alert('비공개 사용자입니다.');
+      return Router.back();
+    }
+  }, [userInfo && userInfo.private]);
+
+  useEffect(()=>{
     setPage(1);
   }, [id]);
 
@@ -34,7 +42,7 @@ const User = memo(({id}) => {
       type: LOG_OUT_REQUEST
     })
   }
-  if(userInfo && userInfo.id !== id || !userInfo){
+  if(userInfo && userInfo.id !== id || !userInfo || userInfo.private===true){
     return null;
   }
   return (
@@ -67,7 +75,7 @@ const User = memo(({id}) => {
               <UserName>{userInfo && `${userInfo.nickname} (${userInfo.userId})`}</UserName>
               <Level>{userInfo && userInfo.level}</Level>
             </UserStatue>
-         {me && <LogoutButton onClick={onLogout}><i/></LogoutButton>}
+         {me ? <LogoutButton onClick={onLogout}><i/></LogoutButton> : <LoginButton onClick={() => Router.push('/login')}><i/></LoginButton>}
           <Character id={id}/>
         <Tab>
           <ul>
@@ -98,6 +106,13 @@ const HomeButton = styled(Star)`
     background-size: 14px 14px;
     background-position: center center;
     background-repeat: no-repeat;
+  }
+`;
+
+const LoginButton = styled(LogoutButton)`
+  top: 0;
+  & i{
+    background: url('/icons/login.svg');
   }
 `;
 

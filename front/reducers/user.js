@@ -50,6 +50,14 @@ export const EDIT_GREETINGS_REQUEST = 'EDIT_GREETINGS_REQUEST';
 export const EDIT_GREETINGS_SUCCESS = 'EDIT_GREETINGS_SUCCESS';
 export const EDIT_GREETINGS_FAILURE = 'EDIT_GREETINGS_FAILURE';
 
+export const EDIT_NICKNAME_REQUEST = 'EDIT_NICKNAME_REQUEST';
+export const EDIT_NICKNAME_SUCCESS = 'EDIT_NICKNAME_SUCCESS';
+export const EDIT_NICKNAME_FAILURE = 'EDIT_NICKNAME_FAILURE';
+
+export const EDIT_PRIVATE_REQUEST = 'EDIT_PRIVATE_REQUEST';
+export const EDIT_PRIVATE_SUCCESS = 'EDIT_PRIVATE_SUCCESS';
+export const EDIT_PRIVATE_FAILURE = 'EDIT_PRIVATE_FAILURE';
+
 export const LOAD_RANKING_USERS_REQUEST = 'LOAD_RANKING_USERS_REQUEST';
 export const LOAD_RANKING_USERS_SUCCESS = 'LOAD_RANKING_USERS_SUCCESS';
 export const LOAD_RANKING_USERS_FAILURE = 'LOAD_RANKING_USERS_FAILURE';
@@ -186,6 +194,26 @@ const reducer = (state = initialState, action) => {
         break;
       }
       case EDIT_GREETINGS_FAILURE: {
+        break;
+      }
+      case EDIT_NICKNAME_REQUEST: {
+        break;
+      }
+      case EDIT_NICKNAME_SUCCESS: {
+        draft.me.nickname = action.data;
+        break;
+      }
+      case EDIT_NICKNAME_FAILURE: {
+        break;
+      }
+      case EDIT_PRIVATE_REQUEST: {
+        break;
+      }
+      case EDIT_PRIVATE_SUCCESS: {
+        draft.me.private = action.data;
+        break;
+      }
+      case EDIT_PRIVATE_FAILURE: {
         break;
       }
       case LOAD_RANKING_USERS_REQUEST: {

@@ -17,7 +17,8 @@ moment.locale('ko');
 const CheckList = memo(({id}) => {
   const dispatch = useDispatch();
   const { todos, isCleared, lastTodos, todosLoaded } = useSelector((state) => state.todo);
-  const { me, userInfo } = useSelector(state=>state.user);
+  const userInfo = useSelector(state=>state.user.userInfo);
+  const lastStart = useSelector(state=>state.user.me && state.user.me.lastStart);
   const [started, setStarted] = useState(false);
   const [todosToCopy, setTodosToCopy] = useState([]);
   const [writingHistory, setWritingHistory] = useState(false);
@@ -43,10 +44,10 @@ const CheckList = memo(({id}) => {
     if(!started && todosLoaded && !todos[0] && !id){
       return dispatch({
         type: LOAD_LAST_TODOS_REQUEST,
-        data: me && me.lastStart
+        data: lastStart
       })
     }
-  }, [todos && todos[0], todosLoaded, started, me && me.lastStart]); // 시작하지 않았다면 지난 날의 투두 데이터 가져오기
+  }, [todos && todos[0], todosLoaded, started, lastStart]); // 시작하지 않았다면 지난 날의 투두 데이터 가져오기
 
   const onStartTodo = useCallback(() => {
     setStarted(true);
@@ -81,9 +82,9 @@ const CheckList = memo(({id}) => {
     }
   }, [todosToCopy]); // 복사할 지난 투두 선택
 
-  const onClickWriteHistory = () => {
+  const onClickWriteHistory = useCallback(() => {
     setWritingHistory(true);
-  } // 히스토리 작성모드
+  }, []) // 히스토리 작성모드
 
   const clear = useCallback((historyContent) => () => {
     dispatch({

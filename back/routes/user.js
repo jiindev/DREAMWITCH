@@ -24,7 +24,7 @@ router.get("/:id", async(req, res, next) => {
         as: 'Equipment',
         attributes: ['id', 'hat', 'clothes', 'hair', 'bg', 'wand', 'cat']
       }],
-      attributes: ['id', 'nickname', 'level', 'greetings', 'userId']
+      attributes: ['id', 'nickname', 'level', 'greetings', 'userId', 'private']
     });
     
     const jsonUser = user.toJSON();
@@ -84,7 +84,7 @@ router.post("/login", async(req, res, next) => {
             as: 'Followings',
             attributes: ['id', 'nickname', 'userId']
           }],
-          attributes: ['id', 'nickname', 'userId', 'level', 'exp', 'star','lastStart', 'greetings'],
+          attributes: ['id', 'nickname', 'userId', 'level', 'exp', 'star','lastStart', 'greetings', 'private'],
         });
         return res.json(fullUser);
       }catch(e){
@@ -177,6 +177,36 @@ router.patch("/greetings", isLoggedIn, async(req, res, next) => {
       where: {id: req.user.id}
     });
     res.send(req.body.greetings);
+  }catch(e){
+    console.error(e);
+    next(e);
+  }
+});
+
+router.patch("/nickname", isLoggedIn, async(req, res, next) => {
+  //닉네임 수정
+  try{
+    const nickname = await db.User.update({
+      nickname: req.body.nickname
+    }, {
+      where: {id: req.user.id}
+    });
+    res.send(req.body.nickname);
+  }catch(e){
+    console.error(e);
+    next(e);
+  }
+});
+
+router.patch("/private", isLoggedIn, async(req, res, next) => {
+  //공개 설정 수정
+  try{
+    const private = await db.User.update({
+      private: req.body.private
+    }, {
+      where: {id: req.user.id}
+    });
+    res.send(req.body.private);
   }catch(e){
     console.error(e);
     next(e);

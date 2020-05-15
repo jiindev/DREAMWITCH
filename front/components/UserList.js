@@ -9,7 +9,8 @@ import propTypes from 'prop-types';
 const UserList = memo(({title, users, editingMode}) => {
     const dispatch = useDispatch();
     const [showList, setShowList] = useState(true);
-    const { me } = useSelector(state=>state.user);
+    const meId = useSelector(state=>state.user.me && state.user.me.id);
+    const meFollowings = useSelector(state=>state.user.me && state.user.me.Followings);
 
     const onToggleShow = useCallback(() => {
         setShowList(!showList)
@@ -42,8 +43,8 @@ const UserList = memo(({title, users, editingMode}) => {
                         {v.nickname}<span>({v.userId})</span>
                         {editingMode ? 
                         <DeleteButton onClick={onRemoveFriend(v.id)}>친구삭제</DeleteButton> 
-                        : me && me.id !== v.id  && <Link href={{pathname: '/user', query:{id:v.id}}} as={`/user/${v.id}`}><VisitButton>방문하기</VisitButton></Link>}
-                        {me && me.id !== v.id  && !(me.Followings.find(following=>following.id===v.id)) && 
+                        : meId !== v.id  && <Link href={{pathname: '/user', query:{id:v.id}}} as={`/user/${v.id}`}><VisitButton>방문하기</VisitButton></Link>}
+                        {meId !== v.id  && !(meFollowings.find(following=>following.id===v.id)) && 
                         <AddButton onClick={onAddFriend(v.userId)}>친구추가</AddButton> }
                     </li>
                     </Animated>);

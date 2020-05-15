@@ -258,6 +258,7 @@ const CommentInput = styled.div`
         box-sizing: border-box;
         outline: none;
         color: ${props => props.theme.black};
+        font-family: 'GmarketSansMedium';
         &::placeholder{
             color: ${props=>props.theme.purpleMedium};
             opacity: .3;

@@ -10,7 +10,7 @@ const ClosetItem = memo(({v, i}) => {
     const dispatch = useDispatch();
     const equipment = useSelector(state=>state.item.equipment && state.item.equipment[v.type]);
     const items = useSelector(state=>state.item.items && state.item.items[v.type]);
-    const { me } = useSelector(state=>state.user);
+    const star = useSelector(state=>state.user.me && state.user.me.star);
 
     const onClickItem = useCallback((item) => () => {
         if(!items.includes(item.id)){ // 현재 아이템 목록에 없음 (구매기능)

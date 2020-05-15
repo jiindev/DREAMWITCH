@@ -31,6 +31,12 @@ import {
   LOAD_RANKING_USERS_SUCCESS,
   LOAD_RANKING_USERS_FAILURE,
   LOAD_RANKING_USERS_REQUEST,
+  EDIT_NICKNAME_SUCCESS,
+  EDIT_NICKNAME_FAILURE,
+  EDIT_NICKNAME_REQUEST,
+  EDIT_PRIVATE_REQUEST,
+  EDIT_PRIVATE_SUCCESS,
+  EDIT_PRIVATE_FAILURE,
 } from "../reducers/user";
 import Router from 'next/router';
 import { SAY_HELLO } from "../reducers/character";
@@ -268,6 +274,54 @@ function* watchEditGreetings() {
   yield takeLatest(EDIT_GREETINGS_REQUEST, editGreetings);
 }
 
+function editNicknameAPI(nickname) {
+  return axios.patch(`/user/nickname`, nickname, {
+    withCredentials: true
+  });
+}
+function* editNickname(action) {
+  try {
+    const result = yield call(editNicknameAPI, action.data);
+    yield put({
+      type: EDIT_NICKNAME_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: EDIT_NICKNAME_FAILURE,
+      error: e,
+    });
+  }
+}
+function* watchEditNickname() {
+  yield takeLatest(EDIT_NICKNAME_REQUEST, editNickname);
+}
+
+function editPrivateAPI(privateSetting) {
+  return axios.patch(`/user/private`, privateSetting, {
+    withCredentials: true
+  });
+}
+function* editPrivate(action) {
+  try {
+    const result = yield call(editPrivateAPI, action.data);
+    yield put({
+      type: EDIT_PRIVATE_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: EDIT_PRIVATE_FAILURE,
+      error: e,
+    });
+  }
+}
+function* watchEditPrivate() {
+  yield takeLatest(EDIT_PRIVATE_REQUEST, editPrivate);
+}
+
 function loadRankingUsersAPI() {
   return axios.get('/users/rank', {
     withCredentials: true
@@ -305,6 +359,8 @@ export default function* userSaga() {
     fork(watchAddFollowing),
     fork(watchLevelUp),
     fork(watchEditGreetings),
-    fork(watchLoadRankingUsers)
+    fork(watchLoadRankingUsers),
+    fork(watchEditPrivate),
+    fork(watchEditNickname)
   ]);
 }

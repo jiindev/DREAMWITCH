@@ -26,7 +26,7 @@ const LevelUpPopup = () => {
     );
 };
 
-const PopUp = styled.div`
+export const PopUp = styled.div`
   position: absolute;
   z-index: 999;
   bottom: 10px;

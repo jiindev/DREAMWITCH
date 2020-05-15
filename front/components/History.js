@@ -11,7 +11,7 @@ import propTypes from 'prop-types';
 const History = memo(({id}) => {
   const dispatch = useDispatch();
   const { histories, hasMoreHistories } = useSelector(state=>state.history);
-  const {userInfo} = useSelector(state=>state.user);
+  const userInfo = useSelector(state=>state.user.userInfo);
   const historyPageRef = useRef();
   const countRef = useRef([]);
 

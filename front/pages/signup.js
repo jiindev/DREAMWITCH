@@ -101,6 +101,8 @@ const Signup = memo(() => {
   const onChangeNickname = useCallback((e) => {
     if(!e.target.value){
       setNicknameError('필수 정보입니다.');
+    }else if(e.target.value.length<2){
+      setNicknameError('닉네임은 최소 2글자로 설정해주세요.');
     }else{
       setNicknameError('');
     }

@@ -22,6 +22,7 @@ const Index = memo(() => {
   const { me, page } = useSelector((state) => state.user);
   const {historyLoading} = useSelector((state)=>state.history);
   const [levelUp, setLevelUp] = useState(false);
+  const [settingShown, setSettingShown] = useState(false);
 
   useEffect(()=>{
     if(!me){
@@ -56,11 +57,19 @@ const Index = memo(() => {
     }
   }, [page]);
 
-  const onLogout = () => {
+  const onLogout = useCallback(() => {
     dispatch({
       type: LOG_OUT_REQUEST
     })
-  }
+  }, []);
+
+  const settingOn = useCallback(() => {
+    setSettingShown(true);
+  }, []);
+
+  const settingOff = useCallback(()=>{
+    setSettingShown(false);
+  }, []);
 
   if(!me){
     return null;
@@ -71,11 +80,11 @@ const Index = memo(() => {
       <Wrap>
         {levelUp && <LevelUpPopup/>}
         {historyLoading  && <Loading/>}
-        <UserSetting/>
+        {settingShown && <UserSetting settingOff={settingOff}/>}
        <TopContent>
          <UserStatue>
             <Star>{me && me.star}</Star>
-            <UserName>{me && `${me.nickname} (${me.userId})`}<SettingButton/></UserName>
+            <UserName>{me && `${me.nickname} (${me.userId})`}<SettingButton onClick={settingShown ? settingOff : settingOn}/></UserName>
             <Level>{me && me.level}</Level>
          </UserStatue>
          <LogoutButton onClick={onLogout}><i/></LogoutButton>
@@ -197,7 +206,7 @@ const SettingButton = styled.span`
     height: 12px;
     vertical-align: middle;
     margin-left: 5px;
-    background: url('/icons/friend_setting_off.svg');
+    background: url('/icons/me_setting.svg');
     background-size: contain;
     cursor: pointer;
 `;
@@ -237,7 +246,7 @@ right: auto;
 export const LogoutButton = styled.button`
   position: absolute;
   top: 32px;
-  left: 0;
+  left: -6px;
   z-index: 98;
   width: 40px;
   height: 34px;
@@ -250,7 +259,7 @@ export const LogoutButton = styled.button`
   & i{
     width: 16px;
     height: 16px;
-    background-image: url('/icons/back_to_home.svg');
+    background-image: url('/icons/logout.svg');
     display: inline-block;
   }
   &:hover{
