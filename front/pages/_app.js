@@ -47,7 +47,7 @@ class DreamWitch extends App{
     return(
       <Provider store={store}>
           <Helmet
-          title="DREAMWITCH :: 꿈의 마녀"
+          title="DREAMWITCH :: 꿈을 이루어줄게!"
           htmlAttributes={{lang:'ko'}}
           meta={[{
             charset: 'UTF-8'
@@ -56,7 +56,7 @@ class DreamWitch extends App{
           }, {
             'http-equiv': 'X-UA-Compatible', content: 'IE=edge',
           }, {
-            name: 'og:title', content: 'DREAMWITCH :: 꿈의 마녀',
+            name: 'og:title', content: 'DREAMWITCH :: 꿈을 이루어줄게!',
           }, {
             name: 'og:description', content: '꿈을 이루기 위한 할일 관리 프로젝트',
           }, {
@@ -91,7 +91,7 @@ const configureStore = (initialState, options) => {
   ];
   const enhancer =
     process.env.NODE_ENV === "production"
-      ? comspose(applyMiddleware(...middlewares))
+      ? compose(applyMiddleware(...middlewares))
       : compose(
           applyMiddleware(...middlewares),
           !options.isServer &&

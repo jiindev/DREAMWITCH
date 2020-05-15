@@ -223,7 +223,7 @@ const Wrap = styled.div`
   padding: 30px 15px;
   box-sizing: border-box;
   margin: 0 auto;
-  @media only screen and (min-width: 769px) and (min-height: 900px) {
+  @media only screen and (min-width: 768px) and (min-height: 900px) {
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -87,7 +87,10 @@ export const Background = styled.div`
   background: url('/img/login_pattern.png');
   background-size: 300px 300px;
   background-position: center center;
-  height: 100vh;
+  height: 100%;
+  @media only screen and (min-width: 768px) and (min-height: 900px) {
+    height: 100vh;
+  }
 `;
 
 const Wrap = styled.div`
