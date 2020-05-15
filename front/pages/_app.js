@@ -12,11 +12,40 @@ import themes from '../components/styledComponents/theme';
 import GlobalStyle from '../components/styledComponents/GlobalStyle';
 import Axios from "axios";
 import { LOAD_USER_REQUEST } from "../reducers/user";
+import App from 'next/app';
 import {Helmet} from 'react-helmet';
 
-const DreamWitch = ({ Component, store, pageProps }) => (
-    <>
-        <Provider store={store}>
+class DreamWitch extends App{
+  static propTypes = {
+    Component: propTypes.elementType.isRequired,
+    store: propTypes.object.isRequired,
+    pageProps: propTypes.object.isRequired,
+  };
+  static async getInitialProps (context){
+    const {ctx, Component} = context;
+    let pageProps = {};
+    const state= ctx.store.getState();
+    const cookie = ctx.isServer ? ctx.req.headers.cookie : '';
+    if(ctx.isServer){
+      Axios.defaults.headers.cookie = '';
+    }
+    if(ctx.isServer && cookie){
+      Axios.defaults.headers.cookie = cookie;
+    }
+    if(!state.user.me){
+      ctx.store.dispatch({
+        type:LOAD_USER_REQUEST
+      })
+    }
+    if(Component.getInitialProps){
+      pageProps = await Component.getInitialProps(ctx) || {};
+    }
+    return {pageProps};
+  }
+  render(){
+    const {Component, store, pageProps} = this.props;
+    return(
+      <Provider store={store}>
           <Helmet
           title="DREAMWITCH :: 꿈의 마녀"
           htmlAttributes={{lang:'ko'}}
@@ -44,41 +73,14 @@ const DreamWitch = ({ Component, store, pageProps }) => (
               <Component {...pageProps}/>
             </ThemeProvider>
         </Provider>
-    </>
-);
-
-DreamWitch.propTypes = {
-  Component: propTypes.elementType.isRequired,
-  store: propTypes.object.isRequired,
-  pageProps: propTypes.object.isRequired,
-};
+    )
+  }
+}
 
 const middleware = (store) => (next) => (action) => {
   console.log(action);
   next(action);
 };
-
-DreamWitch.getInitialProps = async (context) => {
-  const {ctx, Component} = context;
-  let pageProps = {};
-  const state= ctx.store.getState();
-  const cookie = ctx.isServer ? ctx.req.headers.cookie : '';
-  if(ctx.isServer){
-    Axios.defaults.headers.cookie = '';
-  }
-  if(ctx.isServer && cookie){
-    Axios.defaults.headers.cookie = cookie;
-  }
-  if(!state.user.me){
-    ctx.store.dispatch({
-      type:LOAD_USER_REQUEST
-    })
-  }
-  if(Component.getInitialProps){
-    pageProps = await Component.getInitialProps(ctx) || {};
-  }
-  return {pageProps};
-}
 
 const configureStore = (initialState, options) => {
   const sagaMiddleware = createSagaMiddleware();

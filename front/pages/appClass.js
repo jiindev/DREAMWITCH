@@ -16,6 +16,11 @@ import App from 'next/app';
 import {Helmet} from 'react-helmet';
 
 class DreamWitch extends App{
+  static propTypes = {
+    Component: propTypes.elementType.isRequired,
+    store: propTypes.object.isRequired,
+    pageProps: propTypes.object.isRequired,
+  };
   static async getInitialProps (context){
     const {ctx, Component} = context;
     let pageProps = {};
@@ -71,12 +76,6 @@ class DreamWitch extends App{
     )
   }
 }
-
-DreamWitch.propTypes = {
-  Component: propTypes.elementType.isRequired,
-  store: propTypes.object.isRequired,
-  pageProps: propTypes.object.isRequired,
-};
 
 const middleware = (store) => (next) => (action) => {
   console.log(action);
