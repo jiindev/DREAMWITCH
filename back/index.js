@@ -55,6 +55,6 @@ app.use("/api/item", itemAPIRouter);
 app.use("/api/items", itemsAPIRouter);
 app.use("/api/users", usersAPIRouter);
 
-app.listen(3065, () => {
-  console.log("server is running on http://localhost:3065");
+app.listen(process.env.NODE_ENV === 'production' ? process.env.PORT : 3065, () => {
+  console.log(`server is running on ${process.env.PORT}`);
 });
