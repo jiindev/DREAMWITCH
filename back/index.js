@@ -46,6 +46,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.get('/', (req, res)=>{
+  res.send('dreamwitch 정상 동작');
+})
+
 app.use("/api/user", userAPIRouter);
 app.use("/api/todo", todoAPIRouter);
 app.use("/api/todos", todosAPIRouter);
