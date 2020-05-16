@@ -21,7 +21,6 @@ const usersAPIRouter = require('./routes/users');
 const prod = process.env.NODE_ENV === 'production';
 dotenv.config();
 const app = express();
-
 db.sequelize.sync();
 passportConfig();
 
@@ -30,14 +29,14 @@ if(prod){
   app.use(helmet());
   app.use(morgan('combined'));
   app.use(cors({
-    origin: 'http://dreamwitch.kr',
+    origin: /dreamwitch\.kr$/,
     credentials: true,
-  }))
+  }));
 }else{
-  app.use(morgan("dev"));
+  app.use(morgan('dev'));
   app.use(cors({
     origin: true,
-    credentials: true
+    credentials: true,
   }));
 }
 
