@@ -19,12 +19,12 @@ const Closet = memo(() => {
     <>
     <ClosetPage>
       <H2>마녀의 옷장</H2>
-      <ClosetSection title="HAT" itemsData={hatItems} delay={50}/>
-      <ClosetSection title="HAIR" itemsData={hairItems} delay={100}/>
-      <ClosetSection title="CLOTHES" itemsData={clothesItems} delay={150}/>
-      <ClosetSection title="BACKGROUND" itemsData={bgItems} delay={200}/>
-      <ClosetSection title="WAND" itemsData={wandItems} delay={250}/>
-      <ClosetSection title="CAT" itemsData={catItems} delay={300}/>
+      <ClosetSection title="HAT" iconName='hat' itemsData={hatItems} delay={50}/>
+      <ClosetSection title="HAIR" iconName='hair' itemsData={hairItems} delay={100}/>
+      <ClosetSection title="CLOTHES" iconName='clothes' itemsData={clothesItems} delay={150}/>
+      <ClosetSection title="BACKGROUND" iconName='background' itemsData={bgItems} delay={200}/>
+      <ClosetSection title="WAND" iconName='wand' itemsData={wandItems} delay={250}/>
+      <ClosetSection title="CAT" iconName='cat' itemsData={catItems} delay={300}/>
     </ClosetPage>
   </>);
 });

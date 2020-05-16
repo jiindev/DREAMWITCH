@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import ClosetItem from "./ClosetItem";
 import propTypes from 'prop-types';
 
-const ClosetSection = ({title, itemsData, delay}) => {
+const ClosetSection = ({title, iconName, itemsData, delay}) => {
     return (
         <Animated animationIn="fadeIn" animationInDelay={delay} animationInDuration={500} isVisible={true}>
             <Section>
-            <H3 type={title}>{title}</H3>
+            <H3 type={iconName}>{title}</H3>
             <ItemList>
                 {itemsData.map((v, i)=>{
                 return <ClosetItem v={v} i={i} key={i}/>

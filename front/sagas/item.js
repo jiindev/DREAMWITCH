@@ -84,7 +84,7 @@ function* watchBuyItem() {
 }
 
 function equipItemAPI(itemData) {
-  return axios.patch(`/item/equip/${itemData.itemId}`, itemData,{
+  return axios.patch(`/item/equip`, itemData,{
     withCredentials: true
   });
 }

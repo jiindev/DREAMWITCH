@@ -26,7 +26,7 @@ router.post("/", async(req, res, next) => {
   }
 });
 
-router.patch("/equip/:id", async(req, res, next) => {
+router.patch("/equip", async(req, res, next) => {
   //아이템 장착
   try{
     const equippedItem = await db.Equipment.update({
