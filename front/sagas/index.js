@@ -1,4 +1,4 @@
-import { all, call, fork } from "redux-saga/effects";
+import { all, fork } from "redux-saga/effects";
 import todo from "./todo";
 import user from "./user";
 import history from './history';

@@ -4,13 +4,13 @@ import {Animated} from 'react-animated-css';
 import EditNickname from "./EditNickname";
 import EditPrivate from "./EditPrivate";
 
-const UserSetting = memo(({settingOff}) => {
+const UserSetting = memo(({onClickSetting}) => {
     const [disappear, setDisappear] = useState(false);
     
     const onClose = useCallback(() => {
         setDisappear(true);
         setTimeout(()=>{
-            settingOff();
+            onClickSetting();
         }, 800)
     }, []);
 

@@ -5,6 +5,7 @@ const router = express.Router();
 const db = require("../models");
 const {isLoggedIn, isNotLoggedIn} = require('./middleware');
 const moment = require('moment');
+const sequelize = require('sequelize');
 moment.locale('ko');
 
 router.get("/", isLoggedIn, async(req, res, next) => {
@@ -157,7 +158,8 @@ router.patch("/level", isLoggedIn, async(req, res, next) => {
   //레벨업
   try{
     const levelUp = await db.User.update({
-      level: req.body.level
+      level: req.body.level,
+      star: sequelize.literal(`star + 10`),
     }, {
       where: {id: req.user.id}
     });

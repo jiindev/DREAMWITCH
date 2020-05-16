@@ -1,4 +1,4 @@
-import { all, delay, put, takeLatest, fork, call, takeEvery } from "redux-saga/effects";
+import { all, put, takeLatest, fork, call, takeEvery } from "redux-saga/effects";
 import axios from "axios";
 import {
   LOG_IN_FAILURE,
@@ -37,6 +37,7 @@ import {
   EDIT_PRIVATE_REQUEST,
   EDIT_PRIVATE_SUCCESS,
   EDIT_PRIVATE_FAILURE,
+  GET_STARS,
 } from "../reducers/user";
 import Router from 'next/router';
 import { SAY_HELLO } from "../reducers/character";
@@ -237,7 +238,11 @@ function* levelUp(action) {
         type: 'levelUp',
         content: `나는 이제 ${action.data.level}!`
       }
-    })
+    });
+    yield put({
+      type: GET_STARS,
+      data: 10
+    });
   } catch (e) {
     console.error(e);
     yield put({

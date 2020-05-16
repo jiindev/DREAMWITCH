@@ -84,7 +84,7 @@ const StarImage = styled.span`
   background-size: contain;
 `;
 
-const GetStarText = styled.div`
+export const GetStarText = styled.div`
   text-align: center;
   margin-bottom: 20px;
   color: ${props=>props.theme.purpleDark};

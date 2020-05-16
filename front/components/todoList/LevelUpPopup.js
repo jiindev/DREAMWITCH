@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import {Animated} from 'react-animated-css';
 import styled from 'styled-components';
 import { levelCheck } from '../data/levelData';
+import { GetStarText } from "./TodoCompletePopup";
 
 
 const LevelUpPopup = () => {
@@ -20,6 +21,7 @@ const LevelUpPopup = () => {
               <div>
                 <h4>LEVEL UP!</h4>
                 <p><span>{levelCheck(me.exp)}</span>로 레벨업!</p>
+                <GetStarText><span>+10</span></GetStarText>
               </div>
           </Animated>
         </PopUp>
@@ -61,7 +63,7 @@ export const PopUp = styled.div`
     & p{
       color: ${props=>props.theme.purpleDark};
       text-align: center;
-      margin-top: 5px;
+      margin: 5px 0;
       & span{
         color: ${props=>props.theme.purpleMedium};
       }

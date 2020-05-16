@@ -63,13 +63,9 @@ const Index = memo(() => {
     })
   }, []);
 
-  const settingOn = useCallback(() => {
-    setSettingShown(true);
-  }, []);
-
-  const settingOff = useCallback(()=>{
-    setSettingShown(false);
-  }, []);
+  const onClickSetting = useCallback(() => {
+    setSettingShown(!settingShown);
+  }, [settingShown]);
 
   if(!me){
     return null;
@@ -80,11 +76,11 @@ const Index = memo(() => {
       <Wrap>
         {levelUp && <LevelUpPopup/>}
         {historyLoading  && <Loading/>}
-        {settingShown && <UserSetting settingOff={settingOff}/>}
+        {settingShown && <UserSetting onClickSetting={onClickSetting}/>}
        <TopContent>
          <UserStatue>
             <Star>{me && me.star}</Star>
-            <UserName>{me && `${me.nickname} (${me.userId})`}<SettingButton onClick={settingShown ? settingOff : settingOn}/></UserName>
+            <UserName>{me && `${me.nickname} (${me.userId})`}<SettingButton onClick={onClickSetting}/></UserName>
             <Level>{me && me.level}</Level>
          </UserStatue>
          <LogoutButton onClick={onLogout}><i/></LogoutButton>

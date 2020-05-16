@@ -39,13 +39,13 @@
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
+    "babel-plugin-styled-components": "^1.10.7",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^3.0.0",
-    "babel-plugin-styled-components": "^1.10.7",
     "nodemon": "^2.0.2",
     "webpack": "^4.42.1"
   }

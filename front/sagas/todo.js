@@ -1,4 +1,4 @@
-import { all, fork, takeLatest, call, put, delay } from "redux-saga/effects";
+import { all, fork, takeLatest, call, put } from "redux-saga/effects";
 import {
   LOAD_TODOS_REQUEST,
   LOAD_TODOS_SUCCESS,
@@ -23,7 +23,7 @@ import {
   CLEAN_LAST_TODOS_REQUEST,
 } from "../reducers/todo";
 import axios from 'axios';
-import { SAY_ADD_TODO, SAY_CHECK_TODO, SAY_EDIT_TODO, SAY_DELETE_TODO, SAY_LOAD_TODOS, SAY_HELLO, SAY_LAST_SUCCESS, SAY_LAST} from "../reducers/character";
+import { SAY_ADD_TODO, SAY_CHECK_TODO, SAY_EDIT_TODO, SAY_DELETE_TODO, SAY_LAST} from "../reducers/character";
 import { UPDATE_LASTSTART_REQUEST } from "../reducers/user";
 
 function loadTodosAPI(userId) {

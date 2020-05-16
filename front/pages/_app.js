@@ -9,7 +9,6 @@ import createSagaMiddleware from "redux-saga";
 import rootsaga from "../sagas";
 import {ThemeProvider} from 'styled-components';
 import themes from '../components/styledComponents/theme';
-import GlobalStyle from '../components/styledComponents/GlobalStyle';
 import Axios from "axios";
 import { LOAD_USER_REQUEST } from "../reducers/user";
 import App from 'next/app';
