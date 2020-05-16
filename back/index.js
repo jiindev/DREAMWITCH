@@ -5,6 +5,8 @@ const cookieParser = require("cookie-parser");
 const expressSession = require("express-session");
 const dotenv = require("dotenv");
 const passport = require("passport");
+const hpp = require('hpp');
+const helmet = require('helmet');
 
 const passportConfig = require("./passport");
 const db = require("./models");
@@ -16,17 +18,30 @@ const historiesAPIRouter = require("./routes/histories");
 const itemAPIRouter = require("./routes/item");
 const itemsAPIRouter = require("./routes/items");
 const usersAPIRouter = require('./routes/users');
+const prod = process.env.NODE_ENV === 'production';
 dotenv.config();
 const app = express();
 
 db.sequelize.sync();
 passportConfig();
 
-app.use(morgan("dev"));
-app.use(cors({
-  origin: true,
-  credentials: true
-}));
+if(prod){
+  app.use(hpp());
+  app.use(helmet());
+  app.use(morgan('combined'));
+  app.use(cors({
+    origin: 'http://dreamwitch.kr',
+    credentials: true,
+  }))
+}else{
+  app.use(morgan("dev"));
+  app.use(cors({
+    origin: true,
+    credentials: true
+  }));
+}
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -38,6 +53,7 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: false,
+      domain: prod && '.dreamwitch.kr',
     },
     name: 'znzldlfmaqusrud'
   })
@@ -59,6 +75,6 @@ app.use("/api/item", itemAPIRouter);
 app.use("/api/items", itemsAPIRouter);
 app.use("/api/users", usersAPIRouter);
 
-app.listen(process.env.NODE_ENV === 'production' ? process.env.PORT : 3065, () => {
+app.listen(prod ? process.env.PORT : 3065, () => {
   console.log(`server is running on ${process.env.PORT}`);
 });
