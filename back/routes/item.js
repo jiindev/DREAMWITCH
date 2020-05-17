@@ -6,7 +6,7 @@ const sequelize = require('sequelize');
 router.post("/", async(req, res, next) => {
   //아이템 구매
   try{
-    if(req.user.star<req.body.price){
+    if(req.user.star-req.body.price<0){
       return res.status(403).send("별이 부족합니다.");
     }
     const useStars = await db.User.update({
