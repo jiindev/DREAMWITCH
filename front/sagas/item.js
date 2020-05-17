@@ -1,4 +1,4 @@
-import { all, fork, takeLatest, call, put, takeEvery } from "redux-saga/effects";
+import { all, fork, takeLatest, call, put } from "redux-saga/effects";
 import axios from 'axios';
 import { LOAD_ITEMS_SUCCESS, LOAD_ITEMS_FAILURE, LOAD_ITEMS_REQUEST, BUY_ITEM_SUCCESS, BUY_ITEM_FAILURE, BUY_ITEM_REQUEST, EQUIP_ITEM_SUCCESS, EQUIP_ITEM_FAILURE, EQUIP_ITEM_REQUEST, UNEQUIP_ITEM_FAILURE, UNEQUIP_ITEM_SUCCESS, UNEQUIP_ITEM_REQUEST, LOAD_EQUIPMENT_SUCCESS, LOAD_EQUIPMENT_REQUEST, LOAD_EQUIPMENT_FAILURE } from "../reducers/item";
 import { USE_STARS } from "../reducers/user";
@@ -61,31 +61,26 @@ function* buyItem(action) {
   try {
     const result = yield call(buyItemAPI, action.data);
     yield put({
-      type: USE_STARS,
-      data: action.data.price
-    });
-    yield put({
       type: BUY_ITEM_SUCCESS,
       data: result.data
     });
     yield put({
+      type: USE_STARS,
+      data: action.data.price
+    });
+    yield put({
       type: SAY_BUY_ITEM
-    })
+    });
   } catch (e) {
     console.error(e);
     yield put({
       type: BUY_ITEM_FAILURE,
       error: e,
     });
-    if(e.response.data==='별이 부족합니다.'){
-      yield put({
-        type: SAY_NO_STAR
-      });
-    };
   }
 }
 function* watchBuyItem() {
-  yield takeEvery(BUY_ITEM_REQUEST, buyItem);
+  yield takeLatest(BUY_ITEM_REQUEST, buyItem);
 }
 
 function equipItemAPI(itemData) {

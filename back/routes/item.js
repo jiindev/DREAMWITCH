@@ -7,10 +7,6 @@ const {isLoggedIn } = require('./middleware');
 router.post("/", isLoggedIn, async(req, res, next) => {
   //아이템 구매
   try{
-    console.log(req.user.star);
-    if(req.user.star-req.body.price<0){
-      return res.status(403).send("별이 부족합니다.");
-    }
     const useStars = await db.User.update({
       star: sequelize.literal(`star - ${req.body.price}`)
     }, {

@@ -37,7 +37,7 @@ const ClosetItem = memo(({v, i}) => {
               })
             }
         }
-      }, [items, equipment]);
+      }, [items, equipment, star]);
 
     return(
     <Animated animationIn="fadeInUp" animationInDelay={i*50} isVisible={true}>
