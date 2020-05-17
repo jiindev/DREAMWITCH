@@ -61,13 +61,13 @@ function* buyItem(action) {
   try {
     const result = yield call(buyItemAPI, action.data);
     yield put({
+      type: USE_STARS,
+      data: action.data.price
+    });
+    yield put({
       type: BUY_ITEM_SUCCESS,
       data: result.data
     });
-    yield put({
-      type: USE_STARS,
-      data: action.data.price
-    })
     yield put({
       type: SAY_BUY_ITEM
     })
