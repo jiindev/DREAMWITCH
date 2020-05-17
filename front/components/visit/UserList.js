@@ -43,7 +43,7 @@ const UserList = memo(({title, users, editingMode}) => {
                         {v.nickname}<span>({v.userId})</span>
                         {editingMode ? 
                         <DeleteButton onClick={onRemoveFriend(v.id)}>친구삭제</DeleteButton> 
-                        : meId !== v.id  && v.private ? <VisitButtonOff/> : <Link href={{pathname: '/user', query:{id:v.id}}} as={`/user/${v.id}`}><VisitButton>방문하기</VisitButton></Link>}
+                        : meId !== v.id ? v.private ? <VisitButtonOff/> : <Link href={{pathname: '/user', query:{id:v.id}}} as={`/user/${v.id}`}><VisitButton>방문하기</VisitButton></Link> : <></>}
                         {meId !== v.id  && !(meFollowings.find(following=>following.id===v.id)) && 
                         <AddButton onClick={onAddFriend(v.userId)}>친구추가</AddButton> }
                     </li>
