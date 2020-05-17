@@ -2,7 +2,7 @@ import { all, fork, takeLatest, call, put } from "redux-saga/effects";
 import axios from 'axios';
 import { LOAD_ITEMS_SUCCESS, LOAD_ITEMS_FAILURE, LOAD_ITEMS_REQUEST, BUY_ITEM_SUCCESS, BUY_ITEM_FAILURE, BUY_ITEM_REQUEST, EQUIP_ITEM_SUCCESS, EQUIP_ITEM_FAILURE, EQUIP_ITEM_REQUEST, UNEQUIP_ITEM_FAILURE, UNEQUIP_ITEM_SUCCESS, UNEQUIP_ITEM_REQUEST, LOAD_EQUIPMENT_SUCCESS, LOAD_EQUIPMENT_REQUEST, LOAD_EQUIPMENT_FAILURE } from "../reducers/item";
 import { USE_STARS } from "../reducers/user";
-import { SAY_BUY_ITEM, SAY_EQUIP_ITEM, SAY_UNEQUIP_ITEM } from "../reducers/character";
+import { SAY_BUY_ITEM, SAY_EQUIP_ITEM, SAY_UNEQUIP_ITEM, SAY_NO_STAR } from "../reducers/character";
 
 function loadItemsAPI() {
   return axios.get("/items", {
@@ -77,6 +77,11 @@ function* buyItem(action) {
       type: BUY_ITEM_FAILURE,
       error: e,
     });
+    if(e.response.data==='별이 부족합니다.'){
+      yield put({
+        type: SAY_NO_STAR
+      });
+    };
   }
 }
 function* watchBuyItem() {

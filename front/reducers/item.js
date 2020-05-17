@@ -2,7 +2,8 @@ import produce from 'immer';
 
 export const initialState = {
     items: {hat: [], hair: [], clothes: [], bg: [], wand: [], cat: [],},
-    equipment: {hat: 0, hair:0, clothes: 0, bg: 0, wand: 0, cat: 0,}
+    equipment: {hat: 0, hair:0, clothes: 0, bg: 0, wand: 0, cat: 0,},
+    buyItemLoading: false,
   };
   
   export const LOAD_ITEMS_REQUEST = "LOAD_ITEMS_REQUEST";
@@ -55,13 +56,16 @@ export const initialState = {
             break;
         }
         case BUY_ITEM_REQUEST: {
+            draft.buyItemLoading = true;
             break;
         }
         case BUY_ITEM_SUCCESS: {
             draft.items[action.data.itemType].push(action.data.itemId);
+            draft.buyItemLoading = false;
             break;
         }
         case BUY_ITEM_FAILURE: {
+            draft.buyItemLoading = false;
             break;
         }
         case EQUIP_ITEM_REQUEST: {

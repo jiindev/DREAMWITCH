@@ -10,10 +10,12 @@ const ClosetItem = memo(({v, i}) => {
     const dispatch = useDispatch();
     const equipment = useSelector(state=>state.item.equipment && state.item.equipment[v.type]);
     const items = useSelector(state=>state.item.items && state.item.items[v.type]);
+    const {buyItemLoading} =  useSelector(state=>state.item);
     const star = useSelector(state=>state.user.me && state.user.me.star);
 
     const onClickItem = useCallback((item) => () => {
         if(!items.includes(item.id)){ // 현재 아이템 목록에 없음 (구매기능)
+          if(buyItemLoading) return; //아이템 구매중일 땐 막아두기
           if(star<item.price){ // 별이 부족할 경우
             return dispatch({
               type: SAY_NO_STAR
