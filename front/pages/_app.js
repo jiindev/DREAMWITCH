@@ -57,6 +57,8 @@ class DreamWitch extends App{
           }, {
             name: 'apple-mobile-web-app-capable', content: 'yes',
           }, {
+            name: 'mobile-web-app-capable', content: 'yes',
+          },{
             name: 'og:title', content: 'DREAMWITCH :: 꿈을 이루어줄게!',
           }, {
             name: 'og:description', content: '꿈을 이루기 위한 할일 관리 프로젝트',
