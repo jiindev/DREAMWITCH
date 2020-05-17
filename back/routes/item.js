@@ -2,10 +2,12 @@ const express = require("express");
 const router = express.Router();
 const db = require('../models');
 const sequelize = require('sequelize');
+const {isLoggedIn } = require('./middleware');
 
-router.post("/", async(req, res, next) => {
+router.post("/", isLoggedIn, async(req, res, next) => {
   //아이템 구매
   try{
+    console.log(req.user.star);
     if(req.user.star-req.body.price<0){
       return res.status(403).send("별이 부족합니다.");
     }
