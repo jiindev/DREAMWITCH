@@ -85,7 +85,7 @@ function* buyItem(action) {
   }
 }
 function* watchBuyItem() {
-  yield takeLatest(BUY_ITEM_REQUEST, buyItem);
+  yield takeEvery(BUY_ITEM_REQUEST, buyItem);
 }
 
 function equipItemAPI(itemData) {

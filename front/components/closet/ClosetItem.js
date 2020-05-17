@@ -43,7 +43,6 @@ const ClosetItem = memo(({v, i}) => {
 
     return(
     <Animated animationIn="fadeInUp" animationInDelay={i*50} isVisible={true}>
-        <h1>{buyItemLoading && '로딩중테스트'}</h1>
         <Item onClick={onClickItem(v)} equip={equipment===v.id}>
         {!items.includes(v.id) && <LockIcon/>}
         <Image thumb={`item_${v.type}_thumb${v.id}.png`}/>
