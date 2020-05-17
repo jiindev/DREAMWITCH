@@ -51,9 +51,11 @@ class DreamWitch extends App{
           meta={[{
             charset: 'UTF-8'
           }, {
-            name: 'viewport', content: "width=device-width, initial-scale=1, user-scalable=no",
+            name: 'viewport', content: "width=device-width, initial-scale=1,  maximum-scale=1, user-scalable=no",
           }, {
             'http-equiv': 'X-UA-Compatible', content: 'IE=edge',
+          }, {
+            name: 'apple-mobile-web-app-capable', content: 'yes',
           }, {
             name: 'og:title', content: 'DREAMWITCH :: 꿈을 이루어줄게!',
           }, {
