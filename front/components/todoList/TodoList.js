@@ -23,7 +23,7 @@ const CheckList = memo(({id}) => {
   const [todosToCopy, setTodosToCopy] = useState([]);
   const [writingHistory, setWritingHistory] = useState(false);
   const todoPageRef = useRef();
-  const [todoHeight, setTodoHeight] = useState(0);
+  const [todoHeight, setTodoHeight] = useState(300);
 
   useEffect(()=>{
     const setHeight = () => {
@@ -31,8 +31,8 @@ const CheckList = memo(({id}) => {
     }
     window.addEventListener('resize', setHeight);
     return () => window.removeEventListener('resize', setHeight);
-  },[]);
-  
+  },[]); //투두리스트 높이 체크 (가상키보드 여부 체크 목적)
+
   useEffect(()=>{
     if(todos.length>0 && !isCleared && !id){
       setStarted(true);
