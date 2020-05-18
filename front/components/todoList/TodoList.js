@@ -11,7 +11,7 @@ import { LOAD_LAST_TODOS_REQUEST, CLEAN_LAST_TODOS_REQUEST, LOAD_TODOS_REQUEST }
 import TodoCompletePopup from './TodoCompletePopup';
 import { ADD_HISTORIES_REQUEST } from "../../reducers/history";
 import {Animated} from 'react-animated-css';
-import moment from 'moment';
+import moment from 'moment-timezone';
 moment.locale('ko');
 
 const CheckList = memo(({id}) => {

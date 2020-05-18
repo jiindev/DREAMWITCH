@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../models');
 const sequelize = require('sequelize');
 const {historyExists} = require('./middleware');
-const moment = require('moment');
+const moment = require('moment-timezone');
 moment.locale('ko');
 
 router.post("/", async(req, res, next) => {

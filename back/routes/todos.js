@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require('../models');
 const sequelize = require('sequelize');
-const moment = require('moment');
+const moment = require('moment-timezone');
 moment.locale('ko');
       
 router.get("/", async(req, res, next) => {

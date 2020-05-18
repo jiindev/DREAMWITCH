@@ -4,7 +4,7 @@ const passport = require("passport");
 const router = express.Router();
 const db = require("../models");
 const {isLoggedIn, isNotLoggedIn} = require('./middleware');
-const moment = require('moment');
+const moment = require('moment-timezone');
 const sequelize = require('sequelize');
 moment.locale('ko');
 
