@@ -1,4 +1,4 @@
-import React, { useState, useRef, createRef, useCallback, useEffect, memo } from "react";
+import React, { useState, useLayoutEffect, useRef, useCallback, useEffect, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import propTypes from 'prop-types';
 import TodoItem from "./TodoItem";
@@ -22,7 +22,17 @@ const CheckList = memo(({id}) => {
   const [started, setStarted] = useState(false);
   const [todosToCopy, setTodosToCopy] = useState([]);
   const [writingHistory, setWritingHistory] = useState(false);
+  const todoPageRef = useRef();
+  const [todoHeight, setTodoHeight] = useState(0);
 
+  useEffect(()=>{
+    const setHeight = () => {
+      setTodoHeight(todoPageRef.current.clientHeight);
+    }
+    window.addEventListener('resize', setHeight);
+    return () => window.removeEventListener('resize', setHeight);
+  },[]);
+  
   useEffect(()=>{
     if(todos.length>0 && !isCleared && !id){
       setStarted(true);
@@ -31,8 +41,7 @@ const CheckList = memo(({id}) => {
       })
     }
     //투두 페이지 들어올때마다 started 셋팅 / 말풍선 보여주기
-    console.log('front moment check:', moment());
-    if(!id && todos && todos[0] && moment(todos[0].createdAt).format('YYYY-MM-DD')!==moment().format('YYYY-MM-DD')){
+    if(!id && todos && todos[0] && moment(todos[0].createdAt).format('YYYY-MM-DD')!==moment().tz("Asia/Seoul").format('YYYY-MM-DD')){
       dispatch({
         type: LOAD_TODOS_REQUEST
       });
@@ -101,7 +110,7 @@ const CheckList = memo(({id}) => {
 
   return (
     <>
-      <TodoList>
+      <TodoList ref={todoPageRef}>
       {id ? //다른 사용자의 할일 목록 보기
         todos && todos[0] ?
             <TodoPage>
@@ -155,8 +164,8 @@ const CheckList = memo(({id}) => {
                 </>
                 }
               </TodoUl>
-              <TodoBottom/>
-              <TodoStatue onClickWriteHistory={onClickWriteHistory} writingHistory={writingHistory}/>
+              <TodoBottom todoHeight={todoHeight}/>
+              <TodoStatue onClickWriteHistory={onClickWriteHistory} writingHistory={writingHistory} todoHeight={todoHeight}/>
             </TodoPage>
           </>
         ) : lastTodos.length>0 ? ( // 오늘의 투두를 아직 시작하지 않았을 때 지난날의 투두 조회
@@ -207,7 +216,8 @@ const TodoPage = styled.div`
 `;
 
 const TodoBottom = styled.div`
-  height: 100px;
+  height: ${props=>props.todoHeight < 260 ? 0 : '100px'};
+  transition: all .5s ease;
 `;
 
 const TodoUl = styled.ul`

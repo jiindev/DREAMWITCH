@@ -9,7 +9,7 @@ moment.locale('ko');
 router.post("/", async(req, res, next) => {
   // 히스토리 생성
   try{
-    let today = moment().format('YYYY-MM-DD');
+    let today = moment().tz("Asia/Seoul").format('YYYY-MM-DD');
     let newHistory = await db.History.create({
       UserId: req.user.id,
       content: req.body.content,

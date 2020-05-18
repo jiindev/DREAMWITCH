@@ -8,8 +8,7 @@ moment.locale('ko');
 router.get("/", async(req, res, next) => {
   // 나의 그날의 투두리스트 불러오기
   try {
-    console.log('back moment check:', moment());
-    let today = moment().format('YYYY-MM-DD');
+    let today = moment().tz("Asia/Seoul").format('YYYY-MM-DD');
     const todos = await db.Todo.findAll({
       where: {
         userId: req.user.id,
@@ -30,7 +29,7 @@ router.get("/", async(req, res, next) => {
 router.get("/:id", async(req, res, next) => {
   // 특정 사용자의 그날의 투두리스트 불러오기
   try {
-    let today = moment().format('YYYY-MM-DD');
+    let today = moment().tz("Asia/Seoul").format('YYYY-MM-DD');
     const todos = await db.Todo.findAll({
       where: {
         userId: req.params.id,
@@ -101,7 +100,7 @@ router.post("/", async(req, res, next) => {
   //지난 할일 목록에서 투두 복사
   try{
     let fullTodos = [];
-    let today = moment().format('YYYY-MM-DD');
+    let today = moment().tz("Asia/Seoul").format('YYYY-MM-DD');
     if(req.body.todosToCopy){
       const copiedTodos = req.body.todosToCopy.map((v, i)=>{
         return {content: v, UserId: req.user.id};
