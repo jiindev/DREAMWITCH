@@ -8,6 +8,7 @@ moment.locale('ko');
 router.get("/", async(req, res, next) => {
   // 나의 그날의 투두리스트 불러오기
   try {
+    console.log('back moment check:', moment());
     let today = moment().format('YYYY-MM-DD');
     const todos = await db.Todo.findAll({
       where: {

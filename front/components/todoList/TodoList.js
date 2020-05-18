@@ -31,6 +31,7 @@ const CheckList = memo(({id}) => {
       })
     }
     //투두 페이지 들어올때마다 started 셋팅 / 말풍선 보여주기
+    console.log('front moment check:', moment());
     if(!id && todos && todos[0] && moment(todos[0].createdAt).format('YYYY-MM-DD')!==moment().format('YYYY-MM-DD')){
       dispatch({
         type: LOAD_TODOS_REQUEST
