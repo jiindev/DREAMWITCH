@@ -217,7 +217,6 @@ const TodoPage = styled.div`
 
 const TodoBottom = styled.div`
   height: ${props=>props.todoHeight < 260 ? 0 : '100px'};
-  transition: all .5s ease;
 `;
 
 const TodoUl = styled.ul`

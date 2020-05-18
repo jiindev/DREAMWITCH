@@ -40,11 +40,11 @@ const TodoStatueBar = styled.div`
   position: absolute;
   width: 100%;
   height: ${props => props.complete ? '110px' : '100px'};
-  bottom: ${props=> props.todoHeight < 260 ? '-100px' : 0};
+  bottom: 0;
   left: 0;
   border-radius: 20px 20px 0 0;
   background-color: ${props => props.complete ? props.theme.purpleDark : props.theme.purpleMedium};
-  display: flex;
+  display: ${props=> props.todoHeight < 260 ? 'none' : 'flex'};
   transition: all .5s ease;
 `;
 
