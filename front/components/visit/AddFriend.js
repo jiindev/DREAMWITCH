@@ -59,7 +59,6 @@ const AddFriendForm = styled.div`
   margin-bottom: 10px;
   display: flex;
   overflow: hidden;
-
   & button {
     background-color: ${props=>props.theme.purpleMedium};
     width: 60px;
@@ -84,7 +83,7 @@ const AddFriendForm = styled.div`
   & input {
     background-color: white;
     border: 0;
-    flex: 1;
+    width: 100%;
     outline: 0;
     font-size: 14px;
     border-radius: 20px 0 0 20px;
