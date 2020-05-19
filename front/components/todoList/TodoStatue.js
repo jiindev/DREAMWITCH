@@ -4,25 +4,21 @@ import {SAY_COMPLETE_TODOS} from '../../reducers/character';
 import styled, {keyframes} from 'styled-components';
 import propTypes from 'prop-types';
 
-const TodoStatue = ({onClickWriteHistory, writingHistory, todoHeight}) => {
+const TodoStatue = ({onClickWriteHistory, writingHistory}) => {
   const dispatch = useDispatch();
   const { clearPercentage, isCleared } = useSelector((state) => state.todo);
   
-  useEffect(()=>{
-    console.log(todoHeight);
-  }, [todoHeight]);
   useEffect(()=>{
     if(clearPercentage === 100 && isCleared === false){
       dispatch({
         type: SAY_COMPLETE_TODOS
       })
     }
-    console.log(todoHeight);
   }, [clearPercentage]);
 
   return (
     <>
-      <TodoStatueBar complete={clearPercentage === 100} todoHeight={todoHeight}>
+      <TodoStatueBar complete={clearPercentage === 100}>
         <Percentage>
           <p className="topText">{isCleared ? '미션 완료 짝짝짝~' : clearPercentage === 100 ? '달성 완료! 별을 눌러 완료하세요!' : '미션 달성율'}</p>
           <p className="percent">{clearPercentage ? clearPercentage : '0'}%</p>
@@ -44,8 +40,11 @@ const TodoStatueBar = styled.div`
   left: 0;
   border-radius: 20px 20px 0 0;
   background-color: ${props => props.complete ? props.theme.purpleDark : props.theme.purpleMedium};
-  display: ${props=> props.todoHeight < 260 ? 'none' : 'flex'};
+  display: none;
   transition: all .5s ease;
+  @media only screen and (min-height: 600px) {
+    display: flex;
+  }
 `;
 
 const Percentage = styled.div`

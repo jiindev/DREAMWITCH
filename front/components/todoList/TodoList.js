@@ -22,16 +22,6 @@ const CheckList = memo(({id}) => {
   const [started, setStarted] = useState(false);
   const [todosToCopy, setTodosToCopy] = useState([]);
   const [writingHistory, setWritingHistory] = useState(false);
-  const todoPageRef = useRef();
-  const [todoHeight, setTodoHeight] = useState(300);
-
-  useEffect(()=>{
-    const setHeight = () => {
-      setTodoHeight(todoPageRef.current.clientHeight);
-    }
-    window.addEventListener('resize', setHeight);
-    return () => window.removeEventListener('resize', setHeight);
-  },[]); //투두리스트 높이 체크 (가상키보드 여부 체크 목적)
 
   useEffect(()=>{
     if(todos.length>0 && !isCleared && !id){
@@ -110,7 +100,7 @@ const CheckList = memo(({id}) => {
 
   return (
     <>
-      <TodoList ref={todoPageRef}>
+      <TodoList>
       {id ? //다른 사용자의 할일 목록 보기
         todos && todos[0] ?
             <TodoPage>
@@ -164,8 +154,8 @@ const CheckList = memo(({id}) => {
                 </>
                 }
               </TodoUl>
-              <TodoBottom todoHeight={todoHeight}/>
-              <TodoStatue onClickWriteHistory={onClickWriteHistory} writingHistory={writingHistory} todoHeight={todoHeight}/>
+              <TodoBottom/>
+              <TodoStatue onClickWriteHistory={onClickWriteHistory} writingHistory={writingHistory}/>
             </TodoPage>
           </>
         ) : lastTodos.length>0 ? ( // 오늘의 투두를 아직 시작하지 않았을 때 지난날의 투두 조회
@@ -216,7 +206,10 @@ const TodoPage = styled.div`
 `;
 
 const TodoBottom = styled.div`
-  height: ${props=>props.todoHeight < 260 ? 0 : '100px'};
+  height: 0;
+  @media only screen and (min-height: 600px) {
+    height: 100px;
+  }
 `;
 
 const TodoUl = styled.ul`
