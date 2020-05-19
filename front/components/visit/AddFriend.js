@@ -62,7 +62,7 @@ const AddFriendForm = styled.div`
 
   & button {
     background-color: ${props=>props.theme.purpleMedium};
-    width: 50px;
+    width: 60px;
     display: inline-block;
     border-radius: 0 20px 20px 0;
     border: 0;

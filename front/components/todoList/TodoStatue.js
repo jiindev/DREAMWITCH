@@ -42,7 +42,7 @@ const TodoStatueBar = styled.div`
   background-color: ${props => props.complete ? props.theme.purpleDark : props.theme.purpleMedium};
   display: none;
   transition: all .5s ease;
-  @media only screen and (min-height: 600px) {
+  @media only screen and (min-height: 500px) {
     display: flex;
   }
 `;

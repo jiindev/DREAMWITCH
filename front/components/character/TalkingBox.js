@@ -107,6 +107,8 @@ const EditButton = styled.button`
     height: 12px;
     background: url('/icons/chatter_box_edit.svg');
     background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
     border: 0;
     outline: none;
     vertical-align: middle;

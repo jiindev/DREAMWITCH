@@ -207,7 +207,7 @@ const TodoPage = styled.div`
 
 const TodoBottom = styled.div`
   height: 0;
-  @media only screen and (min-height: 600px) {
+  @media only screen and (min-height: 500px) {
     height: 100px;
   }
 `;

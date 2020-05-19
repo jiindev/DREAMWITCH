@@ -43,8 +43,10 @@ const EditButton = styled.button`
     float: right;
     width: 15px;
     height: 15px;
-    background: ${props=>props.editingMode ? "url('/icons/friend_setting_on.svg')" : "url('/icons/friend_setting_off.svg')"};
+    background-image: ${props=>props.editingMode ? "url('/icons/friend_setting_on.svg')" : "url('/icons/friend_setting_off.svg')"};
     background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
     text-indent: -9999px;
     border: 0;
     vertical-align: middle;

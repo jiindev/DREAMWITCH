@@ -272,6 +272,7 @@ const CommentInput = styled.div`
         outline: none;
         transition: all .2s ease;
         cursor:pointer;
+        width: 50px;
         &:after{
             width: 15px;
             height: 15px;
