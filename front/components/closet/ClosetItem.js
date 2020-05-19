@@ -16,7 +16,8 @@ const ClosetItem = memo(({v, i}) => {
     const onClickItem = useCallback((item) => () => {
         if(!items.includes(item.id)){ // 현재 아이템 목록에 없음 (구매기능)
           if(buyItemLoading) return;
-          if(confirm(`별 ${item.price}개와 바꿀까요?`)==true){
+          const buyCheck = confirm(`별 ${item.price}개로 잠금해제 하시겠습니까?`);
+          if(buyCheck===true){
             if(star<item.price){ // 별이 부족할 경우
               return dispatch({
                 type: SAY_NO_STAR

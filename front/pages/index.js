@@ -174,7 +174,7 @@ export const TabItem = styled.li`
 
 export const TopContent = styled.div`
   position: relative;
-  display: flex;
+  height: 200px;
   flex-direction: column;
 `;
 
