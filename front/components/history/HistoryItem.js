@@ -215,7 +215,7 @@ const Comments = styled.ul`
     background-color: ${props => props.theme.purpleLight};
     padding: 20px;
     max-height: 180px;
-    overflow-y: scroll;
+    overflow-y: auto;
 `;
 const Comment = styled.li`
     margin-bottom: 18px;

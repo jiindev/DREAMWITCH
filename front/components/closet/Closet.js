@@ -88,6 +88,7 @@ const ClosetPage = styled.div`
   box-sizing: border-box;
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   position: relative;
 `;
 
