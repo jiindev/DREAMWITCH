@@ -16,16 +16,18 @@ const ClosetItem = memo(({v, i}) => {
     const onClickItem = useCallback((item) => () => {
         if(!items.includes(item.id)){ // 현재 아이템 목록에 없음 (구매기능)
           if(buyItemLoading) return;
-          if(star<item.price){ // 별이 부족할 경우
-            return dispatch({
-              type: SAY_NO_STAR
-            })
-          }else{
-            dispatch({
-              type: BUY_ITEM_REQUEST,
-              data: {itemId:item.id, price:item.price, itemType:item.type}
-            })
-          }
+          if(confirm(`별 ${item.price}개와 바꿀까요?`)==true){
+            if(star<item.price){ // 별이 부족할 경우
+              return dispatch({
+                type: SAY_NO_STAR
+              })
+            }else{
+              dispatch({
+                type: BUY_ITEM_REQUEST,
+                data: {itemId:item.id, price:item.price, itemType:item.type}
+              })
+            }
+          }else return;
         }else{
           if(equipment === item.id){ //장착중일 시 (장착해제)
               dispatch({
