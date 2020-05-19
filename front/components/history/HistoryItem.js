@@ -251,7 +251,7 @@ const Comment = styled.li`
 const CommentInput = styled.div`
     display: flex;
     & input{
-        flex: 1;
+        width: 100%;
         border: 0;
         font-size: 14px;
         padding: 10px 20px;
