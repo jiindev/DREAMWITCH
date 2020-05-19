@@ -259,6 +259,7 @@ const CommentInput = styled.div`
         outline: none;
         color: ${props => props.theme.black};
         font-family: 'GmarketSansMedium';
+        border-radius: none;
         &::placeholder{
             color: ${props=>props.theme.purpleMedium};
             opacity: .3;
@@ -280,7 +281,7 @@ const CommentInput = styled.div`
             content: '';
             background: url('/icons/history_comment.svg');
             background-size: contain;
-            margin: 0px 12px 12px 12px;
+            margin: 0px auto 12px auto;
         }
         &:hover{
             background-color: ${props=>props.theme.purpleMediumHover};

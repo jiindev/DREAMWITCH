@@ -75,6 +75,7 @@ const AddFriendForm = styled.div`
         background-image: url('/icons/friend_add_click.svg');
         text-indent: -9999px;
         background-repeat: no-repeat;
+        margin: 0 auto;
     }
     &:hover{
       background-color: ${props=>props.theme.purpleMediumHover};
