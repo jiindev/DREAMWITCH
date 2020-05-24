@@ -16,6 +16,7 @@ import AppLayout from "../components/AppLayout";
 import { SAY_LEVEL_UP } from "../reducers/character";
 import LevelUpPopup from "../components/todoList/LevelUpPopup";
 import UserSetting from "../components/setting/UserSetting";
+import Help from '../components/Help';
 
 const Index = memo(() => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const Index = memo(() => {
   const {historyLoading} = useSelector((state)=>state.history);
   const [levelUp, setLevelUp] = useState(false);
   const [settingShown, setSettingShown] = useState(false);
+  const [helpShown, setHelpSown] = useState(false);
 
   useEffect(()=>{
     if(!me){
@@ -65,7 +67,17 @@ const Index = memo(() => {
 
   const onClickSetting = useCallback(() => {
     setSettingShown(!settingShown);
+    if(helpShown){
+      setHelpSown(false);
+    }
   }, [settingShown]);
+
+  const onClickHelp = useCallback(() => {
+    setHelpSown(!helpShown);
+    if(settingShown){
+      setSettingShown(false);
+    }
+  }, [helpShown]);
 
   if(!me){
     return null;
@@ -77,12 +89,14 @@ const Index = memo(() => {
         {levelUp && <LevelUpPopup/>}
         {historyLoading  && <Loading/>}
         {settingShown && <UserSetting onClickSetting={onClickSetting}/>}
+        {helpShown && <Help onClickHelp={onClickHelp}/>}
        <TopContent>
          <UserStatue>
             <Star>{me && me.star}</Star>
             <UserName>{me && `${me.nickname} (${me.userId})`}<SettingButton onClick={onClickSetting}/></UserName>
             <Level>{me && me.level}</Level>
          </UserStatue>
+         <HelpButton onClick={onClickHelp}></HelpButton>
          <LogoutButton onClick={onLogout}><i/></LogoutButton>
           <Character></Character>
         <Tab>
@@ -237,6 +251,20 @@ right: auto;
     background: url('/icons/top_left_star.svg');
     background-size: contain;
   }
+`;
+
+const HelpButton = styled.button`
+  position: absolute;
+  top: 70px;
+  right: 6px;
+  z-index: 90;
+  width: 20px;
+  height: 20px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: url('/icons/help_button.svg');
+  background-size: contain;
 `;
 
 export const LogoutButton = styled.button`
