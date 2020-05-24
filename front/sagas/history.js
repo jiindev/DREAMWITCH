@@ -2,7 +2,7 @@ import { all, fork, takeLatest, call, put, throttle } from "redux-saga/effects";
 import { TODOS_CLEAR } from "../reducers/todo";
 import axios from 'axios';
 import { LOAD_HISTORIES_REQUEST, LOAD_HISTORIES_SUCCESS, LOAD_HISTORIES_FAILURE, ADD_HISTORIES_SUCCESS, ADD_HISTORIES_FAILURE, ADD_HISTORIES_REQUEST, LOAD_HISTORY_FAILURE, LOAD_HISTORY_REQUEST, LOAD_HISTORY_SUCCESS, ADD_COMMENT_REQUEST, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAILURE, REMOVE_COMMENT_SUCCESS, REMOVE_COMMENT_FAILURE, REMOVE_COMMENT_REQUEST, LOAD_USER_HISTORIES_SUCCESS, LOAD_USER_HISTORIES_FAILURE, LOAD_USER_HISTORIES_REQUEST } from "../reducers/history";
-import { GET_STARS, GET_EXP, EDIT_STAR_REQUEST, GET_EXP_REQUEST } from "../reducers/user";
+import { EDIT_STAR_REQUEST, GET_EXP_REQUEST } from "../reducers/user";
 
 function loadHistoriesAPI(lastId = 0, limit=5) {
   return axios.get(`/histories?lastId=${lastId}&limit=${limit}`, {

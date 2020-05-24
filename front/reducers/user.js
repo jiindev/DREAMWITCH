@@ -70,10 +70,6 @@ export const GET_EXP_REQUEST = 'GET_EXP_REQUEST';
 export const GET_EXP_SUCCESS = 'GET_EXP_SUCCESS';
 export const GET_EXP_FAILURE = 'GET_EXP_FAILURE';
 
-export const GET_EXP = 'GET_EXP';
-export const GET_STARS = 'GET_STARS';
-export const USE_STARS = 'USE_STARS';
-
 export const SET_PAGE = 'SET_PAGE';
 export const LOGIN_ERROR_RESET = 'LOGIN_ERROR_RESET';
 export const FOLLOWING_ERROR_RESET = 'FOLLOWING_ERROR_RESET';
@@ -147,18 +143,6 @@ const reducer = (state = initialState, action) => {
         break;
       }
       case UPDATE_LASTSTART_FAILURE: {
-        break;
-      }
-      case GET_EXP: {
-        draft.me.exp += 1;
-        break;
-      }
-      case GET_STARS: {
-        draft.me.star += action.data;
-        break;
-      }
-      case USE_STARS: {
-        draft.me.star -= action.data;
         break;
       }
       case REMOVE_FOLLOWING_REQUEST: {
