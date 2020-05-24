@@ -62,6 +62,14 @@ export const LOAD_RANKING_USERS_REQUEST = 'LOAD_RANKING_USERS_REQUEST';
 export const LOAD_RANKING_USERS_SUCCESS = 'LOAD_RANKING_USERS_SUCCESS';
 export const LOAD_RANKING_USERS_FAILURE = 'LOAD_RANKING_USERS_FAILURE';
 
+export const EDIT_STAR_REQUEST = 'EDIT_STAR_REQUEST';
+export const EDIT_STAR_SUCCESS = 'EDIT_STAR_SUCCESS';
+export const EDIT_STAR_FAILURE = 'EDIT_STAR_FAILURE';
+
+export const GET_EXP_REQUEST = 'GET_EXP_REQUEST';
+export const GET_EXP_SUCCESS = 'GET_EXP_SUCCESS';
+export const GET_EXP_FAILURE = 'GET_EXP_FAILURE';
+
 export const GET_EXP = 'GET_EXP';
 export const GET_STARS = 'GET_STARS';
 export const USE_STARS = 'USE_STARS';
@@ -224,6 +232,26 @@ const reducer = (state = initialState, action) => {
         break;
       }
       case LOAD_RANKING_USERS_FAILURE: {
+        break;
+      }
+      case EDIT_STAR_REQUEST: {
+        break;
+      }
+      case EDIT_STAR_SUCCESS: {
+        draft.me.star += action.data;
+        break;
+      }
+      case EDIT_STAR_FAILURE: {
+        break;
+      }
+      case GET_EXP_REQUEST: {
+        break;
+      }
+      case GET_EXP_SUCCESS: {
+        draft.me.exp += action.data;
+        break;
+      }
+      case GET_EXP_FAILURE: {
         break;
       }
       case SET_PAGE:{

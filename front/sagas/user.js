@@ -38,6 +38,12 @@ import {
   EDIT_PRIVATE_SUCCESS,
   EDIT_PRIVATE_FAILURE,
   GET_STARS,
+  EDIT_STAR_REQUEST,
+  EDIT_STAR_FAILURE,
+  EDIT_STAR_SUCCESS,
+  GET_EXP_SUCCESS,
+  GET_EXP_FAILURE,
+  GET_EXP_REQUEST,
 } from "../reducers/user";
 import Router from 'next/router';
 import { SAY_HELLO } from "../reducers/character";
@@ -240,8 +246,8 @@ function* levelUp(action) {
       }
     });
     yield put({
-      type: GET_STARS,
-      data: 10
+      type: EDIT_STAR_REQUEST,
+      data: {star:10}
     });
   } catch (e) {
     console.error(e);
@@ -352,6 +358,52 @@ function* watchLoadRankingUsers() {
   yield takeLatest(LOAD_RANKING_USERS_REQUEST, loadRankingUsers);
 }
 
+function editStarAPI(star) {
+  return axios.patch(`/user/star`, star, {
+    withCredentials: true
+  });
+}
+function* editStar(action) {
+  try {
+    const result = yield call(editStarAPI, action.data);
+    yield put({
+      type: EDIT_STAR_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: EDIT_STAR_FAILURE,
+      error: e,
+    });
+  }
+}
+function* watchEditStar() {
+  yield takeLatest(EDIT_STAR_REQUEST, editStar);
+}
+function getExpAPI(exp) {
+  return axios.patch(`/user/exp`, exp, {
+    withCredentials: true
+  });
+}
+function* getExp(action) {
+  try {
+    const result = yield call(getExpAPI, action.data);
+    yield put({
+      type: GET_EXP_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: GET_EXP_FAILURE,
+      error: e,
+    });
+  }
+}
+function* watchgetExp() {
+  yield takeLatest(GET_EXP_REQUEST, getExp);
+}
 
 export default function* userSaga() {
   yield all([
@@ -366,6 +418,8 @@ export default function* userSaga() {
     fork(watchEditGreetings),
     fork(watchLoadRankingUsers),
     fork(watchEditPrivate),
-    fork(watchEditNickname)
+    fork(watchEditNickname),
+    fork(watchEditStar),
+    fork(watchgetExp)
   ]);
 }

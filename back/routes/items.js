@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const db = require('../models');
+const {isLoggedIn } = require('./middleware');
 
-router.get("/", async(req, res, next) => {
+router.get("/", isLoggedIn, async(req, res, next) => {
   // 사용자의 전체 아이템 불러오기
   try{
     const items = await db.Item.findAll({
@@ -25,7 +26,7 @@ router.get("/", async(req, res, next) => {
   }
 });
 
-router.get("/equipment", async(req, res, next) => {
+router.get("/equipment", isLoggedIn, async(req, res, next) => {
   // 사용자 장착 아이템 불러오기
   try{
     const equipment = await db.Equipment.findOne({

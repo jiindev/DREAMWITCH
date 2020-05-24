@@ -103,7 +103,7 @@ router.post("/logout", (req, res) => {
   res.send("logout 성공");
 });
 
-router.patch('/laststart', async(req, res, next) => {
+router.patch('/laststart', isLoggedIn, async(req, res, next) => {
   //마지막으로 미션을 시작한 시간 기록
   try{
     let today = moment().tz("Asia/Seoul").format('YYYY-MM-DD');
@@ -159,7 +159,6 @@ router.patch("/level", isLoggedIn, async(req, res, next) => {
   try{
     const levelUp = await db.User.update({
       level: req.body.level,
-      star: sequelize.literal(`star + 10`),
     }, {
       where: {id: req.user.id}
     });
@@ -214,5 +213,36 @@ router.patch("/private", isLoggedIn, async(req, res, next) => {
     next(e);
   }
 });
+
+router.patch('/star', isLoggedIn, async(req, res, next)=>{
+ // 별 변동
+  try{
+    const getStar = await db.User.update({
+      star: sequelize.literal(`star +${req.body.star}`),
+    }, {
+      where: {id: req.user.id}
+    });
+    res.send(req.body.star.toString());
+  }catch(e){
+    console.error(e);
+    next(e);
+  }
+});
+
+router.patch('/exp', isLoggedIn, async(req, res, next)=>{
+  // 경험치 획득
+   try{
+    const getExp = await db.User.update({
+      exp: sequelize.literal(`exp +${req.body.exp}`),
+    }, {
+      where: {id: req.user.id}
+    });
+    res.send(req.body.exp.toString());
+   }catch(e){
+     console.error(e);
+     next(e);
+   }
+ });
+ router.patch('')
 
 module.exports = router;

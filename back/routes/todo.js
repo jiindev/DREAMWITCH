@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models");
+const {isLoggedIn } = require('./middleware');
 
-router.post("/", async(req, res, next) => {
+
+router.post("/", isLoggedIn, async(req, res, next) => {
   try{
     const newTodo = await db.Todo.create({
       content: req.body.content,
@@ -21,7 +23,7 @@ router.post("/", async(req, res, next) => {
     next(e);
   }
 });
-router.patch("/:id", async(req, res, next) => {
+router.patch("/:id", isLoggedIn, async(req, res, next) => {
   // 투두 항목 내용 수정
   try{
     const editTodo = await db.Todo.update({
@@ -35,7 +37,7 @@ router.patch("/:id", async(req, res, next) => {
     next(e);
   }
 });
-router.patch("/:id/check", async (req, res, next) => {
+router.patch("/:id/check", isLoggedIn, async (req, res, next) => {
   // 투두 항목 체크 / 언체크
   try{
     const checkTodo = await db.Todo.update({
@@ -49,7 +51,7 @@ router.patch("/:id/check", async (req, res, next) => {
     next(e);
   }
 });
-router.delete("/:id", async(req, res, next) => {
+router.delete("/:id", isLoggedIn, async(req, res, next) => {
   // 투두 항목 삭제
   try{
     await db.Todo.destroy({

@@ -4,8 +4,10 @@ const db = require('../models');
 const sequelize = require('sequelize');
 const moment = require('moment-timezone');
 moment.locale('ko');
+const {isLoggedIn } = require('./middleware');
+
       
-router.get("/", async(req, res, next) => {
+router.get("/", isLoggedIn, async(req, res, next) => {
   // 나의 그날의 투두리스트 불러오기
   try {
     let today = moment().tz("Asia/Seoul").format('YYYY-MM-DD');

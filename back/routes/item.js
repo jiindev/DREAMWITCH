@@ -7,11 +7,6 @@ const {isLoggedIn } = require('./middleware');
 router.post("/", isLoggedIn, async(req, res, next) => {
   //아이템 구매
   try{
-    const useStars = await db.User.update({
-      star: sequelize.literal(`star - ${req.body.price}`)
-    }, {
-      where: {id: req.user.id}
-    });
     const newItem = await db.Item.create({
       itemId: req.body.itemId,
       itemType: req.body.itemType,
@@ -27,7 +22,7 @@ router.post("/", isLoggedIn, async(req, res, next) => {
   }
 });
 
-router.patch("/equip", async(req, res, next) => {
+router.patch("/equip", isLoggedIn, async(req, res, next) => {
   //아이템 장착
   try{
     const equippedItem = await db.Equipment.update({
@@ -44,7 +39,7 @@ router.patch("/equip", async(req, res, next) => {
   }
 });
 
-router.patch("/unequip", async(req, res, next) => {
+router.patch("/unequip", isLoggedIn, async(req, res, next) => {
   //아이템 장착해제
   try{
     db.Equipment.itemType = req.body.itemType;

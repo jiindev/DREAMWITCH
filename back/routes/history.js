@@ -2,11 +2,13 @@ const express = require("express");
 const router = express.Router();
 const db = require('../models');
 const sequelize = require('sequelize');
-const {historyExists} = require('./middleware');
+const {historyExists, isLoggedIn} = require('./middleware');
 const moment = require('moment-timezone');
 moment.locale('ko');
 
-router.post("/", async(req, res, next) => {
+
+
+router.post("/", isLoggedIn, async(req, res, next) => {
   // 히스토리 생성
   try{
     let today = moment().tz("Asia/Seoul").format('YYYY-MM-DD');
@@ -26,12 +28,6 @@ router.post("/", async(req, res, next) => {
           },
           UserId: req.user.id
         }
-      });
-      const userGet = await db.User.update({
-        star: sequelize.literal(`star + 10`),
-        exp: sequelize.literal(`exp + 1`)
-      }, {
-        where: {id: req.user.id}
       });
     }
     const fullHistory = await db.History.findOne({
@@ -74,7 +70,7 @@ router.get("/:id", async(req, res, next) => {
   }
 });
 
-router.post('/:id/comment', historyExists, async(req, res, next)=>{
+router.post('/:id/comment', isLoggedIn, historyExists, async(req, res, next)=>{
   try{
     const history = req.history;
     const newComment = await db.Comment.create({
@@ -99,7 +95,7 @@ router.post('/:id/comment', historyExists, async(req, res, next)=>{
   } 
 });
 
-router.delete('/comment/:id', async(req, res, next)=>{
+router.delete('/comment/:id', isLoggedIn, async(req, res, next)=>{
   try{
     await db.Comment.destroy({
       where: {

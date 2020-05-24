@@ -1,7 +1,6 @@
 import React, { useCallback, memo, useState } from "react";
 import styled from 'styled-components';
 import {Animated} from 'react-animated-css';
-import UserSettingPopup from './UserSetting';
 
 const Help = memo(({onClickHelp}) => {
     const [disappear, setDisappear] = useState(false);
@@ -82,8 +81,8 @@ const HelpPopup = styled.div`
 `;
 
 const Image = styled.span`
-    width: 450px;
-    height: 450px;
+    width: 376px;
+    height: 376px;
     max-width: 100%;
     display:inline-block;
     background: ${props=>`url('/img/help_image${props.page}.png')`};
