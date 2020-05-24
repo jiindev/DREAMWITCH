@@ -15,8 +15,8 @@ import { levelCheck } from '../components/data/levelData';
 import AppLayout from "../components/AppLayout";
 import { SAY_LEVEL_UP } from "../reducers/character";
 import LevelUpPopup from "../components/todoList/LevelUpPopup";
-import UserSetting from "../components/setting/UserSetting";
-import Help from '../components/Help';
+import UserSetting from "../components/popup/UserSetting";
+import Help from '../components/popup/Help';
 
 const Index = memo(() => {
   const dispatch = useDispatch();
@@ -258,13 +258,14 @@ const HelpButton = styled.button`
   top: 70px;
   right: 6px;
   z-index: 90;
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   border: none;
   outline: none;
   cursor: pointer;
   background: url('/icons/help_button.svg');
   background-size: contain;
+  background-repeat: no-repeat;
 `;
 
 export const LogoutButton = styled.button`

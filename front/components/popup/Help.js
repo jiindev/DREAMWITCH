@@ -1,7 +1,7 @@
 import React, { useCallback, memo, useState } from "react";
 import styled from 'styled-components';
 import {Animated} from 'react-animated-css';
-import UserSettingPopup from './setting/UserSetting';
+import UserSettingPopup from './UserSetting';
 
 const Help = memo(({onClickHelp}) => {
     const [disappear, setDisappear] = useState(false);
@@ -27,7 +27,7 @@ const Help = memo(({onClickHelp}) => {
            <Animated animationIn="bounceInDown" animationInDuration={800} animationOut="bounceOutUp" animationOutDuration={800} isVisible={!disappear}>
             <div>
             <CloseButton onClick={onClose}/>
-            <H3>HOW TO DO</H3>
+            <H3>HOW TO</H3>
                 <Image page={page}>
                     {page>1 && <Arrow className="prev" onClick={onClickArrow('prev')}/>}
                     {page<8 && <Arrow className="next" onClick={onClickArrow('next')}/>}
@@ -92,7 +92,7 @@ const Image = styled.span`
     background-repeat: no-repeat;
     border-radius: 20px;
     position: relative;
-    margin: 0 50px 15px 50px;
+    margin: 0 auto 15px auto;
     @media only screen and (min-width: 769px) {
         width: 376px;
         height: 376px;
@@ -144,11 +144,11 @@ const Navigation = styled.ul`
 
 const H3 = styled.h3`
     color: ${props=>props.theme.purpleDark};
-    margin: 0 0 30px 0;
+    padding: 0 0 30px 0;
     text-align: center;
     font-size: 18px;
     @media only screen and (min-width: 769px) {
-        margin: 50px 0 20px 0;
+        padding: 50px 0 20px 0;
     }
 `;
 
