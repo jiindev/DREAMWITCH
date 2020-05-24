@@ -146,9 +146,8 @@ const H3 = styled.h3`
     color: ${props=>props.theme.purpleDark};
     margin: 0 0 30px 0;
     text-align: center;
-    font-size: 24px;
+    font-size: 18px;
     @media only screen and (min-width: 769px) {
-        font-size: 18px;
         margin: 50px 0 20px 0;
     }
 `;
