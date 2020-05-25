@@ -89,7 +89,6 @@ function* logOut() {
     yield put({
       type: LOG_OUT_SUCCESS,
     });
-    Router.push('/login');
   } catch (e) {
     console.error(e);
     yield put({
@@ -172,6 +171,11 @@ function* updateLastStart(action) {
       type: UPDATE_LASTSTART_FAILURE,
       error: e,
     });
+    if(e.response.data==='로그인이 필요합니다.'){
+      yield put({
+        type: LOG_OUT_REQUEST
+      })
+    }
   }
 }
 
@@ -196,6 +200,11 @@ function* removeFollowing(action) {
       type: REMOVE_FOLLOWING_FAILURE,
       error: e,
     });
+    if(e.response.data==='로그인이 필요합니다.'){
+      yield put({
+        type: LOG_OUT_REQUEST
+      })
+    }
   }
 }
 function* watchRemoveFollowing() {
@@ -219,6 +228,11 @@ function* addFollowing(action) {
       type: ADD_FOLLOWING_FAILURE,
       error: e.response.data,
     });
+    if(e.response.data==='로그인이 필요합니다.'){
+      yield put({
+        type: LOG_OUT_REQUEST
+      })
+    }
   }
 }
 function* watchAddFollowing() {
@@ -254,6 +268,11 @@ function* levelUp(action) {
       type: LEVEL_UP_FAILURE,
       error: e,
     });
+    if(e.response.data==='로그인이 필요합니다.'){
+      yield put({
+        type: LOG_OUT_REQUEST
+      })
+    }
   }
 }
 function* watchLevelUp() {
@@ -278,6 +297,11 @@ function* editGreetings(action) {
       type: EDIT_GREETINGS_FAILURE,
       error: e,
     });
+    if(e.response.data==='로그인이 필요합니다.'){
+      yield put({
+        type: LOG_OUT_REQUEST
+      })
+    }
   }
 }
 function* watchEditGreetings() {
@@ -302,6 +326,11 @@ function* editNickname(action) {
       type: EDIT_NICKNAME_FAILURE,
       error: e,
     });
+    if(e.response.data==='로그인이 필요합니다.'){
+      yield put({
+        type: LOG_OUT_REQUEST
+      })
+    }
   }
 }
 function* watchEditNickname() {
@@ -326,6 +355,11 @@ function* editPrivate(action) {
       type: EDIT_PRIVATE_FAILURE,
       error: e,
     });
+    if(e.response.data==='로그인이 필요합니다.'){
+      yield put({
+        type: LOG_OUT_REQUEST
+      })
+    }
   }
 }
 function* watchEditPrivate() {
@@ -375,6 +409,11 @@ function* editStar(action) {
       type: EDIT_STAR_FAILURE,
       error: e,
     });
+    if(e.response.data==='로그인이 필요합니다.'){
+      yield put({
+        type: LOG_OUT_REQUEST
+      })
+    }
   }
 }
 function* watchEditStar() {
@@ -398,6 +437,11 @@ function* getExp(action) {
       type: GET_EXP_FAILURE,
       error: e,
     });
+    if(e.response.data==='로그인이 필요합니다.'){
+      yield put({
+        type: LOG_OUT_REQUEST
+      })
+    }
   }
 }
 function* watchgetExp() {

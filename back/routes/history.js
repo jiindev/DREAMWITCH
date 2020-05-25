@@ -8,6 +8,7 @@ moment.locale('ko');
 
 
 
+
 router.post("/", isLoggedIn, async(req, res, next) => {
   // 히스토리 생성
   try{

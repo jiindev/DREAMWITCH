@@ -2,7 +2,9 @@ import { all, fork, takeLatest, call, put, throttle } from "redux-saga/effects";
 import { TODOS_CLEAR } from "../reducers/todo";
 import axios from 'axios';
 import { LOAD_HISTORIES_REQUEST, LOAD_HISTORIES_SUCCESS, LOAD_HISTORIES_FAILURE, ADD_HISTORIES_SUCCESS, ADD_HISTORIES_FAILURE, ADD_HISTORIES_REQUEST, LOAD_HISTORY_FAILURE, LOAD_HISTORY_REQUEST, LOAD_HISTORY_SUCCESS, ADD_COMMENT_REQUEST, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAILURE, REMOVE_COMMENT_SUCCESS, REMOVE_COMMENT_FAILURE, REMOVE_COMMENT_REQUEST, LOAD_USER_HISTORIES_SUCCESS, LOAD_USER_HISTORIES_FAILURE, LOAD_USER_HISTORIES_REQUEST } from "../reducers/history";
-import { EDIT_STAR_REQUEST, GET_EXP_REQUEST } from "../reducers/user";
+import { EDIT_STAR_REQUEST, GET_EXP_REQUEST, LOG_OUT_REQUEST } from "../reducers/user";
+
+
 
 function loadHistoriesAPI(lastId = 0, limit=5) {
   return axios.get(`/histories?lastId=${lastId}&limit=${limit}`, {
@@ -22,6 +24,11 @@ function* loadHistories(action) {
       type: LOAD_HISTORIES_FAILURE,
       error: e,
     });
+    if(e.response.data==='로그인이 필요합니다.'){
+      yield put({
+        type: LOG_OUT_REQUEST
+      })
+    }
   }
 }
 function* watchLoadHistories() {
@@ -115,6 +122,11 @@ function addHistoryAPI(historyData) {
         type: ADD_HISTORIES_FAILURE,
         error: e,
       });
+      if(e.response.data==='로그인이 필요합니다.'){
+        yield put({
+          type: LOG_OUT_REQUEST
+        })
+      }
     }
   }
   function* watchAddHistory() {
@@ -142,6 +154,11 @@ function addHistoryAPI(historyData) {
         type: ADD_COMMENT_FAILURE,
         error: e,
       });
+      if(e.response.data==='로그인이 필요합니다.'){
+        yield put({
+          type: LOG_OUT_REQUEST
+        })
+      }
     }
   }
   function* watchAddComment() {
@@ -156,7 +173,6 @@ function addHistoryAPI(historyData) {
   function* removeComment(action) {
     try {
       const result = yield call(removeCommentAPI, action.data.commentId);
-      
       yield put({
         type: REMOVE_COMMENT_SUCCESS,
         data: {
@@ -170,6 +186,11 @@ function addHistoryAPI(historyData) {
         type: REMOVE_COMMENT_FAILURE,
         error: e,
       });
+      if(e.response.data==='로그인이 필요합니다.'){
+        yield put({
+          type: LOG_OUT_REQUEST
+        })
+      }
     }
   }
   function* watchRemoveComment() {

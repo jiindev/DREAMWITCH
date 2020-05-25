@@ -24,7 +24,7 @@ const Index = memo(() => {
   const {historyLoading} = useSelector((state)=>state.history);
   const [levelUp, setLevelUp] = useState(false);
   const [settingShown, setSettingShown] = useState(false);
-  const [helpShown, setHelpSown] = useState(false);
+  const [helpShown, setHelpShown] = useState(false);
 
   useEffect(()=>{
     if(!me){
@@ -66,18 +66,18 @@ const Index = memo(() => {
   }, []);
 
   const onClickSetting = useCallback(() => {
-    setSettingShown(!settingShown);
     if(helpShown){
-      setHelpSown(false);
+      setHelpShown(false);
     }
-  }, [settingShown]);
+    setSettingShown(!settingShown);
+  }, [settingShown,helpShown]);
 
   const onClickHelp = useCallback(() => {
-    setHelpSown(!helpShown);
     if(settingShown){
       setSettingShown(false);
     }
-  }, [helpShown]);
+    setHelpShown(!helpShown);
+  }, [helpShown,settingShown]);
 
   if(!me){
     return null;

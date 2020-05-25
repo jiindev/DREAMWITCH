@@ -24,7 +24,7 @@ import {
 } from "../reducers/todo";
 import axios from 'axios';
 import { SAY_ADD_TODO, SAY_CHECK_TODO, SAY_EDIT_TODO, SAY_DELETE_TODO, SAY_LAST} from "../reducers/character";
-import { UPDATE_LASTSTART_REQUEST } from "../reducers/user";
+import { UPDATE_LASTSTART_REQUEST, LOG_OUT_REQUEST } from "../reducers/user";
 
 function loadTodosAPI(userId) {
   return axios.get(userId?`/todos/${userId}`:`/todos`, {
@@ -76,6 +76,11 @@ function* checkTodo(action) {
       type: CHECK_TODO_FAILURE,
       error: e,
     });
+    if(e.response.data==='로그인이 필요합니다.'){
+      yield put({
+        type: LOG_OUT_REQUEST
+      })
+    }
   }
 }
 function* watchCheckTodo() {
@@ -102,6 +107,11 @@ function* addTodo(action) {
       type: ADD_TODO_FAILURE,
       error: e,
     });
+    if(e.response.data==='로그인이 필요합니다.'){
+      yield put({
+        type: LOG_OUT_REQUEST
+      })
+    }
   }
 }
 function* watchAddTodo() {
@@ -129,6 +139,11 @@ function* editTodo(action) {
       type: EDIT_TODO_FAILURE,
       error: e,
     });
+    if(e.response.data==='로그인이 필요합니다.'){
+      yield put({
+        type: LOG_OUT_REQUEST
+      })
+    }
   }
 }
 function* watchEditTodo() {
@@ -156,6 +171,11 @@ function* removeTodo(action) {
       type: REMOVE_TODO_FAILURE,
       error: e,
     });
+    if(e.response.data==='로그인이 필요합니다.'){
+      yield put({
+        type: LOG_OUT_REQUEST
+      })
+    }
   }
 }
 function* watchRemoveTodo() {
@@ -186,6 +206,11 @@ function* loadLastTodos(action) {
       type: LOAD_LAST_TODOS_FAILURE,
       error: e,
     });
+    if(e.response.data==='로그인이 필요합니다.'){
+      yield put({
+        type: LOG_OUT_REQUEST
+      })
+    }
   }
 }
 function* watchLoadLastTodos() {
@@ -223,6 +248,11 @@ function* cleanLastTodos(action) {
       type: CLEAN_LAST_TODOS_FAILURE,
       error: e,
     });
+    if(e.response.data==='로그인이 필요합니다.'){
+      yield put({
+        type: LOG_OUT_REQUEST
+      })
+    }
   }
 }
 function* watchCleanLastTodos() {
