@@ -22,13 +22,6 @@ export const initialState = {
   export const EQUIP_ITEM_SUCCESS = "EQUIP_ITEM_SUCCESS";
   export const EQUIP_ITEM_FAILURE = "EQUIP_ITEM_FAILURE";
 
-  export const UNEQUIP_ITEM_REQUEST = "UNEQUIP_ITEM_REQUEST";
-  export const UNEQUIP_ITEM_SUCCESS = "UNEQUIP_ITEM_SUCCESS";
-  export const UNEQUIP_ITEM_FAILURE = "UNEQUIP_ITEM_FAILURE";
-
-
-  
-  
   const reducer = (state = initialState, action) => {
     return produce(state, (draft)=>{
       switch (action.type) {
@@ -72,20 +65,14 @@ export const initialState = {
             break;
         }
         case EQUIP_ITEM_SUCCESS: {
-            draft.equipment[action.data.itemType]=action.data.itemId;
+            if(action.data.type==='equip'){
+                draft.equipment[action.data.itemType]=action.data.itemId;
+            }else{
+                draft.equipment[action.data.itemType]=0;
+            }
             break;
         }
         case EQUIP_ITEM_FAILURE: {
-            break;
-        }
-        case UNEQUIP_ITEM_REQUEST: {
-            break;
-        }
-        case UNEQUIP_ITEM_SUCCESS: {
-            draft.equipment[action.data]=0;
-            break;
-        }
-        case UNEQUIP_ITEM_FAILURE: {
             break;
         }
         default: {

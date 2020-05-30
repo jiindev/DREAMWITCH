@@ -1,8 +1,8 @@
 import { all, fork, takeLatest, call, put } from "redux-saga/effects";
 import axios from 'axios';
 import { LOAD_ITEMS_SUCCESS, LOAD_ITEMS_FAILURE, LOAD_ITEMS_REQUEST, BUY_ITEM_SUCCESS, BUY_ITEM_FAILURE, BUY_ITEM_REQUEST, EQUIP_ITEM_SUCCESS, EQUIP_ITEM_FAILURE, EQUIP_ITEM_REQUEST, UNEQUIP_ITEM_FAILURE, UNEQUIP_ITEM_SUCCESS, UNEQUIP_ITEM_REQUEST, LOAD_EQUIPMENT_SUCCESS, LOAD_EQUIPMENT_REQUEST, LOAD_EQUIPMENT_FAILURE } from "../reducers/item";
-import { USE_STARS, EDIT_STAR_REQUEST, LOG_OUT_REQUEST } from "../reducers/user";
-import { SAY_BUY_ITEM, SAY_EQUIP_ITEM, SAY_UNEQUIP_ITEM, SAY_NO_STAR } from "../reducers/character";
+import { EDIT_STAR_REQUEST, LOG_OUT_REQUEST } from "../reducers/user";
+import { SAY_BUY_ITEM, SAY_EQUIP_ITEM, SAY_UNEQUIP_ITEM } from "../reducers/character";
 
 function loadItemsAPI() {
   return axios.get("/items", {
@@ -110,9 +110,15 @@ function* equipItem(action) {
       type: EQUIP_ITEM_SUCCESS,
       data: result.data
     });
-    yield put({
-      type: SAY_EQUIP_ITEM
-    })
+    if(result.data.type==='equip'){
+      yield put({
+        type: SAY_EQUIP_ITEM
+      })
+    }else{
+      yield put({
+        type: SAY_UNEQUIP_ITEM
+      })
+    }
   } catch (e) {
     console.error(e);
     yield put({
@@ -130,45 +136,11 @@ function* watchEquipItem() {
   yield takeLatest(EQUIP_ITEM_REQUEST, equipItem);
 }
 
-function unequipItemAPI(itemData) {
-  return axios.patch(`/item/unequip`, itemData,{
-    withCredentials: true
-  });
-}
-function* unequipItem(action) {
-  try {
-    const result = yield call(unequipItemAPI, action.data);
-    yield put({
-      type: UNEQUIP_ITEM_SUCCESS,
-      data: result.data
-    });
-    yield put({
-      type: SAY_UNEQUIP_ITEM
-    })
-  } catch (e) {
-    console.error(e);
-    yield put({
-      type: UNEQUIP_ITEM_FAILURE,
-      error: e,
-    });
-    if(e.response.data==='로그인이 필요합니다.'){
-      yield put({
-        type: LOG_OUT_REQUEST
-      })
-    }
-  }
-}
-function* watchUnequipItem() {
-  yield takeLatest(UNEQUIP_ITEM_REQUEST, unequipItem);
-}
-
-
 export default function* itemSaga() {
   yield all([
     fork(watchLoadItems),
     fork(watchLoadEquipment),
     fork(watchBuyItem),
-    fork(watchEquipItem),
-    fork(watchUnequipItem),
+    fork(watchEquipItem)
   ]);
 }

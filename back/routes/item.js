@@ -25,37 +25,28 @@ router.post("/", isLoggedIn, async(req, res, next) => {
 router.patch("/equip", isLoggedIn, async(req, res, next) => {
   //아이템 장착
   try{
-    const equippedItem = await db.Equipment.update({
-      [req.body.itemType]: req.body.itemId
-    }, {
-      where: {
-        UserId: req.user.id,
-      }
-    });
-    res.json({itemType: req.body.itemType, itemId: req.body.itemId});
+    if(req.body.type==='equip'){ //아이템 장착
+      const equippedItem = await db.Equipment.update({
+        [req.body.itemType]: req.body.itemId
+      }, {
+        where: {
+          UserId: req.user.id,
+        }
+      });
+    }else if(req.body.type==='unequip'){ //아이템 장착 해제
+      const unequippedItem = await db.Equipment.update({
+        [req.body.itemType]: 0
+      }, {
+        where: {
+          UserId: req.user.id,
+        }
+      });
+    }
+    res.json({itemType: req.body.itemType, itemId: req.body.itemId, type:req.body.type});
   }catch(e){
     console.error(e);
     next(e);
   }
 });
-
-router.patch("/unequip", isLoggedIn, async(req, res, next) => {
-  //아이템 장착해제
-  try{
-    db.Equipment.itemType = req.body.itemType;
-    const equippedItem = await db.Equipment.update({
-      [req.body.itemType]: 0
-    }, {
-      where: {
-        UserId: req.user.id,
-      }
-    });
-    res.send(req.body.itemType);
-  }catch(e){
-    console.error(e);
-    next(e);
-  }
-});
-
 
 module.exports = router;

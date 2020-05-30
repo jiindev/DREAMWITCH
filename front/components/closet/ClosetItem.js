@@ -30,17 +30,14 @@ const ClosetItem = memo(({v, i}) => {
             }
           }else return;
         }else{
-          if(equipment === item.id){ //장착중일 시 (장착해제)
-              dispatch({
-                type: UNEQUIP_ITEM_REQUEST,
-                data: {itemId:item.id, itemType:item.type}
-              })
-            }else{ //장착을 하지 않고 있을 시 (장착)
-              dispatch({
-                type: EQUIP_ITEM_REQUEST,
-                data: {itemId:item.id, itemType:item.type}
-              })
+          dispatch({
+            type: EQUIP_ITEM_REQUEST,
+            data: {
+              itemId:item.id, 
+              itemType:item.type,
+              type: equipment === item.id ? 'unequip' : 'equip' // 장착해제/장착
             }
+          });
         }
       }, [items, equipment, star, buyItemLoading]);
 
